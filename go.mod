@@ -1,6 +1,6 @@
 module github.com/vegarsti/personal-site
 
-go 1.24.5
+go 1.25.0
 
 require (
 	github.com/yuin/goldmark v1.7.13
