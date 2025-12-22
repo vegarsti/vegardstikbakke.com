@@ -94,7 +94,13 @@ func main() {
 		log.Fatalf("Error generating individual posts: %v", err)
 	}
 
+	// 10. Generate RSS feed
+	if err := generateRSSFeed(site); err != nil {
+		log.Fatalf("Error generating RSS feed: %v", err)
+	}
+
 	fmt.Printf("✓ Site generated successfully in public/\n")
 	fmt.Printf("✓ Generated %d posts\n", len(publishedPosts))
 	fmt.Printf("✓ Generated %d books\n", len(books))
+	fmt.Printf("✓ Generated RSS feed at /feed.xml\n")
 }

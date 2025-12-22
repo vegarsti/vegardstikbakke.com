@@ -12,6 +12,7 @@ var baseTemplate = `<!DOCTYPE html>
     <title>{{.Title}}</title>
     {{if .CanonicalURL}}<link rel="canonical" href="{{.CanonicalURL}}">{{end}}
     <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" type="application/rss+xml" title="Vegard Stikbakke" href="/feed.xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>

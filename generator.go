@@ -2,11 +2,14 @@ package main
 
 import (
 	"bytes"
+	"encoding/xml"
 	"fmt"
+	"html"
 	"html/template"
 	"io"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 // generateHomepage creates the homepage with bio from about.md
@@ -176,4 +179,102 @@ func copyFile(src, dst string) error {
 
 	_, err = io.Copy(destFile, sourceFile)
 	return err
+}
+
+// RSS structs for XML generation
+type RSSFeed struct {
+	XMLName xml.Name `xml:"rss"`
+	Version string   `xml:"version,attr"`
+	Atom    string   `xml:"xmlns:atom,attr"`
+	Channel RSSChannel
+}
+
+type RSSChannel struct {
+	XMLName       xml.Name `xml:"channel"`
+	Title         string   `xml:"title"`
+	Link          string   `xml:"link"`
+	Description   string   `xml:"description"`
+	Language      string   `xml:"language"`
+	LastBuildDate string   `xml:"lastBuildDate"`
+	AtomLink      AtomLink `xml:"atom:link"`
+	Items         []RSSItem
+}
+
+type AtomLink struct {
+	Href string `xml:"href,attr"`
+	Rel  string `xml:"rel,attr"`
+	Type string `xml:"type,attr"`
+}
+
+type RSSItem struct {
+	XMLName     xml.Name `xml:"item"`
+	Title       string   `xml:"title"`
+	Link        string   `xml:"link"`
+	PubDate     string   `xml:"pubDate"`
+	GUID        string   `xml:"guid"`
+	Description string   `xml:"description"`
+}
+
+// generateRSSFeed creates an RSS feed at /feed.xml
+func generateRSSFeed(site Site) error {
+	// Build items from posts
+	items := make([]RSSItem, 0, len(site.Posts))
+	for _, post := range site.Posts {
+		// Format date as RFC822 (required for RSS)
+		pubDate := post.Date.Format(time.RFC822)
+
+		// Create post URL
+		postURL := fmt.Sprintf("https://vegardstikbakke.com/%s/", post.Slug)
+
+		// Use description if available, otherwise use truncated content
+		description := post.Description
+		if description == "" {
+			// Use raw HTML content as description
+			description = post.HTMLContent
+		}
+
+		items = append(items, RSSItem{
+			Title:       html.EscapeString(post.Title),
+			Link:        postURL,
+			PubDate:     pubDate,
+			GUID:        postURL,
+			Description: description, // Will be escaped by xml.Marshal
+		})
+	}
+
+	// Determine last build date (use most recent post date)
+	lastBuildDate := time.Now().Format(time.RFC822)
+	if len(site.Posts) > 0 {
+		lastBuildDate = site.Posts[0].Date.Format(time.RFC822)
+	}
+
+	feed := RSSFeed{
+		Version: "2.0",
+		Atom:    "http://www.w3.org/2005/Atom",
+		Channel: RSSChannel{
+			Title:         "Vegard Stikbakke",
+			Link:          "https://vegardstikbakke.com/",
+			Description:   "Software engineer from Norway",
+			Language:      "en-us",
+			LastBuildDate: lastBuildDate,
+			AtomLink: AtomLink{
+				Href: "https://vegardstikbakke.com/feed.xml",
+				Rel:  "self",
+				Type: "application/rss+xml",
+			},
+			Items: items,
+		},
+	}
+
+	// Marshal to XML
+	output, err := xml.MarshalIndent(feed, "", "  ")
+	if err != nil {
+		return err
+	}
+
+	// Add XML header
+	xmlContent := []byte(xml.Header + string(output))
+
+	// Write to file
+	return os.WriteFile("public/feed.xml", xmlContent, 0644)
 }
