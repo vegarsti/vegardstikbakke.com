@@ -4,11 +4,12 @@ import "time"
 
 // Frontmatter represents the YAML metadata at the top of markdown files
 type Frontmatter struct {
-	Title  string `yaml:"title"`
-	Slug   string `yaml:"slug"`
-	Date   string `yaml:"date"`
-	Draft  bool   `yaml:"draft"`
-	Layout string `yaml:"layout"`
+	Title       string `yaml:"title"`
+	Slug        string `yaml:"slug"`
+	Date        string `yaml:"date"`
+	Draft       bool   `yaml:"draft"`
+	Layout      string `yaml:"layout"`
+	Description string `yaml:"description"`
 }
 
 // Post represents a blog post with its content and metadata
@@ -18,6 +19,7 @@ type Post struct {
 	Date        time.Time
 	DateString  string
 	Draft       bool
+	Description string
 	HTMLContent string
 	RawContent  string
 }

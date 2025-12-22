@@ -8,13 +8,19 @@ var baseTemplate = `<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{if .Description}}<meta name="description" content="{{.Description}}">{{end}}
     <title>{{.Title}}</title>
+    {{if .CanonicalURL}}<link rel="canonical" href="{{.CanonicalURL}}">{{end}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Code+Pro&display=swap');
+
         body {
             max-width: 800px;
             margin: 40px auto;
             padding: 0 20px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             line-height: 1.6;
             color: #333;
         }
@@ -41,8 +47,19 @@ var baseTemplate = `<!DOCTYPE html>
         .book-title { font-weight: 600; font-size: 1.1em; }
         .book-meta { color: #666; font-size: 0.9em; }
         .book-rating { color: #f39c12; }
-        pre { background: #f4f4f4; padding: 10px; overflow-x: auto; border-radius: 4px; }
-        code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Source Code Pro', monospace;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Source Code Pro', monospace;
+        }
         pre code { padding: 0; }
         a { color: #0066cc; }
     </style>

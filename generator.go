@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"os"
 	"path/filepath"
@@ -13,11 +14,15 @@ func generateHomepage(site Site) error {
 	template.Must(tmpl.Parse(homepageContent))
 
 	data := struct {
-		Title   string
-		Content template.HTML
+		Title        string
+		Description  string
+		CanonicalURL string
+		Content      template.HTML
 	}{
-		Title:   "Vegard Stikbakke",
-		Content: template.HTML(site.AboutPage.HTMLContent),
+		Title:        "Vegard Stikbakke",
+		Description:  "Vegard Stikbakke — software engineer from Norway",
+		CanonicalURL: "https://vegardstikbakke.com/",
+		Content:      template.HTML(site.AboutPage.HTMLContent),
 	}
 
 	return renderToFile(tmpl, data, "public/index.html")
@@ -29,11 +34,15 @@ func generatePostsListing(site Site) error {
 	template.Must(tmpl.Parse(postsListingContent))
 
 	data := struct {
-		Title string
-		Posts []Post
+		Title        string
+		Description  string
+		CanonicalURL string
+		Posts        []Post
 	}{
-		Title: "Posts - Vegard Stikbakke",
-		Posts: site.Posts,
+		Title:        "Posts - Vegard Stikbakke",
+		Description:  "Blog posts by Vegard Stikbakke",
+		CanonicalURL: "https://vegardstikbakke.com/posts/",
+		Posts:        site.Posts,
 	}
 
 	if err := os.MkdirAll("public/posts", 0755); err != nil {
@@ -49,11 +58,15 @@ func generateBooksListing(site Site) error {
 	template.Must(tmpl.Parse(booksListingContent))
 
 	data := struct {
-		Title string
-		Books []Book
+		Title        string
+		Description  string
+		CanonicalURL string
+		Books        []Book
 	}{
-		Title: "Books - Vegard Stikbakke",
-		Books: site.Books,
+		Title:        "Books - Vegard Stikbakke",
+		Description:  "Books read by Vegard Stikbakke",
+		CanonicalURL: "https://vegardstikbakke.com/books/",
+		Books:        site.Books,
 	}
 
 	if err := os.MkdirAll("public/books", 0755); err != nil {
@@ -70,15 +83,19 @@ func generateIndividualPosts(site Site) error {
 
 	for _, post := range site.Posts {
 		data := struct {
-			Title      string
-			PostTitle  string
-			DateString string
-			Content    template.HTML
+			Title        string
+			PostTitle    string
+			DateString   string
+			Description  string
+			CanonicalURL string
+			Content      template.HTML
 		}{
-			Title:      post.Title + " - Vegard Stikbakke",
-			PostTitle:  post.Title,
-			DateString: post.DateString,
-			Content:    template.HTML(post.HTMLContent),
+			Title:        post.Title + " - Vegard Stikbakke",
+			PostTitle:    post.Title,
+			DateString:   post.DateString,
+			Description:  post.Description,
+			CanonicalURL: fmt.Sprintf("https://vegardstikbakke.com/blog/%s/", post.Slug),
+			Content:      template.HTML(post.HTMLContent),
 		}
 
 		dir := filepath.Join("public/blog", post.Slug)

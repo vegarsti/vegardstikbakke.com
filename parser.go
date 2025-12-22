@@ -76,6 +76,7 @@ func parsePost(filePath string) (Post, error) {
 		Date:        parsedDate,
 		DateString:  fm.Date,
 		Draft:       fm.Draft,
+		Description: fm.Description,
 		HTMLContent: buf.String(),
 		RawContent:  markdown,
 	}, nil
