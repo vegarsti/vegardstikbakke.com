@@ -67,7 +67,7 @@ var baseTemplate = `<!DOCTYPE html>
 <body>
     <nav>
         <a href="/">Vegard Stikbakke</a>
-        <a href="/posts/">Posts</a>
+        <a href="/blog/">Posts</a>
         <a href="/books/">Books</a>
     </nav>
     <main>
@@ -87,7 +87,7 @@ var postsListingContent = `{{define "content"}}
 <ul class="post-list">
 {{range .Posts}}
     <li>
-        <a href="/blog/{{.Slug}}/">{{.Title}}</a>
+        <a href="/{{.Slug}}/">{{.Title}}</a>
         {{if .DateString}}<span class="post-date"> — {{.DateString}}</span>{{end}}
     </li>
 {{end}}

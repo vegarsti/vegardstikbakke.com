@@ -41,15 +41,15 @@ func generatePostsListing(site Site) error {
 	}{
 		Title:        "Posts - Vegard Stikbakke",
 		Description:  "Blog posts by Vegard Stikbakke",
-		CanonicalURL: "https://vegardstikbakke.com/posts/",
+		CanonicalURL: "https://vegardstikbakke.com/blog/",
 		Posts:        site.Posts,
 	}
 
-	if err := os.MkdirAll("public/posts", 0755); err != nil {
+	if err := os.MkdirAll("public/blog", 0755); err != nil {
 		return err
 	}
 
-	return renderToFile(tmpl, data, "public/posts/index.html")
+	return renderToFile(tmpl, data, "public/blog/index.html")
 }
 
 // generateBooksListing creates the books listing page
@@ -94,11 +94,11 @@ func generateIndividualPosts(site Site) error {
 			PostTitle:    post.Title,
 			DateString:   post.DateString,
 			Description:  post.Description,
-			CanonicalURL: fmt.Sprintf("https://vegardstikbakke.com/blog/%s/", post.Slug),
+			CanonicalURL: fmt.Sprintf("https://vegardstikbakke.com/%s/", post.Slug),
 			Content:      template.HTML(post.HTMLContent),
 		}
 
-		dir := filepath.Join("public/blog", post.Slug)
+		dir := filepath.Join("public", post.Slug)
 		if err := os.MkdirAll(dir, 0755); err != nil {
 			return err
 		}
