@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"html/template"
+	"io"
 	"os"
 	"path/filepath"
 )
@@ -120,4 +121,59 @@ func renderToFile(tmpl *template.Template, data interface{}, filepath string) er
 	}
 
 	return os.WriteFile(filepath, buf.Bytes(), 0644)
+}
+
+// copyStaticAssets copies files from static/ directory to public/
+func copyStaticAssets() error {
+	staticDir := "static"
+
+	// Check if static directory exists
+	if _, err := os.Stat(staticDir); os.IsNotExist(err) {
+		return nil // No static directory, nothing to copy
+	}
+
+	return filepath.Walk(staticDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		// Skip the root static directory itself
+		if path == staticDir {
+			return nil
+		}
+
+		// Calculate relative path
+		relPath, err := filepath.Rel(staticDir, path)
+		if err != nil {
+			return err
+		}
+
+		destPath := filepath.Join("public", relPath)
+
+		// Create directories
+		if info.IsDir() {
+			return os.MkdirAll(destPath, 0755)
+		}
+
+		// Copy files
+		return copyFile(path, destPath)
+	})
+}
+
+// copyFile copies a single file from src to dst
+func copyFile(src, dst string) error {
+	sourceFile, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer sourceFile.Close()
+
+	destFile, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer destFile.Close()
+
+	_, err = io.Copy(destFile, sourceFile)
+	return err
 }

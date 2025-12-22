@@ -72,7 +72,12 @@ func main() {
 		log.Fatalf("Error creating public dir: %v", err)
 	}
 
-	// 8. Generate all HTML files
+	// 8. Copy static assets
+	if err := copyStaticAssets(); err != nil {
+		log.Fatalf("Error copying static assets: %v", err)
+	}
+
+	// 9. Generate all HTML files
 	if err := generateHomepage(site); err != nil {
 		log.Fatalf("Error generating homepage: %v", err)
 	}

@@ -11,6 +11,7 @@ var baseTemplate = `<!DOCTYPE html>
     {{if .Description}}<meta name="description" content="{{.Description}}">{{end}}
     <title>{{.Title}}</title>
     {{if .CanonicalURL}}<link rel="canonical" href="{{.CanonicalURL}}">{{end}}
+    <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>

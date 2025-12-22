@@ -21,7 +21,7 @@ generate: build
 	./ssg
 
 # Serve the generated site locally
-serve:
+serve: generate
 	@echo "Serving site at http://localhost:8000"
 	@cd public && python3 -m http.server 8000
 
