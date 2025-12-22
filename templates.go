@@ -75,7 +75,7 @@ var baseTemplate = `<!DOCTYPE html>
     <nav>
         <a href="/">Vegard Stikbakke</a>
         <a href="/blog/">Posts</a>
-        <a href="/books/">Books</a>
+        <!-- <a href="/books/">Books</a> -->
     </nav>
     <main>
         {{template "content" .}}
