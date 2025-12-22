@@ -1,20 +1,25 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
 )
 
 func main() {
+	// Parse command-line flags
+	includeDrafts := flag.Bool("include-drafts", false, "Include draft posts in generation")
+	flag.Parse()
+
 	// 1. Parse content directory
 	posts, err := loadPosts("content/blog")
 	if err != nil {
 		log.Fatalf("Error loading posts: %v", err)
 	}
 
-	// 2. Filter out drafts
-	publishedPosts := filterPublished(posts)
+	// 2. Filter out drafts (unless includeDrafts is true)
+	publishedPosts := filterPublished(posts, *includeDrafts)
 
 	// 3. Sort posts by date (newest first)
 	sortPostsByDate(publishedPosts)

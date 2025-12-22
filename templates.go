@@ -45,6 +45,18 @@ var baseTemplate = `<!DOCTYPE html>
         .post-list { list-style: none; padding: 0; }
         .post-list li { margin-bottom: 1em; }
         .post-date { color: #666; font-size: 0.9em; }
+        .draft-badge {
+            display: inline-block;
+            background: #f0f0f0;
+            color: #666;
+            font-size: 0.7em;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-left: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
         .book { margin-bottom: 2em; padding-bottom: 1em; border-bottom: 1px solid #eee; }
         .book-title { font-weight: 600; font-size: 1.1em; }
         .book-meta { color: #666; font-size: 0.9em; }
@@ -96,6 +108,7 @@ var postsListingContent = `{{define "content"}}
 {{range .Posts}}
     <li>
         <a href="/{{.Slug}}/">{{.Title}}</a>
+        {{if .Draft}}<span class="draft-badge">Draft</span>{{end}}
         {{if .DateString}}<span class="post-date"> — {{.DateString}}</span>{{end}}
     </li>
 {{end}}

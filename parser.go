@@ -153,8 +153,12 @@ func parseDate(dateStr string) time.Time {
 	return time.Time{}
 }
 
-// filterPublished filters out draft posts
-func filterPublished(posts []Post) []Post {
+// filterPublished filters out draft posts unless includeDrafts is true
+func filterPublished(posts []Post, includeDrafts bool) []Post {
+	if includeDrafts {
+		return posts
+	}
+
 	var published []Post
 	for _, post := range posts {
 		if !post.Draft {
