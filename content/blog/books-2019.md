@@ -1,0 +1,52 @@
+---
+title: Books I read in 2019
+slug: books-2019
+date: "2020-01-05"
+---
+
+This year I read 40 books, surpassing my goal of 30 ([see my year in books on Goodreads](https://www.goodreads.com/user/year_in_books/2019/3400170)).
+I'm pleasantly surprised at how much reading it's possible to get in, just by reading when commuting and in various idle windows during the afternoon.
+[Last year I read 5k pages over 16 books](/books-2018), whereas this year I read 12k (12137).
+Below is a list of the books I read.
+Those in bold are especially recommended, either because they were particularly enjoying or interesting.
+
+- Show Stopper by G. Pascal Zachary
+- **Stubborn Attachments** by Tyler Cowen
+- Sapiens by Yuval Noah Harari
+- Creative Selection by Ken Kocienda
+- The Great Stagnation by Tyler Cowen
+- We Are The Nerds by Christine Lagorio-Chafkin
+- High Growth Handbook by Elad Gil
+- Shoe Dog by Phil Knight
+- Hackers and Painters by Paul Graham
+- AI Superpowers by Kai-Fu Lee
+- **How Asia Works** by Joe Studwell
+- Jeg vil dø - et essay om dødsønske og dødshjelp, mennesket og dets samfunn by Andreas and Randi Espegren Masvie
+- The Soul of a New Machine by Tracy Kidder
+- The Crying of Lot 49 by Thomas Pynchon
+- In the Beginning...Was the Command Line by Neal Stephenson
+- Working by Robert A. Caro
+- Big Business by Tyler Cowen
+- Japan: The Story of a Nation by Edwin Reischauer
+- 12 Rules for Life by Jordan Peterson
+- The Effective Engineer by Edmond Lau
+- **Range** by David Epstein
+- An Elegant Puzzle by Will Larson
+- Gambling with Other People's Money by Russ Roberts
+- Brave New World by Aldous Huxley
+- Fuglane (The Birds) by Tarjei Vesaas
+- Good to Great by Jim Collins
+- **The Power Broker** by Robert A. Caro
+- Finite and Infinite Games by James P. Carse
+- **Crime and Punishment** by Fyodor Dostoyevsky
+- Accidental Empires by Robert Cringely
+- How I Sold My Business by Alvin Alexander
+- Secrets of Sand Hill Road by Scott Kupor
+- Resilient Management by Lara Hogan
+- **High Output Management** by Andrew S. Grove
+- Thinking in Systems by Donella H. Meadows
+- Resume Speed by Lawrence Block
+- The Man Who Solved the Market by Gregory Zuckerman
+- **The Dream Machine** by M. Mitchell Waldrop
+- **UNIX: A History and a Memoir** by Brian Kernighan
+- Start Small, Stay Small: A Developer's Guide to Launching a Startup by Rob Walling

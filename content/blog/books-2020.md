@@ -1,0 +1,41 @@
+---
+title: Books I read in 2020
+slug: books-2020
+date: "2021-01-04"
+---
+
+Below is a list of the 23 books I read this year ([8151 pages](https://www.goodreads.com/user/year_in_books/2020/3400170)).
+Those in bold were my favourites.
+See also what I read in [2018](/books-2018) and [2019](/books-2019).
+
+- Flow by Mihaly Csikszentmihalyi
+- Super Pumped by Mike Isaac
+- **Educated** by Tara Westover
+- In the Company of Giants by Rama Dev Jager and Ortiz Rafael
+- **Uncanny Valley** by Anna Wiener
+- Inside the Mind of Xi Jinping by François Bougon
+- Founders at Work by Jessica Livingston
+- **Writing an Interpreter in Go** by Thorsten Ball
+- **Writing a Compiler in Go** by Thorsten Ball
+- Debugging by David J. Agans
+- Facebook by Steven Levy
+- **A Philosophy of Software Design** (reread) by John Osterhout
+- The Three-Body Problem by Cixin Liu
+- **The Art of Doing Science and Engineering** by Richard Hamming
+- Netflixed by Gina Keating
+- The J Primer by Eric Iverson
+- **Ten Essays on FizzBuzz** by Joel Grus
+- The Infinite Machine by Camila Russo
+- **The Go Programming Language** by Alan A. A. Donovan and Brian Kernighan
+- What Every Web Developer Should Know About HTTP by K. Scott Allen
+- The Perfect Store: Inside eBay by Adam Cohen
+- **Designing Data-Intensive Applications** by Martin Kleppmann
+- **The Path to Power** by Robert Caro
+
+Some interesting people's 2020 books:
+
+- [Dan Romero](https://danromero.org/2020-booklist.html)
+- [Phil Eaton](https://notes.eatonphil.com/year-in-books-2020.html)
+- [Mary Rose Cook](http://notebook.maryrosecook.com/BooksIreadin2020.html)
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">2020 book thread</p>&mdash; Vegard Stikbakke (@vegardstikbakke) <a href="https://twitter.com/vegardstikbakke/status/1219219790549614592?ref_src=twsrc%5Etfw">January 20, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

@@ -1,0 +1,30 @@
+---
+title: Books I read in 2018
+slug: books-2018
+date: "2019-01-21"
+---
+
+As a kid I read a lot of books. Not so the last couple of years. In 2018 I managed to get thoroughly into reading again. There is just so much to learn, and the more I read, the more I want to read. If you're interested, [this is my Goodreads account](https://www.goodreads.com/user/show/3400170-vegard-stikbakke).
+
+In 2018, I apparently read 5267 pages total over 16 books (see [My Year in Books on Goodreads](https://www.goodreads.com/user/year_in_books/2018/3400170)). I'm pretty satisfied with that. The themes of the books seem to be mainly business, startups, tech and biographies.
+
+Here's a list of the books I read. Those in bold are especially recommended.
+
+- **Why We Sleep** by Matthew Walker
+- The Lean Startup by Eric Ries
+- **The Everything Store** by Brad Stone
+- The Hard Thing About Hard Things by Ben Horowitz
+- The Mythical Man-Month by Frederik P. Brooks Jr.
+- Liar's Poker by Michael Lewis
+- Zero to One by Peter Thiel
+- In the Plex by Steven Levy
+- Fresh Off the Boat by Eddie Huang
+- Steve Jobs by Walter Isaacson
+- The New New Thing by Michael Lewis
+- The Manager's Path by Camille Fournier
+- **Bad Blood** by John Carreyrou
+- **A Philosophy of Software Design** by John Ousterhout
+- Masters of Doom by David Kushner
+- **Stoner** by John Williams (only fiction book this year)
+
+I got a Kindle for Christmas, and I'm loving it so far. Looking forward to reading more this year!
