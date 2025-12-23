@@ -24,7 +24,7 @@ var baseTemplate = `<!DOCTYPE html>
             padding: 0 20px;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #111;
         }
         nav {
             margin-bottom: 40px;
@@ -34,7 +34,7 @@ var baseTemplate = `<!DOCTYPE html>
         nav a {
             margin-right: 20px;
             text-decoration: none;
-            color: #333;
+            color: #111;
             font-weight: 500;
         }
         nav a:hover {
@@ -59,7 +59,7 @@ var baseTemplate = `<!DOCTYPE html>
         }
         .books {
             display: grid;
-            grid-template-columns: 1fr 0.75fr min-content 70px;
+            grid-template-columns: 1fr 0.75fr 110px 70px;
             gap: 1em 1.5em;
             margin-top: 2em;
         }
@@ -72,6 +72,13 @@ var baseTemplate = `<!DOCTYPE html>
             font-weight: 500;
             letter-spacing: -0.015em;
         }
+        .book-title a {
+            color: #333;
+            text-decoration: none;
+        }
+        .book-title a:hover {
+            text-decoration: underline;
+        }
         .book-author {
             color: #666;
             letter-spacing: -0.015em;
@@ -81,7 +88,7 @@ var baseTemplate = `<!DOCTYPE html>
             font-variant-numeric: tabular-nums;
         }
         .book-rating {
-            color: #f39c12;
+            color: #333;
             white-space: nowrap;
         }
         @media (max-width: 640px) {
