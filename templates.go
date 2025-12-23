@@ -42,9 +42,36 @@ var baseTemplate = `<!DOCTYPE html>
         }
         h1 { font-size: 2em; margin-bottom: 0.5em; }
         h2 { font-size: 1.5em; margin-top: 1.5em; }
-        .post-list { list-style: none; padding: 0; }
-        .post-list li { margin-bottom: 1em; }
-        .post-date { color: #666; font-size: 0.9em; }
+        .post-list {
+            display: grid;
+            grid-template-columns: 1fr 110px;
+            gap: 5px;
+            margin-top: 2em;
+        }
+        .post-title {
+            font-weight: 500;
+            letter-spacing: -0.015em;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .post-title a {
+            color: #111;
+            text-decoration: none;
+        }
+        .post-title a:hover {
+            text-decoration: underline;
+        }
+        .post-date {
+            color: #666;
+            font-variant-numeric: tabular-nums;
+        }
+        @media (max-width: 640px) {
+            .post-list {
+                grid-template-columns: 1fr;
+                gap: 0.5em;
+            }
+        }
         .draft-badge {
             display: inline-block;
             background: #f0f0f0;
@@ -142,15 +169,12 @@ var homepageContent = `{{define "content"}}
 // Posts listing template
 var postsListingContent = `{{define "content"}}
 <h1>Posts</h1>
-<ul class="post-list">
+<div class="post-list">
 {{range .Posts}}
-    <li>
-        <a href="/{{.Slug}}/">{{.Title}}</a>
-        {{if .Draft}}<span class="draft-badge">Draft</span>{{end}}
-        {{if .DateString}}<span class="post-date"> — {{.DateString}}</span>{{end}}
-    </li>
+    <div class="post-title"><a href="/{{.Slug}}/">{{.Title}}</a>{{if .Draft}}<span class="draft-badge">Draft</span>{{end}}</div>
+    <div class="post-date">{{.DateString}}</div>
 {{end}}
-</ul>
+</div>
 {{end}}`
 
 // Books listing template
