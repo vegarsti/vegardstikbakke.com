@@ -1,0 +1,8 @@
+---
+title: "American Pastoral"
+author: "Philip Roth"
+year_published: "1997"
+date_read: "2023"
+rating: 4
+---
+
