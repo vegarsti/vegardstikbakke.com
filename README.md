@@ -18,8 +18,8 @@ The easiest way to build and run the site locally:
 # Build the generator and generate the site
 make run
 
-# Serve the site locally at http://localhost:8000
-make serve
+# Serve the site locally at http://localhost:8000 with hot reloading (using https://github.com/vegarsti/reload)
+reload make serve
 ```
 
 ### Available Make Targets
@@ -44,6 +44,7 @@ go build -o ssg
 ```
 
 This will:
+
 - Read markdown files from `content/blog/`
 - Filter out posts with `draft: true`
 - Generate HTML in `public/` directory
@@ -74,7 +75,6 @@ slug: my-post-slug
 date: "2024-01-01"
 draft: false
 ---
-
 Your markdown content here...
 ```
 
