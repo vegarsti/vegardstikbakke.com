@@ -132,9 +132,6 @@ var baseTemplate = `<!DOCTYPE html>
             font-family: 'Source Code Pro', monospace;
         }
         code {
-            background: #f4f4f4;
-            padding: 2px 5px;
-            border-radius: 3px;
             font-family: 'Source Code Pro', monospace;
         }
         pre code { padding: 0; }
