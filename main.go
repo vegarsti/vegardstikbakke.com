@@ -30,46 +30,23 @@ func main() {
 		log.Fatalf("Error loading about page: %v", err)
 	}
 
-	// 5. Create placeholder book data
-	books := []Book{
-		{
-			Title:    "The Power Broker",
-			Author:   "Robert A. Caro",
-			DateRead: "2023-06",
-			Rating:   5,
-			Summary:  "An epic biography of Robert Moses and the fall of New York. A masterpiece of investigative journalism and narrative non-fiction.",
-		},
-		{
-			Title:    "UNIX: A History and a Memoir",
-			Author:   "Brian Kernighan",
-			DateRead: "2023-08",
-			Rating:   5,
-			Summary:  "A personal history of Unix from one of its creators. Fascinating insights into the development of computing at Bell Labs.",
-		},
-		{
-			Title:    "The Mythical Man-Month",
-			Author:   "Frederick P. Brooks Jr.",
-			DateRead: "2023-10",
-			Rating:   4,
-			Summary:  "Classic book on software engineering and project management. Still relevant decades after publication.",
-		},
-		{
-			Title:    "Dealers of Lightning",
-			Author:   "Michael A. Hiltzik",
-			DateRead: "2024-02",
-			Rating:   5,
-			Summary:  "The story of Xerox PARC and how a research lab shaped the future of computing. Incredible innovation and missed opportunities.",
-		},
+	// 5. Load books from markdown files
+	books, err := loadBooks("content/books")
+	if err != nil {
+		log.Fatalf("Error loading books: %v", err)
 	}
 
-	// 6. Build site structure
+	// 6. Sort books by date_read (most recent first)
+	sortBooksByDate(books)
+
+	// 7. Build site structure
 	site := Site{
 		Posts:     publishedPosts,
 		AboutPage: aboutPage,
 		Books:     books,
 	}
 
-	// 7. Create output directory
+	// 8. Create output directory
 	if err := os.RemoveAll("public"); err != nil && !os.IsNotExist(err) {
 		log.Fatalf("Error removing public dir: %v", err)
 	}
@@ -77,12 +54,12 @@ func main() {
 		log.Fatalf("Error creating public dir: %v", err)
 	}
 
-	// 8. Copy static assets
+	// 9. Copy static assets
 	if err := copyStaticAssets(); err != nil {
 		log.Fatalf("Error copying static assets: %v", err)
 	}
 
-	// 9. Generate all HTML files
+	// 10. Generate all HTML files
 	if err := generateHomepage(site); err != nil {
 		log.Fatalf("Error generating homepage: %v", err)
 	}
@@ -99,7 +76,11 @@ func main() {
 		log.Fatalf("Error generating individual posts: %v", err)
 	}
 
-	// 10. Generate RSS feed
+	if err := generateIndividualBooks(site); err != nil {
+		log.Fatalf("Error generating individual books: %v", err)
+	}
+
+	// 11. Generate RSS feed
 	if err := generateRSSFeed(site); err != nil {
 		log.Fatalf("Error generating RSS feed: %v", err)
 	}

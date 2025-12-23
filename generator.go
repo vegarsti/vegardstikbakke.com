@@ -61,16 +61,40 @@ func generateBooksListing(site Site) error {
 	tmpl := getBaseTemplate()
 	template.Must(tmpl.Parse(booksListingContent))
 
+	// Convert books to template-friendly format with HTML summaries
+	type BookDisplay struct {
+		Title         string
+		Slug          string
+		Author        string
+		YearPublished string
+		DateRead      string
+		Rating        int
+		Summary       template.HTML
+	}
+
+	books := make([]BookDisplay, len(site.Books))
+	for i, book := range site.Books {
+		books[i] = BookDisplay{
+			Title:         book.Title,
+			Slug:          book.Slug,
+			Author:        book.Author,
+			YearPublished: book.YearPublished,
+			DateRead:      book.DateRead,
+			Rating:        book.Rating,
+			Summary:       template.HTML(book.Summary),
+		}
+	}
+
 	data := struct {
 		Title        string
 		Description  string
 		CanonicalURL string
-		Books        []Book
+		Books        []BookDisplay
 	}{
 		Title:        "Books - Vegard Stikbakke",
 		Description:  "Books read by Vegard Stikbakke",
 		CanonicalURL: "https://vegardstikbakke.com/books/",
-		Books:        site.Books,
+		Books:        books,
 	}
 
 	if err := os.MkdirAll("public/books", 0755); err != nil {
@@ -103,6 +127,48 @@ func generateIndividualPosts(site Site) error {
 		}
 
 		dir := filepath.Join("public", post.Slug)
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			return err
+		}
+
+		outputPath := filepath.Join(dir, "index.html")
+		if err := renderToFile(tmpl, data, outputPath); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// generateIndividualBooks creates individual book pages
+func generateIndividualBooks(site Site) error {
+	tmpl := getBaseTemplate()
+	template.Must(tmpl.Parse(bookContent))
+
+	for _, book := range site.Books {
+		data := struct {
+			Title        string
+			BookTitle    string
+			Author       string
+			YearPublished string
+			DateRead     string
+			Rating       int
+			Description  string
+			CanonicalURL string
+			Content      template.HTML
+		}{
+			Title:        book.Title + " - Vegard Stikbakke",
+			BookTitle:    book.Title,
+			Author:       book.Author,
+			YearPublished: book.YearPublished,
+			DateRead:     book.DateRead,
+			Rating:       book.Rating,
+			Description:  fmt.Sprintf("%s by %s", book.Title, book.Author),
+			CanonicalURL: fmt.Sprintf("https://vegardstikbakke.com/books/%s/", book.Slug),
+			Content:      template.HTML(book.Summary),
+		}
+
+		dir := filepath.Join("public", "books", book.Slug)
 		if err := os.MkdirAll(dir, 0755); err != nil {
 			return err
 		}

@@ -57,10 +57,39 @@ var baseTemplate = `<!DOCTYPE html>
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .book { margin-bottom: 2em; padding-bottom: 1em; border-bottom: 1px solid #eee; }
-        .book-title { font-weight: 600; font-size: 1.1em; }
-        .book-meta { color: #666; font-size: 0.9em; }
-        .book-rating { color: #f39c12; }
+        .books {
+            display: grid;
+            grid-template-columns: 1fr 0.75fr min-content 70px;
+            gap: 1em 1.5em;
+            margin-top: 2em;
+        }
+        .book-title, .book-author {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .book-title {
+            font-weight: 500;
+            letter-spacing: -0.015em;
+        }
+        .book-author {
+            color: #666;
+            letter-spacing: -0.015em;
+        }
+        .book-date {
+            color: #666;
+            font-variant-numeric: tabular-nums;
+        }
+        .book-rating {
+            color: #f39c12;
+            white-space: nowrap;
+        }
+        @media (max-width: 640px) {
+            .books {
+                grid-template-columns: 1fr;
+                gap: 0.5em;
+            }
+        }
         pre {
             background: #f4f4f4;
             padding: 10px;
@@ -88,7 +117,7 @@ var baseTemplate = `<!DOCTYPE html>
     <nav>
         <a href="/">Vegard Stikbakke</a>
         <a href="/blog/">Posts</a>
-        <!-- <a href="/books/">Books</a> -->
+        <a href="/books/">Books</a>
     </nav>
     <main>
         {{template "content" .}}
@@ -118,23 +147,32 @@ var postsListingContent = `{{define "content"}}
 // Books listing template
 var booksListingContent = `{{define "content"}}
 <h1>Books</h1>
+<div class="books">
 {{range .Books}}
-<div class="book">
-    <div class="book-title">{{.Title}}</div>
-    <div class="book-meta">
-        by {{.Author}}
-        {{if .DateRead}} • {{.DateRead}}{{end}}
-        {{if .Rating}} • <span class="book-rating">{{printf "%s" (stars .Rating)}}</span>{{end}}
-    </div>
-    {{if .Summary}}<p>{{.Summary}}</p>{{end}}
-</div>
+    <div class="book-title"><a href="/books/{{.Slug}}/">{{.Title}}</a></div>
+    <div class="book-author">{{.Author}}</div>
+    <div class="book-date">{{.DateRead}}</div>
+    <div class="book-rating">{{printf "%s" (stars .Rating)}}</div>
 {{end}}
+</div>
 {{end}}`
 
 // Individual post template
 var postContent = `{{define "content"}}
 <h1>{{.PostTitle}}</h1>
 {{if .DateString}}<p class="post-date">{{.DateString}}</p>{{end}}
+{{.Content}}
+{{end}}`
+
+// Individual book template
+var bookContent = `{{define "content"}}
+<h1>{{.BookTitle}}</h1>
+<p class="post-date">
+    by {{.Author}}
+    {{if .YearPublished}} ({{.YearPublished}}){{end}}
+    {{if .DateRead}} • Read: {{.DateRead}}{{end}}
+    {{if .Rating}} • <span class="book-rating">{{printf "%s" (stars .Rating)}}</span>{{end}}
+</p>
 {{.Content}}
 {{end}}`
 

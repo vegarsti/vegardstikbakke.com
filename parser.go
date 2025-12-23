@@ -206,3 +206,82 @@ func loadPage(filePath string) (Page, error) {
 		HTMLContent: buf.String(),
 	}, nil
 }
+
+// loadBooks reads all markdown files from content/books/ and parses them
+func loadBooks(dir string) ([]Book, error) {
+	files, err := filepath.Glob(filepath.Join(dir, "*.md"))
+	if err != nil {
+		return nil, err
+	}
+
+	var books []Book
+	for _, file := range files {
+		book, err := parseBook(file)
+		if err != nil {
+			return nil, fmt.Errorf("error parsing %s: %w", file, err)
+		}
+		books = append(books, book)
+	}
+
+	return books, nil
+}
+
+// parseBook reads a markdown file and extracts book metadata and summary
+func parseBook(filePath string) (Book, error) {
+	content, err := os.ReadFile(filePath)
+	if err != nil {
+		return Book{}, err
+	}
+
+	// Split frontmatter from content
+	frontmatter, markdown := extractFrontmatter(content)
+
+	// Parse YAML frontmatter
+	var fm BookFrontmatter
+	if err := yaml.Unmarshal([]byte(frontmatter), &fm); err != nil {
+		return Book{}, fmt.Errorf("error parsing frontmatter: %w", err)
+	}
+
+	// Validate required fields
+	if fm.Title == "" {
+		return Book{}, fmt.Errorf("book missing required field: title")
+	}
+	if fm.Author == "" {
+		return Book{}, fmt.Errorf("book missing required field: author")
+	}
+
+	// Generate slug from filename
+	filename := filepath.Base(filePath)
+	slug := strings.TrimSuffix(filename, ".md")
+
+	// Convert markdown summary to HTML
+	var buf bytes.Buffer
+	if err := goldmark.Convert([]byte(markdown), &buf); err != nil {
+		return Book{}, fmt.Errorf("error converting markdown: %w", err)
+	}
+
+	return Book{
+		Title:         fm.Title,
+		Slug:          slug,
+		Author:        fm.Author,
+		YearPublished: fm.YearPublished,
+		DateRead:      fm.DateRead,
+		Rating:        fm.Rating,
+		Summary:       buf.String(),
+	}, nil
+}
+
+// sortBooksByDate sorts books by date_read, most recent first
+func sortBooksByDate(books []Book) {
+	sort.Slice(books, func(i, j int) bool {
+		// Books without dates should go to the end
+		if books[i].DateRead == "" {
+			return false
+		}
+		if books[j].DateRead == "" {
+			return true
+		}
+		// Simple string comparison works for YYYY-MM or YYYY formats
+		return books[i].DateRead > books[j].DateRead
+	})
+}

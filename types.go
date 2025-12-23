@@ -12,6 +12,15 @@ type Frontmatter struct {
 	Description string `yaml:"description"`
 }
 
+// BookFrontmatter represents the YAML metadata for book files
+type BookFrontmatter struct {
+	Title         string `yaml:"title"`
+	Author        string `yaml:"author"`
+	YearPublished string `yaml:"year_published"`
+	DateRead      string `yaml:"date_read"`
+	Rating        int    `yaml:"rating"`
+}
+
 // Post represents a blog post with its content and metadata
 type Post struct {
 	Title       string
@@ -32,11 +41,13 @@ type Page struct {
 
 // Book represents a book with metadata
 type Book struct {
-	Title    string
-	Author   string
-	DateRead string
-	Rating   int
-	Summary  string
+	Title         string
+	Slug          string
+	Author        string
+	YearPublished string
+	DateRead      string
+	Rating        int
+	Summary       string
 }
 
 // Site represents the entire site structure
