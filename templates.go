@@ -124,7 +124,9 @@ var baseTemplate = `<!DOCTYPE html>
     <nav>
         <a href="/">Vegard Stikbakke</a>
         <a href="/blog/">Posts</a>
+        <!-- TODO: Uncomment to show books again
         <a href="/books/">Books</a>
+        -->
     </nav>
     <main>
         {{template "content" .}}
