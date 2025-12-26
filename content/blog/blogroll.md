@@ -4,6 +4,7 @@ slug: blogroll
 date: "2024-07-31"
 ---
 
+- [Andrew Healey](https://healeycodes.com/)
 - [Ben Hoyt](https://benhoyt.com/writings/)
 - [Phil Eaton](https://notes.eatonphil.com/)
 - [Justin Jaffray](https://justinjaffray.com/) ([newsletter](https://buttondown.com/jaffray))
