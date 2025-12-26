@@ -35,6 +35,15 @@ You should also [read Blood Meridian](/books-2024).
 It's set in the late 1940s and follows a pair of teenage boys who go to Mexico to work as cowboys.
 An incredible and tragic coming of age book about love, fairness, and the end of the old West.
 
+### The Scaling Era: An Oral History of AI, 2019-2025 by Dwarkesh Patel, Gavin Leech
+
+Dwarkesh, still in his early twenties, came out of nowhere to create [an excellent podcast](https://www.dwarkesh.com/) that I really enjoy.
+He does hour-long interviews with public intellectuals, executives, academics, engineers.
+He's done many interviews focused on AI, and this book is a compilation of what leaders in the field think.
+
+It's a great read if you're familiar with recent AI developments.
+It's surprisingly well-edited and fun to read.
+
 ### The Soul of a New Machine by Tracy Kidder
 
 Bryan Cantrill's [favorite book](https://bcantrill.dtrace.org/2019/02/10/reflecting-on-the-soul-of-a-new-machine/) and won a Pulitzer Prize, do you need more convincing?
@@ -61,15 +70,6 @@ Mainframe hackers, hardware hackers, game hackers.
 
 I enjoyed this a lot.
 Although at almost 500 pages you need to be interested in this stuff.
-
-### The Scaling Era: An Oral History of AI, 2019-2025 by Dwarkesh Patel, Gavin Leech
-
-Dwarkesh, still in his early twenties, came out of nowhere to create [an excellent podcast](https://www.dwarkesh.com/) that I really enjoy.
-He does hour-long interviews with public intellectuals, executives, academics, engineers.
-He's done many interviews focused on AI, and this book is a compilation of what leaders in the field think.
-
-It's a great read if you're familiar with recent AI developments.
-It's surprisingly well-edited and fun to read.
 
 ### Steve Jobs & The NeXT Big Thing by Randall E. Stross
 
