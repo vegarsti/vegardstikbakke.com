@@ -2,7 +2,7 @@
 title: "The Undoing Project: A Friendship That Changed Our Minds"
 author: "Michael Lewis"
 year_published: "2016"
-date_read: "2024"
+date_read: "2024-10-12"
 rating: 5
 ---
 

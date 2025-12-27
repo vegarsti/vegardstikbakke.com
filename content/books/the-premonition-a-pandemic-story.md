@@ -2,7 +2,7 @@
 title: "The Premonition: A Pandemic Story"
 author: "Michael Lewis"
 year_published: "2021"
-date_read: "2022"
+date_read: "2022-12-12"
 rating: 4
 ---
 

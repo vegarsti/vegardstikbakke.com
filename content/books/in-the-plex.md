@@ -2,7 +2,7 @@
 title: "In the Plex"
 author: "Steven Levy"
 year_published: ""
-date_read: "2018"
+date_read: "2018-01-01"
 rating: 4
 ---
 

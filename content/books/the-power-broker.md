@@ -2,7 +2,7 @@
 title: "The Power Broker"
 author: "Robert A. Caro"
 year_published: "1974"
-date_read: "2023-06"
+date_read: "2019-07-20"
 rating: 5
 ---
 

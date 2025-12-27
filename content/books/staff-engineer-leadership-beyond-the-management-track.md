@@ -2,7 +2,7 @@
 title: "Staff Engineer: Leadership Beyond the Management Track"
 author: "Will Larson"
 year_published: ""
-date_read: "2021"
+date_read: "2021-04-19"
 rating: 4
 ---
 

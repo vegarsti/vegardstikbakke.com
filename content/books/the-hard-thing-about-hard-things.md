@@ -2,7 +2,7 @@
 title: "The Hard Thing About Hard Things"
 author: "Ben Horowitz"
 year_published: ""
-date_read: "2018"
+date_read: "2018-02-28"
 rating: 4
 ---
 

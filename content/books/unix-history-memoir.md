@@ -2,7 +2,7 @@
 title: "UNIX: A History and a Memoir"
 author: "Brian Kernighan"
 year_published: "2019"
-date_read: "2023-08"
+date_read: "2019-12-26"
 rating: 5
 ---
 
