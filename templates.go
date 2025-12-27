@@ -86,7 +86,7 @@ var baseTemplate = `<!DOCTYPE html>
         }
         .books {
             display: grid;
-            grid-template-columns: 1fr 0.75fr 110px 70px;
+            grid-template-columns: 1fr 0.75fr 110px;
             gap: 1em 1.5em;
             margin-top: 2em;
         }
@@ -193,7 +193,6 @@ var booksListingContent = `{{define "content"}}
     <div class="book-title"><a href="/books/{{.Slug}}/">{{.Title}}</a></div>
     <div class="book-author">{{.Author}}</div>
     <div class="book-date">{{.DateRead}}</div>
-    <div class="book-rating">{{printf "%s" (stars .Rating)}}</div>
 {{end}}
 </div>
 {{end}}`
@@ -212,7 +211,6 @@ var bookContent = `{{define "content"}}
     by {{.Author}}
     {{if .YearPublished}} ({{.YearPublished}}){{end}}
     {{if .DateRead}} • Read: {{.DateRead}}{{end}}
-    {{if .Rating}} • <span class="book-rating">{{printf "%s" (stars .Rating)}}</span>{{end}}
 </p>
 {{.Content}}
 {{end}}`

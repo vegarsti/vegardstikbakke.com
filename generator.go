@@ -147,25 +147,25 @@ func generateIndividualBooks(site Site) error {
 
 	for _, book := range site.Books {
 		data := struct {
-			Title        string
-			BookTitle    string
-			Author       string
+			Title         string
+			BookTitle     string
+			Author        string
 			YearPublished string
-			DateRead     string
-			Rating       int
-			Description  string
-			CanonicalURL string
-			Content      template.HTML
+			DateRead      string
+			Rating        int
+			Description   string
+			CanonicalURL  string
+			Content       template.HTML
 		}{
-			Title:        book.Title + " - Vegard Stikbakke",
-			BookTitle:    book.Title,
-			Author:       book.Author,
+			Title:         book.Title + " — Vegard Stikbakke",
+			BookTitle:     book.Title,
+			Author:        book.Author,
 			YearPublished: book.YearPublished,
-			DateRead:     book.DateRead,
-			Rating:       book.Rating,
-			Description:  fmt.Sprintf("%s by %s", book.Title, book.Author),
-			CanonicalURL: fmt.Sprintf("https://vegardstikbakke.com/books/%s/", book.Slug),
-			Content:      template.HTML(book.Summary),
+			DateRead:      book.DateRead,
+			Rating:        book.Rating,
+			Description:   fmt.Sprintf("%s by %s", book.Title, book.Author),
+			CanonicalURL:  fmt.Sprintf("https://vegardstikbakke.com/books/%s/", book.Slug),
+			Content:       template.HTML(book.Summary),
 		}
 
 		dir := filepath.Join("public", "books", book.Slug)
