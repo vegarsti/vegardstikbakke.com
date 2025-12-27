@@ -43,7 +43,7 @@ func generatePostsListing(site Site) error {
 		CanonicalURL string
 		Posts        []Post
 	}{
-		Title:        "Posts - Vegard Stikbakke",
+		Title:        "Posts — Vegard Stikbakke",
 		Description:  "Blog posts by Vegard Stikbakke",
 		CanonicalURL: "https://vegardstikbakke.com/blog/",
 		Posts:        site.Posts,
@@ -91,7 +91,7 @@ func generateBooksListing(site Site) error {
 		CanonicalURL string
 		Books        []BookDisplay
 	}{
-		Title:        "Books - Vegard Stikbakke",
+		Title:        "Books — Vegard Stikbakke",
 		Description:  "Books read by Vegard Stikbakke",
 		CanonicalURL: "https://vegardstikbakke.com/books/",
 		Books:        books,
@@ -118,7 +118,7 @@ func generateIndividualPosts(site Site) error {
 			CanonicalURL string
 			Content      template.HTML
 		}{
-			Title:        post.Title + " - Vegard Stikbakke",
+			Title:        post.Title + " — Vegard Stikbakke",
 			PostTitle:    post.Title,
 			DateString:   post.DateString,
 			Description:  post.Description,

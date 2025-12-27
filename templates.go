@@ -136,6 +136,14 @@ var baseTemplate = `<!DOCTYPE html>
         }
         pre code { padding: 0; }
         a { color: #0066cc; }
+        .profile-image {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            float: right;
+            margin-left: 1.5em;
+            margin-bottom: 1em;
+        }
     </style>
     <!-- Privacy-friendly analytics by Plausible -->
     <script async src="https://plausible.io/js/pa-fY9B0CzGV3CMqDY5kvN_3.js"></script>
@@ -162,6 +170,7 @@ var baseTemplate = `<!DOCTYPE html>
 
 // Homepage template (shows bio from about.md)
 var homepageContent = `{{define "content"}}
+<img src="/me.jpg" alt="Vegard Stikbakke" class="profile-image">
 {{.Content}}
 {{end}}`
 
