@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark/extension"
 	"gopkg.in/yaml.v3"
 )
 
@@ -62,8 +63,13 @@ func parsePost(filePath string) (Post, error) {
 	}
 
 	// Convert markdown to HTML
+	md := goldmark.New(
+		goldmark.WithExtensions(
+			extension.Footnote,
+		),
+	)
 	var buf bytes.Buffer
-	if err := goldmark.Convert([]byte(markdown), &buf); err != nil {
+	if err := md.Convert([]byte(markdown), &buf); err != nil {
 		return Post{}, fmt.Errorf("error converting markdown: %w", err)
 	}
 
@@ -197,8 +203,13 @@ func loadPage(filePath string) (Page, error) {
 		return Page{}, fmt.Errorf("error parsing frontmatter: %w", err)
 	}
 
+	md := goldmark.New(
+		goldmark.WithExtensions(
+			extension.Footnote,
+		),
+	)
 	var buf bytes.Buffer
-	if err := goldmark.Convert([]byte(markdown), &buf); err != nil {
+	if err := md.Convert([]byte(markdown), &buf); err != nil {
 		return Page{}, fmt.Errorf("error converting markdown: %w", err)
 	}
 
@@ -256,8 +267,13 @@ func parseBook(filePath string) (Book, error) {
 	slug := strings.TrimSuffix(filename, ".md")
 
 	// Convert markdown summary to HTML
+	md := goldmark.New(
+		goldmark.WithExtensions(
+			extension.Footnote,
+		),
+	)
 	var buf bytes.Buffer
-	if err := goldmark.Convert([]byte(markdown), &buf); err != nil {
+	if err := md.Convert([]byte(markdown), &buf); err != nil {
 		return Book{}, fmt.Errorf("error converting markdown: %w", err)
 	}
 
