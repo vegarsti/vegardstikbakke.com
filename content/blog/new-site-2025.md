@@ -40,7 +40,7 @@ to take md blog posts and embed them. I have posts in the content repo.
 Their slugs need to be preserved.
 ```
 
-Some back and forth to refine its implementation plan, and a few minutes later I had a fully functioning site builder rendering my existing posts.
+Some back and forth to refine its implementation plan before allowing it to start coding, and a few minutes later I had a fully functioning site builder rendering my existing posts.
 
 ```
 ⏺ Perfect! I've successfully built your minimal static site generator in Go. Here's what was created:
