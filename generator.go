@@ -21,11 +21,15 @@ func generateHomepage(site Site) error {
 		Title        string
 		Description  string
 		CanonicalURL string
+		Image        string
+		OGType       string
 		Content      template.HTML
 	}{
 		Title:        "Vegard Stikbakke",
 		Description:  "Vegard Stikbakke — software engineer from Norway",
 		CanonicalURL: "https://vegardstikbakke.com/",
+		Image:        "/me.jpg",
+		OGType:       "website",
 		Content:      template.HTML(site.AboutPage.HTMLContent),
 	}
 
@@ -41,11 +45,15 @@ func generatePostsListing(site Site) error {
 		Title        string
 		Description  string
 		CanonicalURL string
+		Image        string
+		OGType       string
 		Posts        []Post
 	}{
 		Title:        "Posts — Vegard Stikbakke",
 		Description:  "Blog posts by Vegard Stikbakke",
 		CanonicalURL: "https://vegardstikbakke.com/blog/",
+		Image:        "",
+		OGType:       "website",
 		Posts:        site.Posts,
 	}
 
@@ -89,11 +97,15 @@ func generateBooksListing(site Site) error {
 		Title        string
 		Description  string
 		CanonicalURL string
+		Image        string
+		OGType       string
 		Books        []BookDisplay
 	}{
 		Title:        "Books — Vegard Stikbakke",
 		Description:  "Books read by Vegard Stikbakke",
 		CanonicalURL: "https://vegardstikbakke.com/books/",
+		Image:        "",
+		OGType:       "website",
 		Books:        books,
 	}
 
@@ -116,6 +128,8 @@ func generateIndividualPosts(site Site) error {
 			DateString   string
 			Description  string
 			CanonicalURL string
+			Image        string
+			OGType       string
 			Content      template.HTML
 		}{
 			Title:        post.Title + " — Vegard Stikbakke",
@@ -123,6 +137,8 @@ func generateIndividualPosts(site Site) error {
 			DateString:   post.DateString,
 			Description:  post.Description,
 			CanonicalURL: fmt.Sprintf("https://vegardstikbakke.com/%s/", post.Slug),
+			Image:        post.Image,
+			OGType:       "article",
 			Content:      template.HTML(post.HTMLContent),
 		}
 
@@ -155,6 +171,8 @@ func generateIndividualBooks(site Site) error {
 			Rating        int
 			Description   string
 			CanonicalURL  string
+			Image         string
+			OGType        string
 			Content       template.HTML
 		}{
 			Title:         book.Title + " — Vegard Stikbakke",
@@ -165,6 +183,8 @@ func generateIndividualBooks(site Site) error {
 			Rating:        book.Rating,
 			Description:   fmt.Sprintf("%s by %s", book.Title, book.Author),
 			CanonicalURL:  fmt.Sprintf("https://vegardstikbakke.com/books/%s/", book.Slug),
+			Image:         "",
+			OGType:        "article",
 			Content:       template.HTML(book.Summary),
 		}
 

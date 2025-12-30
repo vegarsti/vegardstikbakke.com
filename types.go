@@ -10,6 +10,7 @@ type Frontmatter struct {
 	Draft       bool   `yaml:"draft"`
 	Layout      string `yaml:"layout"`
 	Description string `yaml:"description"`
+	Image       string `yaml:"image"`
 }
 
 // BookFrontmatter represents the YAML metadata for book files
@@ -29,6 +30,7 @@ type Post struct {
 	DateString  string
 	Draft       bool
 	Description string
+	Image       string
 	HTMLContent string
 	RawContent  string
 }

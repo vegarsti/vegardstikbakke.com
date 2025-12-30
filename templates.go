@@ -12,6 +12,21 @@ var baseTemplate = `<!DOCTYPE html>
     <title>{{.Title}}</title>
     {{if .CanonicalURL}}<link rel="canonical" href="{{.CanonicalURL}}">{{end}}
     <link rel="icon" type="image/png" href="/favicon.png">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="{{if .OGType}}{{.OGType}}{{else}}website{{end}}">
+    <meta property="og:title" content="{{.Title}}">
+    {{if .Description}}<meta property="og:description" content="{{.Description}}">{{end}}
+    {{if .CanonicalURL}}<meta property="og:url" content="{{.CanonicalURL}}">{{end}}
+    {{if .Image}}<meta property="og:image" content="https://vegardstikbakke.com{{.Image}}">{{end}}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@vegardstikbakke">
+    <meta name="twitter:creator" content="@vegardstikbakke">
+    <meta name="twitter:title" content="{{.Title}}">
+    {{if .Description}}<meta name="twitter:description" content="{{.Description}}">{{end}}
+    {{if .Image}}<meta name="twitter:image" content="https://vegardstikbakke.com{{.Image}}">{{end}}
     <link rel="alternate" type="application/rss+xml" title="Vegard Stikbakke" href="/feed.xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
