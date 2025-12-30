@@ -184,6 +184,12 @@ var baseTemplate = `<!DOCTYPE html>
             margin-left: 1.5em;
             margin-bottom: 1em;
         }
+        main img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5em 0;
+        }
     </style>
     <!-- Privacy-friendly analytics by Plausible -->
     <script async src="https://plausible.io/js/pa-fY9B0CzGV3CMqDY5kvN_3.js"></script>
