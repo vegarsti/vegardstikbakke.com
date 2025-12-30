@@ -9,7 +9,7 @@ Or: [You're telling me a vibe coded this site?](https://knowyourmeme.com/memes/y
 This site is now built using a [small static site builder](https://github.com/vegarsti/vegardstikbakke.com) that Claude Code wrote for me.
 Iterating on the site is so much fun now!
 
-## 2025: Year of vibes
+## Year of vibes
 
 In 2025, AI tooling for software engineers did so many leaps forward that it's hard to fathom.
 My workflow has gone from GitHub Copilot in VSCode, to Cursor, to now using agents[^1] like Amp and Claude Code.
@@ -27,7 +27,7 @@ Here's how I built this site.
 ## First Claude Code session
 
 To begin, I created a new directory and copied over my existing blog posts.
-I opened `claude` and gave it this prompt
+I opened `claude` and gave it this prompt:
 
 ```
 I want to create a static site from scratch. The code to build it needs to
@@ -36,7 +36,7 @@ to take md blog posts and embed them. I have posts in the content repo.
 Their slugs need to be preserved.
 ```
 
-Some back and forth to refine its implementation plan, and a few minutes later it had a fully functioning site builder rendering my existing posts.
+Some back and forth to refine its implementation plan, and a few minutes later I had a fully functioning site builder rendering my existing posts.
 
 ```
 ⏺ Perfect! I've successfully built your minimal static site generator in Go. Here's what was created:
@@ -62,20 +62,20 @@ Some back and forth to refine its implementation plan, and a few minutes later i
   ✓ Clean styling - Minimal, readable CSS
 ```
 
-You can read the full session [here](/prompts-for-new-site/initial.txt).
+You can see the full session [here](/prompts-for-new-site/initial.txt).
 
 ## More sessions
 
 I then iterated on the functionality in a few more sessions, and you can browse those here:
 
-- [Incremental session: Getting to feature parity with existing site](/prompts-for-new-site/compare-features.txt)
+- [Adding fonts and SEO by comparing to old site](/prompts-for-new-site/compare-features.txt)
 - [Tweaking styling of the Posts list page](/prompts-for-new-site/styling.txt)
 - [Deploying to Netlify](/prompts-for-new-site/netlify.txt)
-- [Adding previews for drafts when built locally](/prompts-for-new-site/draft.txt)
+- [Adding previews for draft posts when built locally](/prompts-for-new-site/draft.txt)
 - [Adding system aware light/dark mode](/prompts-for-new-site/dark-mode.txt)
 
-Happy prompting!
-
 ![Claude commit](/claude-commit.png)
+
+Happy prompting!
 
 [^1]: An LLM agent runs tools in a loop to achieve a goal ([via Simon Willison](https://simonwillison.net/2025/Sep/18/agents/)).
