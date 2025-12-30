@@ -1,4 +1,4 @@
-.PHONY: help build generate serve run clean new-post
+.PHONY: help build generate serve run clean new-post og-image
 
 # Default target
 help:
@@ -9,6 +9,7 @@ help:
 	@echo "  make run        - Build the generator and generate the site"
 	@echo "  make clean      - Remove generated files (ssg binary and public/ directory)"
 	@echo "  make new-post SLUG=my-post - Create a new draft blog post"
+	@echo "  make og-image   - Generate default Open Graph preview image"
 	@echo "  make help       - Show this help message"
 
 # Build the static site generator binary
@@ -51,3 +52,9 @@ new-post:
 	@echo "Creating new draft post: content/blog/$(SLUG).md"
 	@printf -- "---\ntitle: $(SLUG)\nslug: $(SLUG)\ndate: $$(date +%Y-%m-%d)\ndraft: true\n---\n\nYour content here.\n" > content/blog/$(SLUG).md
 	@echo "Created! Edit content/blog/$(SLUG).md to write your post."
+
+# Generate default Open Graph image
+og-image:
+	@echo "Generating default Open Graph image..."
+	@uv run --with pillow generate-og-image.py static/og-image.png
+	@echo "Done! Use 'image: /og-image.png' in your post frontmatter to use it."
