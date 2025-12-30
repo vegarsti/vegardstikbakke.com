@@ -9,22 +9,26 @@ Or: [You're telling me a vibe coded this site?](https://knowyourmeme.com/memes/y
 This site is now built using a [small static site builder](https://github.com/vegarsti/vegardstikbakke.com) that Claude Code wrote for me.
 Iterating on the site is so much fun now!
 
+If you're a software engineer and not currently using AI for coding, I hope this post can entice you into giving it a try.
+My hypothesis is that you're underestimating how useful it is!
+
 ## Year of vibes
 
 In 2025, AI tooling for software engineers did so many leaps forward that it's hard to fathom.
-My workflow has gone from GitHub Copilot in VSCode, to Cursor, to now using agents[^1] like Amp and Claude Code.
+My workflow has gone from copy/pasting snippets between ChatGPT and my editor + using GitHub Copilot in VSCode, to Cursor, to now mostly using agents[^1] like [Amp](https://ampcode.com/) and [Claude Code](https://claude.com/product/claude-code).
 I'm now regularly using agents at work, both in new codebases and in old.
 I use it for
 
-- writing new code
+- writing new application code
+- writing tests
 - modifying existing code
 - debugging
 - finding terminal commands
 
-Writing a simple static site builder to host my site is a perfect task for a coding agent, as they are especially good at starting from scratch.
-Here's how I built this site.
+Writing a simple static site builder for this small blog is a perfect task for a coding agent, as they are especially good at starting from scratch.
+Here's how I did it.
 
-## First Claude Code session
+## First Claude session
 
 To begin, I created a new directory and copied over my existing blog posts.
 I opened `claude` and gave it this prompt:
