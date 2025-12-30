@@ -1,0 +1,578 @@
+> We have a basic static site builder here. Now we need to figure out 
+whether there's anything missing in terms of HTML content from the files we 
+generate. I've copied in the old (current) site which is under the 'old' 
+directory. Can you please compare the HTML we have here with what's in old 
+and see what features we should add? 
+
+⏺ I'll help you compare the current static site builder with the old site to identify missing features. Let me explore both implementations to understand what's different.
+
+⏺ 2 Explore agents finished (ctrl+o to expand)
+   ├─ Explore current site builder · 0 tool uses
+   │  ⎿  Done
+   └─ Explore old site structure · 0 tool uses
+      ⎿  Done
+
+⏺ Let me examine some actual HTML files from both implementations to get concrete examples of the differences.
+
+⏺ Read(public/index.html)
+  ⎿  Read 60 lines
+
+⏺ Search(pattern: "old/*.html")
+  ⎿  Found 0 files 
+
+⏺ Bash(ls -la old/)
+  ⎿  drwxr-xr-x@    - vegard 22 Dec 15:13 .bundle  
+     .rw-r--r--@ 6.1k vegard 22 Dec 15:13 .DS_Store
+     drwxr-xr-x@    - vegard 22 Dec 15:13 .git
+     … +17 lines (ctrl+o to expand)
+
+⏺ Read(old/public/index.html)
+  ⎿  Read 188 lines
+
+⏺ Search(pattern: "old/public/**/*.html")
+  ⎿  Found 52 files (ctrl+o to expand)
+
+⏺ Read(old/public/blog/index.html)
+  ⎿  Read 1103 lines
+
+⏺ Read(old/assets/combined.min.css)
+  ⎿  Error reading file
+
+⏺ Read(public/posts/index.html)
+  ⎿  Read 150 lines
+
+⏺ Read(old/public/file-watcher/index.html)
+  ⎿  Read 150 lines
+
+⏺ Search(pattern: "old/assets/**/*.css")
+  ⎿  Found 0 files 
+
+⏺ Bash(find old/assets -name "*.css" 2>/dev/null | head -5)
+  ⎿  (No content)
+
+⏺ Read(old/feed.xml)
+  ⎿  Read 31 lines
+
+⏺ Bash(ls old/layouts/)
+  ⎿  (No content)
+
+⏺ Read(main.go)
+  ⎿  Read 96 lines
+
+⏺ Now let me write an initial plan document and then ask you some clarifying questions:
+
+⏺ Updated plan
+  ⎿  /plan to preview
+                                                                           
+⏺ User answered Claude's questions:
+  ⎿  · Which features from the old site are most important to add to the new
+      static site builder? → SEO improvements (canonical links, meta 
+     descriptions)
+     · Should we use Google Fonts (Inter + Source Code Pro) like the old 
+     site, or keep system fonts for faster loading? → Add Google Fonts
+     · Should we keep CSS inline (current) or move to external stylesheet 
+     (old site approach)? → Keep inline CSS (Recommended)
+
+⏺ Plan(Plan SEO and fonts implementation) Haiku 3.5
+  ⎿  Done (4 tool uses · 15.8k tokens · 29s)                               
+
+⏺ Search(pattern: "*.go")
+  ⎿  Found 5 files (ctrl+o to expand)
+
+⏺ Read(types.go)
+  ⎿  Read 46 lines
+
+⏺ Read(parser.go)
+  ⎿  Read 204 lines
+
+⏺ Read(templates.go)
+  ⎿  Read 119 lines
+
+⏺ Read(generator.go)
+  ⎿  Read 107 lines
+                                                                       
+⏺ User answered Claude's questions:
+  ⎿  · What should be the base URL for canonical links in your site? → 
+     https://vegardstikbakke.com
+
+⏺ Updated plan
+  ⎿  /plan to preview
+                                                                           
+⏺ User approved Claude's plan
+  ⎿  Plan saved to: ~/.claude/plans/vast-strolling-squid.md · /plan to edit
+     Implementation Plan: Add SEO and Google Fonts
+
+     Summary
+
+     Adding SEO improvements (canonical links, meta descriptions) and Google
+      Fonts (Inter, Source Code Pro) to the Go static site generator while
+     keeping inline CSS.
+
+     User Requirements
+
+     1. SEO improvements: Canonical links and meta descriptions on all pages
+     2. Google Fonts: Add Inter for body text and Source Code Pro for code 
+     blocks
+     3. Keep inline CSS (no external stylesheets)
+     4. Base URL: https://vegardstikbakke.com
+
+     Implementation Steps
+
+     1. Update Data Structures (types.go)
+
+     Add description field to support meta descriptions:
+
+     type Frontmatter struct {
+         Title       string `yaml:"title"`
+         Slug        string `yaml:"slug"`
+         Date        string `yaml:"date"`
+         Draft       bool   `yaml:"draft"`
+         Layout      string `yaml:"layout"`
+         Description string `yaml:"description"`  // NEW
+     }
+
+     type Post struct {
+         Title       string
+         Slug        string
+         Date        time.Time
+         DateString  string
+         Draft       bool
+         Description string  // NEW
+         HTMLContent string
+         RawContent  string
+     }
+
+     File: /Users/vegard/dev/personal-site-static/types.go
+
+     2. Parse Description from Frontmatter (parser.go)
+
+     Update parsePost function to extract description:
+
+     // In parsePost(), after parsing frontmatter:
+     return Post{
+         Title:       fm.Title,
+         Slug:        slug,
+         Date:        parsedDate,
+         DateString:  fm.Date,
+         Draft:       fm.Draft,
+         Description: fm.Description,  // NEW
+         HTMLContent: buf.String(),
+         RawContent:  markdown,
+     }, nil
+
+     If description is not in frontmatter, we'll show no description 
+     (cleaner than auto-generating).
+
+     File: /Users/vegard/dev/personal-site-static/parser.go (line ~73-81)
+
+     3. Update HTML Template with Fonts and SEO Tags (templates.go)
+
+     Modify the baseTemplate head section to include:
+     - Google Fonts preconnect hints
+     - Google Fonts import in inline CSS
+     - Conditional canonical link tag
+     - Conditional meta description tag
+
+     <head>
+         <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, 
+     initial-scale=1.0">
+         {{if .Description}}<meta name="description" 
+     content="{{.Description}}">{{end}}
+         <title>{{.Title}}</title>
+         {{if .CanonicalURL}}<link rel="canonical" 
+     href="{{.CanonicalURL}}">{{end}}
+         <link rel="preconnect" href="https://fonts.googleapis.com">
+         <link rel="preconnect" href="https://fonts.gstatic.com" 
+     crossorigin>
+         <style>
+             @import url('https://fonts.googleapis.com/css2?family=Inter:wgh
+     t@400;500;600&family=Source+Code+Pro&display=swap');
+
+             body {
+                 max-width: 800px;
+                 margin: 40px auto;
+                 padding: 0 20px;
+                 font-family: 'Inter', -apple-system, BlinkMacSystemFont, 
+     "Segoe UI", Roboto, sans-serif;
+                 line-height: 1.6;
+                 color: #333;
+             }
+             /* ... rest of styles ... */
+             pre, code {
+                 font-family: 'Source Code Pro', monospace;
+             }
+             pre {
+                 background: #f4f4f4;
+                 padding: 10px;
+                 overflow-x: auto;
+                 border-radius: 4px;
+             }
+             code {
+                 background: #f4f4f4;
+                 padding: 2px 5px;
+                 border-radius: 3px;
+             }
+             pre code { padding: 0; }
+             /* ... rest of styles ... */
+         </style>
+     </head>
+
+     File: /Users/vegard/dev/personal-site-static/templates.go (lines 6-48)
+
+     4. Pass SEO Data to Templates (generator.go)
+
+     Update each generation function to include canonical URL and 
+     description:
+
+     generateHomepage():
+     data := struct {
+         Title        string
+         Description  string
+         CanonicalURL string
+         Content      template.HTML
+     }{
+         Title:        "Vegard Stikbakke",
+         Description:  "Vegard Stikbakke — software engineer from Norway",
+         CanonicalURL: "https://vegardstikbakke.com/",
+         Content:      template.HTML(site.AboutPage.HTMLContent),
+     }
+
+     generatePostsListing():
+     data := struct {
+         Title        string
+         Description  string
+         CanonicalURL string
+         Posts        []Post
+     }{
+         Title:        "Posts - Vegard Stikbakke",
+         Description:  "Blog posts by Vegard Stikbakke",
+         CanonicalURL: "https://vegardstikbakke.com/posts/",
+         Posts:        site.Posts,
+     }
+
+     generateBooksListing():
+     data := struct {
+         Title        string
+         Description  string
+         CanonicalURL string
+         Books        []Book
+     }{
+         Title:        "Books - Vegard Stikbakke",
+         Description:  "Books read by Vegard Stikbakke",
+         CanonicalURL: "https://vegardstikbakke.com/books/",
+         Books:        site.Books,
+     }
+
+     generateIndividualPosts():
+     data := struct {
+         Title        string
+         PostTitle    string
+         DateString   string
+         Description  string
+         CanonicalURL string
+         Content      template.HTML
+     }{
+         Title:        post.Title + " - Vegard Stikbakke",
+         PostTitle:    post.Title,
+         DateString:   post.DateString,
+         Description:  post.Description,
+         CanonicalURL: fmt.Sprintf("https://vegardstikbakke.com/blog/%s/", 
+     post.Slug),
+         Content:      template.HTML(post.HTMLContent),
+     }
+
+     File: /Users/vegard/dev/personal-site-static/generator.go
+
+     Testing
+
+     After implementation:
+     1. Build the site: go build -o ssg && ./ssg
+     2. Check generated HTML files in public/ for:
+       - Google Fonts preconnect links
+       - @import for fonts in inline CSS
+       - Canonical link tags with correct URLs
+       - Meta description tags (where descriptions exist)
+     3. Open in browser to verify fonts load correctly
+     4. Check view-source to confirm proper HTML structure
+
+     Files to Modify
+
+     1. /Users/vegard/dev/personal-site-static/types.go - Add Description 
+     field
+     2. /Users/vegard/dev/personal-site-static/parser.go - Parse description
+      from frontmatter
+     3. /Users/vegard/dev/personal-site-static/templates.go - Add Google 
+     Fonts and SEO tags
+     4. /Users/vegard/dev/personal-site-static/generator.go - Pass canonical
+      URLs and descriptions to templates
+
+
+⏺ Perfect! The plan has been approved. Let me create a todo list to track the implementation:
+
+⏺ Now let me start implementing the changes. First, I'll update the data structures:
+
+⏺ Update(types.go)
+  ⎿  Added 6 lines, removed 5 lines                                      
+       4                                                                 
+       5  // Frontmatter represents the YAML metadata at the top of      
+          markdown files                                                 
+       6  type Frontmatter struct {                                      
+       7 -  Title  string `yaml:"title"`                                 
+       8 -  Slug   string `yaml:"slug"`                                  
+       9 -  Date   string `yaml:"date"`                                  
+      10 -  Draft  bool   `yaml:"draft"`                                 
+      11 -  Layout string `yaml:"layout"`                                
+       7 +  Title       string `yaml:"title"`                            
+       8 +  Slug        string `yaml:"slug"`                             
+       9 +  Date        string `yaml:"date"`                             
+      10 +  Draft       bool   `yaml:"draft"`                            
+      11 +  Layout      string `yaml:"layout"`                           
+      12 +  Description string `yaml:"description"`                      
+      13  }                                                              
+      14                                                                 
+      15  // Post represents a blog post with its content and metadata   
+
+⏺ Update(types.go)
+  ⎿  Added 1 line                                                        
+      19    Date        time.Time                                        
+      20    DateString  string                                           
+      21    Draft       bool                                             
+      22 +  Description string                                           
+      23    HTMLContent string                                           
+      24    RawContent  string                                           
+      25  }                                                              
+
+⏺ Update(parser.go)
+  ⎿  Added 1 line                                                        
+      76      Date:        parsedDate,                                   
+      77      DateString:  fm.Date,                                      
+      78      Draft:       fm.Draft,                                     
+      79 +    Description: fm.Description,                               
+      80      HTMLContent: buf.String(),                                 
+      81      RawContent:  markdown,                                     
+      82    }, nil                                                       
+
+⏺ Update(templates.go)
+  ⎿  Added 20 lines, removed 3 lines                                     
+       8  <head>                                                         
+       9      <meta charset="UTF-8">                                     
+      10      <meta name="viewport" content="width=device-width,         
+          initial-scale=1.0">                                            
+      11 +    {{if .Description}}<meta name="description"                
+         +content="{{.Description}}">{{end}}                             
+      12      <title>{{.Title}}</title>                                  
+      13 +    {{if .CanonicalURL}}<link rel="canonical"                  
+         +href="{{.CanonicalURL}}">{{end}}                               
+      14 +    <link rel="preconnect"                                     
+         +href="https://fonts.googleapis.com">                           
+      15 +    <link rel="preconnect" href="https://fonts.gstatic.com"    
+         +crossorigin>                                                   
+      16      <style>                                                    
+      17 +        @import url('https://fonts.googleapis.com/css2?family= 
+         +Inter:wght@400;500;600&family=Source+Code+Pro&display=swap');  
+      18 +                                                               
+      19          body {                                                 
+      20              max-width: 800px;                                  
+      21              margin: 40px auto;                                 
+      22              padding: 0 20px;                                   
+      23 -            font-family:                                       
+         --apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,         
+         -sans-serif;                                                    
+      23 +            font-family: 'Inter',                              
+         +-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,         
+         +sans-serif;                                                    
+      24              line-height: 1.6;                                  
+      25              color: #333;                                       
+      26          }                                                      
+     ...
+      41          .book-title { font-weight: 600; font-size: 1.1em; }    
+      42          .book-meta { color: #666; font-size: 0.9em; }          
+      43          .book-rating { color: #f39c12; }                       
+      44 -        pre { background: #f4f4f4; padding: 10px; overflow-x:  
+         -auto; border-radius: 4px; }                                    
+      45 -        code { background: #f4f4f4; padding: 2px 5px;          
+         -border-radius: 3px; }                                          
+      44 +        pre {                                                  
+      45 +            background: #f4f4f4;                               
+      46 +            padding: 10px;                                     
+      47 +            overflow-x: auto;                                  
+      48 +            border-radius: 4px;                                
+      49 +            font-family: 'Source Code Pro', monospace;         
+      50 +        }                                                      
+      51 +        code {                                                 
+      52 +            background: #f4f4f4;                               
+      53 +            padding: 2px 5px;                                  
+      54 +            border-radius: 3px;                                
+      55 +            font-family: 'Source Code Pro', monospace;         
+      56 +        }                                                      
+      57          pre code { padding: 0; }                               
+      58          a { color: #0066cc; }                                  
+      59      </style>                                                   
+
+⏺ Update(generator.go)
+  ⎿  Added 8 lines, removed 4 lines                                      
+      13    template.Must(tmpl.Parse(homepageContent))                   
+      14                                                                 
+      15    data := struct {                                             
+      16 -    Title   string                                             
+      17 -    Content template.HTML                                      
+      16 +    Title        string                                        
+      17 +    Description  string                                        
+      18 +    CanonicalURL string                                        
+      19 +    Content      template.HTML                                 
+      20    }{                                                           
+      21 -    Title:   "Vegard Stikbakke",                               
+      22 -    Content: template.HTML(site.AboutPage.HTMLContent),        
+      21 +    Title:        "Vegard Stikbakke",                          
+      22 +    Description:  "Vegard Stikbakke — software engineer from   
+         +Norway",                                                       
+      23 +    CanonicalURL: "https://vegardstikbakke.com/",              
+      24 +    Content:      template.HTML(site.AboutPage.HTMLContent),   
+      25    }                                                            
+      26                                                                 
+      27    return renderToFile(tmpl, data, "public/index.html")         
+
+⏺ Update(generator.go)
+  ⎿  Added 8 lines, removed 4 lines                                      
+      33    template.Must(tmpl.Parse(postsListingContent))               
+      34                                                                 
+      35    data := struct {                                             
+      36 -    Title string                                               
+      37 -    Posts []Post                                               
+      36 +    Title        string                                        
+      37 +    Description  string                                        
+      38 +    CanonicalURL string                                        
+      39 +    Posts        []Post                                        
+      40    }{                                                           
+      41 -    Title: "Posts - Vegard Stikbakke",                         
+      42 -    Posts: site.Posts,                                         
+      41 +    Title:        "Posts - Vegard Stikbakke",                  
+      42 +    Description:  "Blog posts by Vegard Stikbakke",            
+      43 +    CanonicalURL: "https://vegardstikbakke.com/posts/",        
+      44 +    Posts:        site.Posts,                                  
+      45    }                                                            
+      46                                                                 
+      47    if err := os.MkdirAll("public/posts", 0755); err != nil {    
+
+⏺ Update(generator.go)
+  ⎿  Added 8 lines, removed 4 lines                                      
+      57    template.Must(tmpl.Parse(booksListingContent))               
+      58                                                                 
+      59    data := struct {                                             
+      60 -    Title string                                               
+      61 -    Books []Book                                               
+      60 +    Title        string                                        
+      61 +    Description  string                                        
+      62 +    CanonicalURL string                                        
+      63 +    Books        []Book                                        
+      64    }{                                                           
+      65 -    Title: "Books - Vegard Stikbakke",                         
+      66 -    Books: site.Books,                                         
+      65 +    Title:        "Books - Vegard Stikbakke",                  
+      66 +    Description:  "Books read by Vegard Stikbakke",            
+      67 +    CanonicalURL: "https://vegardstikbakke.com/books/",        
+      68 +    Books:        site.Books,                                  
+      69    }                                                            
+      70                                                                 
+      71    if err := os.MkdirAll("public/books", 0755); err != nil {    
+
+⏺ Update(generator.go)
+  ⎿  Added 12 lines, removed 8 lines                                     
+       82                                                                
+       83    for _, post := range site.Posts {                           
+       84      data := struct {                                          
+       85 -      Title      string                                       
+       86 -      PostTitle  string                                       
+       87 -      DateString string                                       
+       88 -      Content    template.HTML                                
+       85 +      Title        string                                     
+       86 +      PostTitle    string                                     
+       87 +      DateString   string                                     
+       88 +      Description  string                                     
+       89 +      CanonicalURL string                                     
+       90 +      Content      template.HTML                              
+       91      }{                                                        
+       92 -      Title:      post.Title + " - Vegard Stikbakke",         
+       93 -      PostTitle:  post.Title,                                 
+       94 -      DateString: post.DateString,                            
+       95 -      Content:    template.HTML(post.HTMLContent),            
+       92 +      Title:        post.Title + " - Vegard Stikbakke",       
+       93 +      PostTitle:    post.Title,                               
+       94 +      DateString:   post.DateString,                          
+       95 +      Description:  post.Description,                         
+       96 +      CanonicalURL:                                           
+          +fmt.Sprintf("https://vegardstikbakke.com/blog/%s/",           
+          +post.Slug),                                                   
+       97 +      Content:      template.HTML(post.HTMLContent),          
+       98      }                                                         
+       99                                                                
+      100      dir := filepath.Join("public/blog", post.Slug)            
+
+⏺ Read(generator.go)
+  ⎿  Read 10 lines
+
+⏺ Update(generator.go)
+  ⎿  Added 1 line                                                        
+      2                                                                  
+      3  import (                                                        
+      4    "bytes"                                                       
+      5 +  "fmt"                                                         
+      6    "html/template"                                               
+      7    "os"                                                          
+      8    "path/filepath"                                               
+
+⏺ Bash(go build -o ssg)
+  ⎿  (No content)
+
+⏺ Bash(./ssg)
+  ⎿  ✓ Site generated successfully in public/
+     ✓ Generated 18 posts
+     ✓ Generated 4 books
+
+⏺ Read(public/index.html)
+  ⎿  Read 50 lines
+
+⏺ Read(public/blog/blogroll/index.html)
+  ⎿  Read 20 lines
+
+⏺ Read(public/posts/index.html)
+  ⎿  Read 20 lines
+
+⏺ Perfect! I've successfully implemented all the missing HTML features. Here's what was added:
+
+  ✅ Completed Features
+
+  1. SEO Improvements
+
+  - Canonical links: Added to all pages with correct URLs (e.g., https://vegardstikbakke.com/blog/blogroll/)
+  - Meta descriptions: Added support for custom descriptions via frontmatter
+    - Homepage: "Vegard Stikbakke — software engineer from Norway"
+    - Posts listing: "Blog posts by Vegard Stikbakke"
+    - Books listing: "Books read by Vegard Stikbakke"
+    - Individual posts: Uses description field from frontmatter (optional)
+
+  2. Google Fonts
+
+  - Inter: Now used for body text (weights 400, 500, 600)
+  - Source Code Pro: Now used for code blocks
+  - Preconnect hints: Added for faster font loading
+  - Inline CSS: Fonts imported via @import to keep CSS inline as requested
+
+  3. Files Modified
+
+  - types.go: Added Description field to Frontmatter and Post structs (types.go:12,22)
+  - parser.go: Parse description from YAML frontmatter (parser.go:79)
+  - templates.go: Added fonts, canonical links, and meta tags (templates.go:6-65)
+  - generator.go: Pass canonical URLs and descriptions to all templates (generator.go:11-96)
+
+  4. How to Use
+
+  To add a meta description to a blog post, simply add it to the frontmatter:
+  ---
+  title: My Post Title
+  date: 2024-01-01
+  description: A brief summary of my post for SEO
+  ---
+
+  The site has been built successfully and all 18 posts and 4 books pages now include these improvements!

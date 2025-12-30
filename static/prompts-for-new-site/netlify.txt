@@ -1,0 +1,70 @@
+> Now I want to deploy this site using Netlify. Please help 
+
+⏺ I'll help you set up Netlify deployment for your static site. Let me check if there's any existing Netlify configuration and then create the necessary files.
+
+⏺ Search(pattern: "netlify.toml")
+  ⎿  Found 0 files 
+
+⏺ Search(pattern: "**/_redirects")
+  ⎿  Found 1 file (ctrl+o to expand)
+
+⏺ Read(old/_redirects)
+  ⎿  Read 2 lines
+
+⏺ Now I'll create the necessary configuration files for Netlify deployment:
+
+⏺ Write(netlify.toml)
+  ⎿  Wrote 20 lines to netlify.toml        
+     [build]
+       command = "go build -o ssg && ./ssg"
+       publish = "public"
+     [build.environment]
+       GO_VERSION = "1.21"
+     [[redirects]]
+       from = "/feed.xml"
+       to = "/blog/index.xml"
+     … +10 lines (ctrl+o to expand)
+
+⏺ Perfect! I've created a netlify.toml configuration file for your site. Here's what it includes:
+
+  Configuration Details
+
+  Build Settings:
+  - Build command: go build -o ssg && ./ssg - compiles your generator and runs it
+  - Publish directory: public - where your generated site lives
+  - Go version: 1.21 (you can adjust this if needed)
+
+  Redirects:
+  - /feed.xml → /blog/index.xml (carried over from your old setup)
+
+  Security Headers:
+  - Basic security headers for XSS protection, frame options, etc.
+
+  Deployment Steps
+
+  Option 1: Deploy via Netlify UI (Easiest)
+
+  1. Push your code to GitHub/GitLab/Bitbucket
+  2. Go to https://netlify.com and sign in
+  3. Click "Add new site" → "Import an existing project"
+  4. Connect your repository
+  5. Netlify will auto-detect the netlify.toml configuration
+  6. Click "Deploy site"
+
+  Option 2: Deploy via Netlify CLI
+
+  # Install Netlify CLI
+  npm install -g netlify-cli
+
+  # Login to Netlify
+  netlify login
+
+  # Initialize and deploy
+  netlify init
+  netlify deploy --prod
+
+  Testing Locally Before Deploy
+
+  Run make serve to verify your site builds correctly and looks good at http://localhost:8000.
+
+  The configuration is ready to go! Do you need help with any specific part of the deployment process?

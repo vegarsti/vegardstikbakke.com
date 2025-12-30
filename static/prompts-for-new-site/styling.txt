@@ -1,0 +1,183 @@
+
+               Claude Code v2.0.76
+ * ▐▛███▜▌ *   arn:aws:bedrock:us-east-1:118330671040:inference-profile/global.…
+* ▝▜█████▛▘ *  API Usage Billing
+ *  ▘▘ ▝▝  *   ~/dev/personal-site-static
+
+  /model to try Opus 4.5. Note: you may need to request access from your cloud 
+  provider
+
+> I want the blog post page to look more like https://macwright.com/writing.
+ It should have two columns: Blog post title and date. The link to the blog 
+post should be regular text color but when hovered should have an underline.
+ 
+
+⏺ I'll help you update the blog post listing page to match that style. Let me first check the reference site and then look at your current implementation.
+
+⏺ Fetch(https://macwright.com/writing)
+  ⎿  Received 55.1KB (200 OK)
+
+⏺ Read(templates.go)
+  ⎿  Read 202 lines
+
+⏺ Now I can see what needs to be updated. The current posts listing uses a traditional list format, and I need to change it to a two-column grid layout similar to the books page but simpler.
+
+⏺ Update(templates.go)
+  ⎿  Added 30 lines, removed 3 lines                                     
+      42          }                                                      
+      43          h1 { font-size: 2em; margin-bottom: 0.5em; }           
+      44          h2 { font-size: 1.5em; margin-top: 1.5em; }            
+      45 -        .post-list { list-style: none; padding: 0; }           
+      46 -        .post-list li { margin-bottom: 1em; }                  
+      47 -        .post-date { color: #333; font-size: 0.9em; }          
+      45 +        .post-list {                                           
+      46 +            display: grid;                                     
+      47 +            grid-template-columns: 1fr min-content;            
+      48 +            gap: 5px;                                          
+      49 +            margin-top: 2em;                                   
+      50 +        }                                                      
+      51 +        .post-title {                                          
+      52 +            font-weight: 500;                                  
+      53 +            letter-spacing: -0.015em;                          
+      54 +            text-overflow: ellipsis;                           
+      55 +            white-space: nowrap;                               
+      56 +            overflow: hidden;                                  
+      57 +        }                                                      
+      58 +        .post-title a {                                        
+      59 +            color: #111;                                       
+      60 +            text-decoration: none;                             
+      61 +        }                                                      
+      62 +        .post-title a:hover {                                  
+      63 +            text-decoration: underline;                        
+      64 +        }                                                      
+      65 +        .post-date {                                           
+      66 +            color: #666;                                       
+      67 +            font-variant-numeric: tabular-nums;                
+      68 +        }                                                      
+      69 +        @media (max-width: 640px) {                            
+      70 +            .post-list {                                       
+      71 +                grid-template-columns: 1fr;                    
+      72 +                gap: 0.5em;                                    
+      73 +            }                                                  
+      74 +        }                                                      
+      75          .draft-badge {                                         
+      76              display: inline-block;                             
+      77              background: #f0f0f0;                               
+
+⏺ Update(templates.go)
+  ⎿  Added 4 lines, removed 7 lines                                      
+      167  // Posts listing template                                     
+      168  var postsListingContent = `{{define "content"}}               
+      169  <h1>Posts</h1>                                                
+      170 -<ul class="post-list">                                        
+      170 +<div class="post-list">                                       
+      171  {{range .Posts}}                                              
+      172 -    <li>                                                      
+      173 -        <a href="/{{.Slug}}/">{{.Title}}</a>                  
+      174 -        {{if .Draft}}<span                                    
+          -class="draft-badge">Draft</span>{{end}}                       
+      175 -        {{if .DateString}}<span class="post-date"> —          
+          -{{.DateString}}</span>{{end}}                                 
+      176 -    </li>                                                     
+      172 +    <div class="post-title"><a                                
+          +href="/{{.Slug}}/">{{.Title}}</a>{{if .Draft}}<span           
+          +class="draft-badge">Draft</span>{{end}}</div>                 
+      173 +    <div class="post-date">{{.DateString}}</div>              
+      174  {{end}}                                                       
+      175 -</ul>                                                         
+      175 +</div>                                                        
+      176  {{end}}`                                                      
+      177                                                                
+      178  // Books listing template                                     
+
+⏺ Perfect! Now let me test the changes locally to make sure they work correctly.
+
+⏺ Bash(make build && ./ssg)
+  ⎿  Building static site generator...       
+     go build -o ssg
+     ✓ Site generated successfully in public/
+     … +3 lines (ctrl+o to expand)
+
+⏺ Excellent! The build succeeded. Let me serve it and take a screenshot to verify the new layout.
+
+⏺ Bash(cd public && python3 -m http.server 8000 &)
+  ⎿  Running in the background (↓ to manage)
+
+⏺ puppeteer - puppeteer_navigate (MCP)(url: "http://localhost:8000/blog/")
+  ⎿  Navigated to http://localhost:8000/blog/                              
+
+⏺ puppeteer - puppeteer_screenshot (MCP)(name: "posts-page", width: 1200,
+                                        height: 800)
+  ⎿  Screenshot 'posts-page' taken at 1200x800                             
+  ⎿  [Image]
+
+⏺ Great! The layout is working. Let me test the hover effect to verify the underline appears:
+
+⏺ puppeteer - puppeteer_hover (MCP)(selector: ".post-title a")
+  ⎿  Hovered .post-title a                                                 
+
+⏺ puppeteer - puppeteer_screenshot (MCP)(name: "posts-page-hover", width: 1200,
+                                        height: 800)
+  ⎿  Screenshot 'posts-page-hover' taken at 1200x800                       
+  ⎿  [Image]
+
+⏺ Perfect! The hover effect is working - you can see the underline on "Books I read in 2024" in the hover screenshot. Let me clean up the background server.
+
+⏺ Bash(lsof -ti:8000 | xargs kill)
+  ⎿  (No content)
+
+⏺ Done! I've updated the blog post listing page at /blog/ to match the style of macwright.com/writing. The changes include:
+
+  What was changed in templates.go:
+
+  1. Two-column grid layout: Post titles in the left column take flexible space, while dates in the right column use minimal width
+  2. Link styling: Post titles use regular text color (#111) with no underline by default, and show an underline on hover
+  3. Typography: Added font-weight: 500 and letter-spacing: -0.015em to post titles for better readability
+  4. Date styling: Dates use tabular-nums for aligned numbers and a dimmed color (#666)
+  5. Mobile responsive: Single column layout on screens ≤640px wide
+
+  The page now has a clean, minimal two-column design that matches the reference site's aesthetic.
+
+⏺ Background command "Start local web server" completed (exit code 0).
+
+⏺ The changes are complete and tested! Your blog posts page now has the two-column layout with titles on the left and dates on the right, matching the macwright.com/writing style. The links display in regular text color and show an underline when hovered.
+
+> The date column is too narrow to contain a full date, please fix. 
+
+⏺ Update(templates.go)
+  ⎿  Added 1 line, removed 1 line                                        
+      44          h2 { font-size: 1.5em; margin-top: 1.5em; }            
+      45          .post-list {                                           
+      46              display: grid;                                     
+      47 -            grid-template-columns: 1fr min-content;            
+      47 +            grid-template-columns: 1fr 110px;                  
+      48              gap: 5px;                                          
+      49              margin-top: 2em;                                   
+      50          }                                                      
+
+⏺ Bash(make build && ./ssg)
+  ⎿  Building static site generator...       
+     go build -o ssg
+     ✓ Site generated successfully in public/
+     … +3 lines (ctrl+o to expand)
+
+⏺ Bash(cd public && python3 -m http.server 8000 &)
+  ⎿  Running in the background (↓ to manage)
+
+⏺ puppeteer - puppeteer_navigate (MCP)(url: "http://localhost:8000/blog/")
+  ⎿  Navigated to http://localhost:8000/blog/                              
+
+⏺ puppeteer - puppeteer_screenshot (MCP)(name: "posts-page-fixed-dates", width:
+                                        1200, height: 800)
+  ⎿  Screenshot 'posts-page-fixed-dates' taken at 1200x800                 
+  ⎿  [Image]
+
+⏺ Perfect! The dates are now fully visible with the 110px width. Let me clean up the server.
+
+⏺ Bash(lsof -ti:8000 | xargs kill)
+  ⎿  (No content)
+
+⏺ Fixed! I've changed the date column width from min-content to 110px in templates.go:47, which now properly accommodates the full date format (YYYY-MM-DD). The dates are now fully visible and aligned nicely in the right column.
+
+
+
