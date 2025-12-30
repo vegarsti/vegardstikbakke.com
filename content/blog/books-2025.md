@@ -2,6 +2,7 @@
 title: Books I read in 2025
 slug: books-2025
 date: 2025-12-26
+image: "/og-image.png"
 ---
 
 I read 16 books this year.
