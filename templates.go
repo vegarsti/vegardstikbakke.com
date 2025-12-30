@@ -18,23 +18,48 @@ var baseTemplate = `<!DOCTYPE html>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Code+Pro&display=swap');
 
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111;
+            --text-secondary: #666;
+            --link-color: #0066cc;
+            --border-color: #ddd;
+            --code-bg: #f4f4f4;
+            --badge-bg: #f0f0f0;
+            --badge-text: #666;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1a1a1a;
+                --text-color: #e4e4e4;
+                --text-secondary: #a0a0a0;
+                --link-color: #66b3ff;
+                --border-color: #404040;
+                --code-bg: #2d2d2d;
+                --badge-bg: #333;
+                --badge-text: #999;
+            }
+        }
+
         body {
             max-width: 800px;
             margin: 40px auto;
             padding: 0 20px;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             line-height: 1.6;
-            color: #111;
+            background-color: var(--bg-color);
+            color: var(--text-color);
         }
         nav {
             margin-bottom: 40px;
             padding-bottom: 20px;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid var(--border-color);
         }
         nav a {
             margin-right: 20px;
             text-decoration: none;
-            color: #111;
+            color: var(--text-color);
             font-weight: 500;
         }
         nav a:hover {
@@ -56,14 +81,14 @@ var baseTemplate = `<!DOCTYPE html>
             overflow: hidden;
         }
         .post-title a {
-            color: #111;
+            color: var(--text-color);
             text-decoration: none;
         }
         .post-title a:hover {
             text-decoration: underline;
         }
         .post-date {
-            color: #666;
+            color: var(--text-secondary);
             font-variant-numeric: tabular-nums;
         }
         @media (max-width: 640px) {
@@ -74,8 +99,8 @@ var baseTemplate = `<!DOCTYPE html>
         }
         .draft-badge {
             display: inline-block;
-            background: #f0f0f0;
-            color: #666;
+            background: var(--badge-bg);
+            color: var(--badge-text);
             font-size: 0.7em;
             font-weight: 600;
             padding: 2px 6px;
@@ -100,22 +125,22 @@ var baseTemplate = `<!DOCTYPE html>
             letter-spacing: -0.015em;
         }
         .book-title a {
-            color: #333;
+            color: var(--text-color);
             text-decoration: none;
         }
         .book-title a:hover {
             text-decoration: underline;
         }
         .book-author {
-            color: #666;
+            color: var(--text-secondary);
             letter-spacing: -0.015em;
         }
         .book-date {
-            color: #666;
+            color: var(--text-secondary);
             font-variant-numeric: tabular-nums;
         }
         .book-rating {
-            color: #333;
+            color: var(--text-color);
             white-space: nowrap;
         }
         @media (max-width: 640px) {
@@ -125,7 +150,7 @@ var baseTemplate = `<!DOCTYPE html>
             }
         }
         pre {
-            background: #f4f4f4;
+            background: var(--code-bg);
             padding: 10px;
             overflow-x: auto;
             border-radius: 4px;
@@ -135,7 +160,7 @@ var baseTemplate = `<!DOCTYPE html>
             font-family: 'Source Code Pro', monospace;
         }
         pre code { padding: 0; }
-        a { color: #0066cc; }
+        a { color: var(--link-color); }
         .profile-image {
             width: 180px;
             height: 180px;
