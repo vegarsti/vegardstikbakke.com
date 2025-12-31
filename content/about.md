@@ -2,7 +2,7 @@ I'm Vegard — I'm a software engineer from Norway.
 
 I work at [Dune](https://dune.com), building data intensive systems supporting SQL queries on blockchain time series data.
 
-I love learning the history of companies, computing, and how systems work.
+I enjoy solving problems with code and learning the history of computing and companies.
 
 I live in Norway with my wife and 2 young kids.
 
