@@ -2,6 +2,7 @@
 title: Rewriting my site using AI
 slug: new-site-2025
 date: 2025-12-31
+image: "/new-site-2025.png"
 ---
 
 This site is now built using a [static site builder](https://github.com/vegarsti/vegardstikbakke.com) that Claude Code wrote for me.
