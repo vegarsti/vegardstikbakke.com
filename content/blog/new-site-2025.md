@@ -1,5 +1,5 @@
 ---
-title: Rewriting my site using AI
+title: How I rewrite my site using Claude Code
 slug: new-site-2025
 date: 2025-12-31
 image: "/new-site-2025.png"
