@@ -31,7 +31,7 @@ var baseTemplate = `<!DOCTYPE html>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Code+Pro&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono&display=swap');
 
         :root {
             --bg-color: #ffffff;
@@ -169,10 +169,11 @@ var baseTemplate = `<!DOCTYPE html>
             padding: 10px;
             overflow-x: auto;
             border-radius: 4px;
-            font-family: 'Source Code Pro', monospace;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8em;
         }
         code {
-            font-family: 'Source Code Pro', monospace;
+            font-family: 'IBM Plex Mono', monospace;
             background: var(--code-bg);
         }
         pre code { padding: 0; }
