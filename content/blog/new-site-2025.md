@@ -557,8 +557,6 @@ Here are links to other session you may find interesting:
 - [Adding system aware light/dark mode](/prompts-for-new-site/dark-mode.txt)
 - [Collapsing long code blocks](/prompts-for-new-site/collapsible-code-block.txt)
 
-![Claude commit](/claude-commit-collapsible-code.png)
-
 Happy prompting!
 
 [^1]: [Andrej Karpathy's tweet Dec 26](https://x.com/karpathy/status/2004607146781278521?s=20), [Armin Ronacher: A Year of Vibes](https://lucumr.pocoo.org/2025/12/22/a-year-of-vibes/), [Mario Zechner: What I learned building an opinionated and minimal coding agent](https://mariozechner.at/posts/2025-11-30-pi-coding-agent/), [Peter Steinberger: Shipping at Inference-Speed](https://steipete.me/posts/2025/shipping-at-inference-speed)
