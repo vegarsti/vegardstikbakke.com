@@ -173,8 +173,65 @@ var baseTemplate = `<!DOCTYPE html>
         }
         code {
             font-family: 'Source Code Pro', monospace;
+            background: var(--code-bg);
         }
         pre code { padding: 0; }
+        /* Collapsible code blocks */
+        .code-block-collapsible {
+            position: relative;
+            margin: 1.5em 0;
+        }
+        .code-block-collapsible.collapsed pre {
+            max-height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+        .code-block-collapsible.collapsed pre::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to bottom, transparent, var(--code-bg));
+            pointer-events: none;
+        }
+        .code-block-collapsible pre {
+            transition: max-height 0.3s ease;
+            margin-bottom: 0;
+        }
+        .code-toggle {
+            display: block;
+            width: 100%;
+            padding: 8px 12px;
+            margin-top: 0;
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .code-toggle:hover {
+            background: var(--border-color);
+            color: var(--text-color);
+        }
+        .code-toggle:focus {
+            outline: 2px solid var(--link-color);
+            outline-offset: 2px;
+        }
+        .code-toggle:active {
+            transform: translateY(1px);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .code-block-collapsible pre {
+                transition: none;
+            }
+        }
         a { color: var(--link-color); }
         .profile-image {
             width: 180px;
@@ -211,6 +268,7 @@ var baseTemplate = `<!DOCTYPE html>
     <main>
         {{template "content" .}}
     </main>
+    <script src="/collapsible-code.js"></script>
 </body>
 </html>`
 
