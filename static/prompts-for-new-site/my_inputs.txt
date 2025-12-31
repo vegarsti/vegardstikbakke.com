@@ -1,0 +1,30 @@
+I want to create a static site from scratch. The code to build it needs to
+be in Go. I want it to be very minimal: The site builder needs to be able
+to take md blog posts and embed them. I have posts in the content repo.
+Their slugs need to be preserved.
+
+Just a bio blurb,
+and a header which has links "Vegard Stikbakke" (links back to the
+bio, "Posts", and "Books"
+
+From frontmatter field
+
+public/ directory
+
+Draft post filtering
+
+From about.md file
+
+A separate
+list of books posts based on books md files. I don't have these now,
+but the idea is to have basic metadata (title, author, date read,
+rating, and summary)
+
+Yes, include all posts
+
+It should show an actual list
+based on some placeholder data we'll generate
+
+Can you successfully navigate the site?
+
+Actually, can you add this to the README? how to serve the files locally

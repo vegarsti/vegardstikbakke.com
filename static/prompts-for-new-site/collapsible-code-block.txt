@@ -1,0 +1,383 @@
+
+               Claude Code v2.0.76
+ * ▐▛███▜▌ *   arn:aws:bedrock:us-east-1:118330671040:inference-profile/global.…
+* ▝▜█████▛▘ *  API Usage Billing
+ *  ▘▘ ▝▝  *   ~/dev/vegardstikbakke.com
+
+  /model to try Opus 4.5. Note: you may need to request access from your cloud 
+  provider
+
+> I want my long code blocks to be collapsible so you can press a ... sign 
+and see the whole thing. Please implement that. 
+
+⏺ I'll help you implement collapsible code blocks. Let me explore the codebase to understand how code blocks are currently rendered and where we need to make changes.
+
+⏺ Explore(Explore code block rendering) Sonnet 4.5
+  ⎿  Done (38 tool uses · 52.3k tokens · 2m 0s)                            
+
+⏺ Now I understand how code blocks are rendered in your site. Before I create a detailed plan, I need to clarify a few things about the desired behavior:
+                                                                           
+⏺ User answered Claude's questions:
+  ⎿  · What should define a 'long' code block that needs to be collapsible? 
+     → More than 20 lines
+
+     · Should long code blocks start collapsed or expanded by default? → 
+     Start collapsed (Recommended)
+
+⏺ Perfect! Now let me design an implementation approach for collapsible code blocks.
+
+⏺ Plan(Design collapsible code blocks) Sonnet 4.5
+  ⎿  Done (14 tool uses · 39.5k tokens · 1m 27s)                           
+
+⏺ Now let me review the critical files to verify the plan aligns perfectly with your codebase structure.
+
+⏺ Read(templates.go)
+  ⎿  Read 60 lines
+
+⏺ Search(pattern: "static/*.js")
+  ⎿  Found 0 files 
+
+⏺ Perfect! I have all the context I need. Let me now write a concise, actionable plan for implementing collapsible code blocks.
+
+⏺ Updated plan
+  ⎿  /plan to preview
+
+⏺ Excellent! I've created a comprehensive implementation plan for collapsible code blocks. The plan includes:
+
+  Summary
+
+  What we'll build:
+  - JavaScript that detects code blocks with >20 lines and makes them collapsible
+  - CSS for the collapsed state (400px preview with gradient fade) and toggle button
+  - Progressive enhancement - works without JavaScript
+
+  Changes required:
+  1. New file: static/collapsible-code.js - Vanilla JavaScript for the collapse/expand logic
+  2. Modified: templates.go - Add CSS styles and script tag reference
+
+  Key features:
+  - Code blocks start collapsed showing ~10 lines
+  - Click button to expand/collapse
+  - Fully accessible (keyboard + screen reader support)
+  - Works with your existing light/dark mode
+  - Minimal and clean implementation
+
+  The plan is ready for your review and approval!
+                                                                           
+⏺ User approved Claude's plan
+  ⎿  Plan saved to: ~/.claude/plans/floating-finding-stream.md · /plan to 
+     edit
+     Implementation Plan: Collapsible Code Blocks
+
+     Goal
+
+     Make code blocks with more than 20 lines collapsible, starting in 
+     collapsed state by default. Users can click to expand/collapse.
+
+     Requirements
+
+     - Code blocks >20 lines → collapsible
+     - Start collapsed (show preview of ~10 lines with gradient fade)
+     - Click button to expand/collapse
+     - Must work without JavaScript (progressive enhancement)
+     - Support light/dark mode
+     - Accessible (keyboard navigation, screen readers)
+
+     Implementation Approach
+
+     1. Create JavaScript File
+
+     File: /Users/vegard/dev/vegardstikbakke.com/static/collapsible-code.js
+
+     Logic:
+     - On DOM load, find all <pre><code> blocks
+     - Count lines in each code block (split by newlines)
+     - For blocks with >20 lines:
+       - Wrap in <div class="code-block-collapsible collapsed">
+       - Add toggle button below the code block
+       - Button shows "Show all N lines" when collapsed, "Collapse" when 
+     expanded
+       - Add click handler to toggle collapsed class
+       - Include ARIA attributes for accessibility
+
+     2. Add CSS Styles
+
+     File: /Users/vegard/dev/vegardstikbakke.com/templates.go
+     Location: After line 178 (after existing pre code { padding: 0; })
+
+     Styles needed:
+     - .code-block-collapsible.collapsed pre → max-height: 400px, overflow 
+     hidden
+     - .code-block-collapsible.collapsed pre::after → gradient fade at 
+     bottom
+     - .code-toggle → button styling that matches code block aesthetic
+     - Smooth transition on expand/collapse
+     - Hover and focus states for button
+     - Use existing CSS variables for theming (--code-bg, --text-color, 
+     etc.)
+
+     3. Add Script Reference
+
+     File: /Users/vegard/dev/vegardstikbakke.com/templates.go
+     Location: Before line 215 (</body> tag)
+
+     Addition:
+     <script src="/collapsible-code.js"></script>
+
+     Testing Steps
+
+     1. Run make serve to build and serve locally
+     2. Visit posts with long code blocks (e.g., python-keyword-only.md has 
+     multiple)
+     3. Verify blocks >20 lines are collapsed with button
+     4. Verify blocks ≤20 lines are unchanged
+     5. Test expand/collapse functionality
+     6. Test keyboard navigation (Tab to button, Enter/Space to toggle)
+     7. Test dark mode toggle
+     8. Disable JavaScript and verify code still displays (not collapsed)
+
+     Critical Files
+
+     - /Users/vegard/dev/vegardstikbakke.com/static/collapsible-code.js - 
+     NEW FILE
+     - /Users/vegard/dev/vegardstikbakke.com/templates.go - MODIFY (add CSS 
+     + script tag)
+
+     Technical Details
+
+     - Current code structure: <pre><code 
+     class="language-X">...</code></pre>
+     - Goldmark already adds language classes (no changes needed to 
+     parser.go)
+     - Site uses 'Source Code Pro' monospace font
+     - CSS variables handle light/dark mode automatically
+     - No external dependencies - vanilla JavaScript only
+
+
+
+⏺ Perfect! Let me implement the collapsible code blocks feature. I'll start by creating a todo list to track progress.
+
+⏺ Now let me create the JavaScript file for the collapsible code blocks:
+
+⏺ Write(static/collapsible-code.js)
+  ⎿  Wrote 49 lines to static/collapsible-code.js                 
+     document.addEventListener('DOMContentLoaded', function() {
+       const codeBlocks = document.querySelectorAll('pre > code');
+       codeBlocks.forEach(function(codeBlock) {
+         const pre = codeBlock.parentElement;
+         // Count lines in the code block
+         const text = codeBlock.textContent;
+         const lines = text.trim().split('\n');
+         const lineCount = lines.length;
+     … +39 lines (ctrl+o to expand)
+
+⏺ Now let me add the CSS styles to templates.go:
+
+⏺ Update(templates.go)
+  ⎿  Added 56 lines                                                      
+      176              background: var(--code-bg);                       
+      177          }                                                     
+      178          pre code { padding: 0; }                              
+      179 +        /* Collapsible code blocks */                         
+      180 +        .code-block-collapsible {                             
+      181 +            position: relative;                               
+      182 +            margin: 1.5em 0;                                  
+      183 +        }                                                     
+      184 +        .code-block-collapsible.collapsed pre {               
+      185 +            max-height: 400px;                                
+      186 +            overflow: hidden;                                 
+      187 +            position: relative;                               
+      188 +        }                                                     
+      189 +        .code-block-collapsible.collapsed pre::after {        
+      190 +            content: '';                                      
+      191 +            position: absolute;                               
+      192 +            bottom: 0;                                        
+      193 +            left: 0;                                          
+      194 +            right: 0;                                         
+      195 +            height: 80px;                                     
+      196 +            background: linear-gradient(to bottom,            
+          +transparent, var(--code-bg));                                 
+      197 +            pointer-events: none;                             
+      198 +        }                                                     
+      199 +        .code-block-collapsible pre {                         
+      200 +            transition: max-height 0.3s ease;                 
+      201 +            margin-bottom: 0;                                 
+      202 +        }                                                     
+      203 +        .code-toggle {                                        
+      204 +            display: block;                                   
+      205 +            width: 100%;                                      
+      206 +            padding: 8px 12px;                                
+      207 +            margin-top: 0;                                    
+      208 +            background: var(--code-bg);                       
+      209 +            border: 1px solid var(--border-color);            
+      210 +            border-top: none;                                 
+      211 +            border-radius: 0 0 4px 4px;                       
+      212 +            color: var(--text-secondary);                     
+      213 +            font-family: 'Inter', sans-serif;                 
+      214 +            font-size: 0.875rem;                              
+      215 +            cursor: pointer;                                  
+      216 +            text-align: center;                               
+      217 +            transition: background 0.2s ease, color 0.2s      
+          +ease;                                                         
+      218 +        }                                                     
+      219 +        .code-toggle:hover {                                  
+      220 +            background: var(--border-color);                  
+      221 +            color: var(--text-color);                         
+      222 +        }                                                     
+      223 +        .code-toggle:focus {                                  
+      224 +            outline: 2px solid var(--link-color);             
+      225 +            outline-offset: 2px;                              
+      226 +        }                                                     
+      227 +        .code-toggle:active {                                 
+      228 +            transform: translateY(1px);                       
+      229 +        }                                                     
+      230 +        @media (prefers-reduced-motion: reduce) {             
+      231 +            .code-block-collapsible pre {                     
+      232 +                transition: none;                             
+      233 +            }                                                 
+      234 +        }                                                     
+      235          a { color: var(--link-color); }                       
+      236          .profile-image {                                      
+      237              width: 180px;                                     
+
+⏺ Now let me add the script tag reference to load the JavaScript file. First, let me check the exact location:
+
+⏺ Read(templates.go)
+  ⎿  Read 20 lines
+
+⏺ Now let me add the script tag:
+
+⏺ Update(templates.go)
+  ⎿  Added 1 line                                                        
+      268      <main>                                                    
+      269          {{template "content" .}}                              
+      270      </main>                                                   
+      271 +    <script src="/collapsible-code.js"></script>              
+      272  </body>                                                       
+      273  </html>`                                                      
+      274                                                                
+
+⏺ Perfect! All the code is in place. Now let me build and serve the site to test the implementation:
+
+⏺ Bash(make serve)
+  ⎿  Running in the background (↓ to manage)
+
+⏺ Let me check if the build was successful:
+
+⏺ Task Output(non-blocking) b327af2
+  ⎿  Building static site generator...           
+     go build -o ssg
+     Generating static site (including drafts)...
+     … +6 lines (ctrl+o to expand)
+
+⏺ Excellent! The site built successfully and is serving at http://localhost:8000. Let me verify the JavaScript file was copied to the public directory:
+
+⏺ Bash(ls -la public/ | grep collapsible)
+  ⎿  .rw-r--r--@ 1.7k vegard 31 Dec 11:16 collapsible-code.js
+
+⏺ Perfect! The JavaScript file is there. Let me test the functionality by visiting a blog post with long code blocks:
+
+⏺ Bash(grep -l "^.*$" content/blog/*.md | head -1 | xargs wc -l)
+  ⎿        23 content/blog/blogroll.md
+
+⏺ Let me find posts with code blocks to test:
+
+⏺ Bash(grep -l '```' content/blog/*.md | head -3)
+  ⎿  content/blog/books-2024.md   
+     content/blog/dependencies.md
+     content/blog/extract-table.md
+
+⏺ Let me use puppeteer to test the functionality on a blog post:
+
+⏺ Bash(grep "^slug:" content/blog/extract-table.md)
+  ⎿  slug: extract-table
+
+⏺ Let me check the generated HTML to verify the JavaScript is included:
+
+⏺ Bash(curl -s http://localhost:8000/blog/extract-table/ | grep -A2 -B2
+      "collapsible-code")
+  ⎿  No matches found
+
+⏺ Bash(curl -s http://localhost:8000/blog/extract-table/ | grep
+      "collapsible-code.js")
+  ⎿  No matches found
+
+⏺ Bash(curl -I http://localhost:8000/blog/extract-table/)
+  ⎿  HTTP/1.0 404 File not found         
+     Server: SimpleHTTP/0.6 Python/3.13.5
+     Date: Wed, 31 Dec 2025 10:17:16 GMT
+     … +10 lines (ctrl+o to expand)
+
+⏺ Bash(ls public/blog/ | head -10)
+  ⎿  index.html
+
+⏺ Bash(find public -name "*.html" -type f | head -15)
+  ⎿  public/extract-table/index.html            
+     public/how-do-pipes-work-sigpipe/index.html
+     public/index.html
+     … +12 lines (ctrl+o to expand)
+
+⏺ Bash(curl -s http://localhost:8000/extract-table/ | grep
+      "collapsible-code.js")
+  ⎿      <script src="/collapsible-code.js"></script>
+
+⏺ Perfect! The script tag is included. Now let me check if this post has code blocks with more than 20 lines:
+
+⏺ Read(content/blog/extract-table.md)
+  ⎿  Read 53 lines
+
+⏺ This post only has 19 lines of code, just under our threshold. Let me find a post with longer code blocks:
+
+⏺ Bash(for file in content/blog/*.md; do
+        echo "=== $file ==="…)
+  ⎿  Tool use rejected with user message: The new-site-2025 post does
+
+⏺ Perfect! Let me check the new-site-2025 post:
+
+⏺ Bash(grep "^slug:" content/blog/new-site-2025.md)
+  ⎿  slug: new-site-2025
+
+⏺ Let me open the page in your browser so you can see the collapsible code blocks in action:
+
+⏺ Bash(open http://localhost:8000/new-site-2025/)
+  ⎿  (No content)
+
+⏺ Perfect! I've successfully implemented collapsible code blocks for your site. Here's what was done:
+
+  Implementation Summary
+
+  Files Created:
+
+  - static/collapsible-code.js - Vanilla JavaScript that detects code blocks with >20 lines and makes them collapsible
+
+  Files Modified:
+
+  - templates.go - Added CSS styles for the collapsible interface and included the script tag reference
+
+  How It Works:
+
+  1. Automatic Detection: When a page loads, the JavaScript counts lines in each code block
+  2. Collapsible UI: Code blocks with >20 lines are wrapped in a collapsible container and start collapsed
+  3. Preview Mode: Collapsed blocks show ~10 lines with a gradient fade at the bottom
+  4. Toggle Button: A button below each long code block shows "Show all N lines" / "Collapse"
+  5. Accessibility: Full keyboard navigation and screen reader support
+
+  Testing:
+
+  The site is now running at http://localhost:8000 and I've opened the /new-site-2025/ post in your browser, which should have long code blocks demonstrating the feature.
+
+  Try it out:
+  - Look for code blocks with the "Show all X lines" button
+  - Click to expand and see the full code
+  - Click "Collapse" to collapse it again
+  - Try using Tab to navigate to the button and Enter/Space to toggle (keyboard accessibility)
+  - Toggle your system dark mode to see it works in both themes
+
+  The implementation uses:
+  - Progressive enhancement (works without JavaScript)
+  - Smooth transitions
+  - Your existing CSS variables for theming
+  - No external dependencies
+
+
+

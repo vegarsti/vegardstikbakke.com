@@ -1,12 +1,3 @@
-
-               Claude Code v2.0.76
- * ▐▛███▜▌ *   arn:aws:bedrock:us-east-1:118330671040:inference-profile/global.…
-* ▝▜█████▛▘ *  API Usage Billing
- *  ▘▘ ▝▝  *   ~/dev/personal-site-static
-
-  /model to try Opus 4.5. Note: you may need to request access from your cloud 
-  provider
-
 > I want the blog post page to look more like https://macwright.com/writing.
  It should have two columns: Blog post title and date. The link to the blog 
 post should be regular text color but when hovered should have an underline.
