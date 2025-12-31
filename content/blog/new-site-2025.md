@@ -1,7 +1,7 @@
 ---
 title: Rewriting my site using AI
 slug: new-site-2025
-date: 2025-12-30
+date: 2025-12-31
 ---
 
 This site is now built using a [static site builder](https://github.com/vegarsti/vegardstikbakke.com) that Claude Code wrote for me.
@@ -332,11 +332,12 @@ It then started to write code:
 ⏺ Great! Now let me implement the static site generator. I'll start by creating a todo list to track progress:
 ```
 
-A typical problem for LLMs has been to lose track of the goal, and Claude uses TODO lists to great effect.
+A typical problem for LLMs in long conversations has been to lose track of the goal, and Claude uses TODO lists to good effect.
 
 It then went on without intervention from me for several minutes, writing its planned code and trying to build the program.
 It failed to build several times but was able to recover.
-This is the magic of agents: It can use a tool, such as code compilation, to autonomously figure out why it's not working and fix it.
+This is the magic of agents:
+It can use a tool, such as code compilation, to autonomously figure out why it's not working and fix it.
 This is a whole different world than last year when I was copy/pasting between ChatGPT and my editor.
 
 ```
@@ -472,9 +473,7 @@ I opened the generated HTML files in a browser but was unable to navigate the si
 
 How to run the local server was useful information, so I told it to add this to a README.
 
-```
 > Actually, can you add this to the README? how to serve the files locally
-```
 
 The README didn't exist, so it wrote that.
 
@@ -511,12 +510,11 @@ The README didn't exist, so it wrote that.
 
 If you're interested, you can see the full session [here](/prompts-for-new-site/initial.txt).
 
-## More sessions
+## Adding more functionality
 
-I then iterated on the functionality in a few more sessions, and you can browse those here:
-
-One really useful capability to install is a headless browser so I installed Puppeteer as described [here](https://github.com/jaenster/puppeteer-mcp-claude).
-In one session I asked it to tweak the styling to look more like a blog I like:
+One really useful capability for the agent to have is being able to browse websites in a headless browser,
+so I installed Puppeteer as described [here](https://github.com/jaenster/puppeteer-mcp-claude).
+In one session I asked it to tweak the styling:
 
 > I want the blog post page to look more like https://macwright.com/writing.
 > It should have two columns: Blog post title and date. The link to the blog
@@ -563,4 +561,4 @@ Here are links to other session you may find interesting:
 
 Happy prompting!
 
-[^1]: [Armin Ronacher: A Year of Vibes](https://lucumr.pocoo.org/2025/12/22/a-year-of-vibes/), [Mario Zechner: What I learned building an opinionated and minimal coding agent](https://mariozechner.at/posts/2025-11-30-pi-coding-agent/), [Peter Steinberger: Shipping at Inference-Speed](https://steipete.me/posts/2025/shipping-at-inference-speed)
+[^1]: [Andrej Karpathy's tweet Dec 26](https://x.com/karpathy/status/2004607146781278521?s=20), [Armin Ronacher: A Year of Vibes](https://lucumr.pocoo.org/2025/12/22/a-year-of-vibes/), [Mario Zechner: What I learned building an opinionated and minimal coding agent](https://mariozechner.at/posts/2025-11-30-pi-coding-agent/), [Peter Steinberger: Shipping at Inference-Speed](https://steipete.me/posts/2025/shipping-at-inference-speed)
