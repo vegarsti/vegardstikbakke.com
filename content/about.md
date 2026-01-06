@@ -4,7 +4,7 @@ I work at [Dune](https://dune.com), building data intensive systems supporting S
 
 I enjoy solving problems with code and learning the history of computing and companies.
 
-I live in Norway with my wife and 2 young kids.
+I live in Norway with my wife and 3 young kids.
 
 I love getting email. Email me at `vegard.stikbakke@gmail.com`!
 
