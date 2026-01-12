@@ -31,63 +31,89 @@ var baseTemplate = `<!DOCTYPE html>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono&display=swap');
 
         :root {
-            --bg-color: #ffffff;
-            --text-color: #111;
+            --bg-color: #faf8f5;
+            --text-color: #1a1a1a;
             --text-secondary: #666;
-            --link-color: #0066cc;
-            --border-color: #ddd;
-            --code-bg: #f4f4f4;
-            --badge-bg: #f0f0f0;
-            --badge-text: #666;
+            --caro-red: #c41e3a;
+            --caro-blue: #1e4d8c;
+            --link-color: #c41e3a;
+            --code-bg: #f0ece6;
+            --badge-bg: #c41e3a;
+            --badge-text: #fff;
+            --gold: #b8960c;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-color: #1a1a1a;
-                --text-color: #e4e4e4;
-                --text-secondary: #a0a0a0;
-                --link-color: #66b3ff;
-                --border-color: #404040;
-                --code-bg: #2d2d2d;
-                --badge-bg: #333;
-                --badge-text: #999;
+                --bg-color: #000000;
+                --text-color: #ffffff;
+                --text-secondary: #888;
+                --caro-red: #c41e3a;
+                --caro-blue: #4a7fc4;
+                --link-color: #c41e3a;
+                --code-bg: #111;
+                --badge-bg: #c41e3a;
+                --badge-text: #fff;
+                --gold: #d4af37;
             }
         }
 
         body {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px 20px;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             line-height: 1.6;
             background-color: var(--bg-color);
             color: var(--text-color);
         }
+
         nav {
             margin-bottom: 40px;
             padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 2px solid var(--caro-red);
         }
+
         nav a {
             margin-right: 20px;
             text-decoration: none;
             color: var(--text-color);
             font-weight: 500;
         }
+
         nav a:hover {
-            text-decoration: underline;
+            color: var(--caro-red);
         }
-        h1 { font-size: 2em; margin-bottom: 0.5em; }
-        h2 { font-size: 1.5em; margin-top: 1.5em; }
+
+        h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2em;
+            margin-bottom: 0.5em;
+            text-transform: uppercase;
+        }
+        h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5em;
+            margin-top: 1.5em;
+            text-transform: uppercase;
+        }
+        h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.25em;
+            margin-top: 1.5em;
+            text-transform: uppercase;
+        }
+
         .post-list {
             display: grid;
             grid-template-columns: 1fr 110px;
             gap: 5px;
             margin-top: 2em;
         }
+
         .post-title {
             font-weight: 500;
             letter-spacing: -0.015em;
@@ -95,26 +121,34 @@ var baseTemplate = `<!DOCTYPE html>
             white-space: nowrap;
             overflow: hidden;
         }
+
         .post-title a {
             color: var(--text-color);
             text-decoration: none;
         }
+
         .post-title a:hover {
-            text-decoration: underline;
+            color: var(--caro-red);
         }
+
         .post-date {
             color: var(--text-secondary);
             font-variant-numeric: tabular-nums;
         }
+
         @media (max-width: 640px) {
             .post-list {
                 grid-template-columns: 1fr;
                 gap: 0.5em;
             }
+            h1 {
+                font-size: 1.75em;
+            }
         }
+
         .draft-badge {
             display: inline-block;
-            background: var(--badge-bg);
+            background: var(--caro-red);
             color: var(--badge-text);
             font-size: 0.7em;
             font-weight: 600;
@@ -123,70 +157,90 @@ var baseTemplate = `<!DOCTYPE html>
             margin-left: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            vertical-align: middle;
         }
+
         .books {
             display: grid;
             grid-template-columns: 1fr 0.75fr 110px;
             gap: 1em 1.5em;
             margin-top: 2em;
         }
+
         .book-title, .book-author {
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
         }
+
         .book-title {
-            font-weight: 500;
-            letter-spacing: -0.015em;
+            font-weight: 400;
         }
+
         .book-title a {
             color: var(--text-color);
             text-decoration: none;
         }
+
         .book-title a:hover {
-            text-decoration: underline;
+            color: var(--caro-red);
         }
+
         .book-author {
             color: var(--text-secondary);
-            letter-spacing: -0.015em;
         }
+
         .book-date {
             color: var(--text-secondary);
             font-variant-numeric: tabular-nums;
+            font-family: 'IBM Plex Mono', monospace;
         }
+
         .book-rating {
-            color: var(--text-color);
+            color: var(--gold);
             white-space: nowrap;
         }
+
         @media (max-width: 640px) {
             .books {
                 grid-template-columns: 1fr;
                 gap: 0.5em;
             }
         }
+
         pre {
             background: var(--code-bg);
-            padding: 10px;
+            padding: 20px;
             overflow-x: auto;
-            border-radius: 4px;
+            border-left: 4px solid var(--caro-red);
             font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.8em;
+            font-size: 0.85em;
         }
+
         code {
             font-family: 'IBM Plex Mono', monospace;
             background: var(--code-bg);
+            color: var(--text-color);
+            padding: 2px 6px;
         }
-        pre code { padding: 0; }
+
+        pre code {
+            padding: 0;
+            background: transparent;
+        }
+
         /* Collapsible code blocks */
         .code-block-collapsible {
             position: relative;
             margin: 1.5em 0;
         }
+
         .code-block-collapsible.collapsed pre {
             max-height: 400px;
             overflow: hidden;
             position: relative;
         }
+
         .code-block-collapsible.collapsed pre::after {
             content: '';
             position: absolute;
@@ -197,57 +251,150 @@ var baseTemplate = `<!DOCTYPE html>
             background: linear-gradient(to bottom, transparent, var(--code-bg));
             pointer-events: none;
         }
+
         .code-block-collapsible pre {
             transition: max-height 0.3s ease;
             margin-bottom: 0;
         }
+
         .code-toggle {
             display: block;
             width: 100%;
-            padding: 8px 12px;
+            padding: 8px 15px;
             margin-top: 0;
             background: var(--code-bg);
-            border: 1px solid var(--border-color);
-            border-top: none;
-            border-radius: 0 0 4px 4px;
-            color: var(--text-secondary);
+            border: 1px solid var(--caro-red);
+            color: var(--text-color);
             font-family: 'Inter', sans-serif;
             font-size: 0.875rem;
             cursor: pointer;
             text-align: center;
             transition: background 0.2s ease, color 0.2s ease;
         }
+
         .code-toggle:hover {
-            background: var(--border-color);
-            color: var(--text-color);
+            background: var(--caro-red);
+            color: #fff;
         }
+
         .code-toggle:focus {
-            outline: 2px solid var(--link-color);
+            outline: 2px solid var(--gold);
             outline-offset: 2px;
         }
+
         .code-toggle:active {
             transform: translateY(1px);
         }
+
         @media (prefers-reduced-motion: reduce) {
             .code-block-collapsible pre {
                 transition: none;
             }
         }
-        a { color: var(--link-color); }
+
+        a {
+            color: var(--caro-red);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--caro-red);
+            text-decoration: underline;
+        }
+
         .profile-image {
             width: 180px;
             height: 180px;
             object-fit: cover;
             float: right;
-            margin-left: 1.5em;
+            margin-left: 2em;
             margin-bottom: 1em;
+            border: 2px solid var(--caro-red);
         }
+
         main img {
             max-width: 100%;
             height: auto;
             display: block;
-            margin: 1.5em 0;
+            margin: 2em 0;
+            border: 2px solid var(--text-secondary);
         }
+
+        main {
+            position: relative;
+        }
+
+        /* Blockquotes - dramatic styling */
+        blockquote {
+            border-left: 4px solid var(--caro-blue);
+            background: var(--code-bg);
+            padding: 20px 25px;
+            margin: 2em 0;
+            font-style: italic;
+            position: relative;
+        }
+
+        blockquote::before {
+            content: '"';
+            font-family: 'Libre Baskerville', serif;
+            font-size: 4em;
+            color: var(--caro-red);
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.3;
+        }
+
+        /* Selection styling */
+        ::selection {
+            background: var(--caro-red);
+            color: #fff;
+        }
+
+        /* Horizontal rules */
+        hr {
+            border: none;
+            height: 3px;
+            background: linear-gradient(to right, var(--caro-red), var(--caro-blue));
+            margin: 3em 0;
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+            padding-left: 1.5em;
+        }
+
+        ul li::before {
+            content: '—';
+            color: var(--caro-red);
+            display: inline-block;
+            width: 1.5em;
+            margin-left: -1.5em;
+            font-weight: bold;
+        }
+
+        ol {
+            padding-left: 1.5em;
+        }
+
+        ol li::marker {
+            color: var(--caro-red);
+            font-weight: bold;
+        }
+
+        /* Strong and emphasis */
+        strong {
+            color: var(--text-color);
+            font-weight: 700;
+        }
+
+        em {
+            color: var(--text-secondary);
+        }
+
+
     </style>
     <!-- Privacy-friendly analytics by Plausible -->
     <script async src="https://plausible.io/js/pa-fY9B0CzGV3CMqDY5kvN_3.js"></script>
