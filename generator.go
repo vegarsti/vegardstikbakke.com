@@ -306,8 +306,8 @@ func generateRSSFeed(site Site) error {
 	// Build items from posts
 	items := make([]RSSItem, 0, len(site.Posts))
 	for _, post := range site.Posts {
-		// Format date as RFC822 (required for RSS)
-		pubDate := post.Date.Format(time.RFC822)
+		// Format date as RFC1123Z (required for RSS)
+		pubDate := post.Date.Format(time.RFC1123Z)
 
 		// Create post URL
 		postURL := fmt.Sprintf("https://vegardstikbakke.com/%s/", post.Slug)
@@ -329,9 +329,9 @@ func generateRSSFeed(site Site) error {
 	}
 
 	// Determine last build date (use most recent post date)
-	lastBuildDate := time.Now().Format(time.RFC822)
+	lastBuildDate := time.Now().Format(time.RFC1123Z)
 	if len(site.Posts) > 0 {
-		lastBuildDate = site.Posts[0].Date.Format(time.RFC822)
+		lastBuildDate = site.Posts[0].Date.Format(time.RFC1123Z)
 	}
 
 	feed := RSSFeed{
