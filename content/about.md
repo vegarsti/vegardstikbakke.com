@@ -1,10 +1,13 @@
-I'm Vegard — I'm a software engineer from Norway.
+I'm Vegard Stikbakke, a software engineer based in Norway.
 
-I work at [Dune](https://dune.com), building data intensive systems supporting SQL queries on blockchain time series data.
+I work at [Dune](https://dune.com), building data intensive systems to support SQL queries on blockchain time series data.
+Before that I studied mathematical statistics and computer science.
+
+I write the occasional post on here. Most recently: {{MOST_RECENT_POST}}.
 
 I enjoy solving problems with code and learning the history of computing and companies.
 
-I live in Norway with my wife and 3 young kids.
+I live in a small town on the south west coast of Norway with my wife and 3 young kids.
 
 I love getting email. Email me at `vegard.stikbakke@gmail.com`!
 

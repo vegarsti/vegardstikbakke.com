@@ -9,6 +9,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -16,6 +17,14 @@ import (
 func generateHomepage(site Site) error {
 	tmpl := getBaseTemplate()
 	template.Must(tmpl.Parse(homepageContent))
+
+	// Replace {{MOST_RECENT_POST}} placeholder with actual post link
+	content := site.AboutPage.HTMLContent
+	if len(site.Posts) > 0 {
+		mostRecent := site.Posts[0]
+		postLink := fmt.Sprintf(`<a href="/%s/">%s</a>`, mostRecent.Slug, mostRecent.Title)
+		content = strings.Replace(content, "{{MOST_RECENT_POST}}", postLink, 1)
+	}
 
 	data := struct {
 		Title        string
@@ -30,7 +39,7 @@ func generateHomepage(site Site) error {
 		CanonicalURL: "https://vegardstikbakke.com/",
 		Image:        "/me.jpg",
 		OGType:       "website",
-		Content:      template.HTML(site.AboutPage.HTMLContent),
+		Content:      template.HTML(content),
 	}
 
 	return renderToFile(tmpl, data, "public/index.html")
