@@ -267,6 +267,60 @@ func copyFile(src, dst string) error {
 	return err
 }
 
+// generateRSSListing creates the RSS reading list page
+func generateRSSListing(site Site) error {
+	if len(site.FeedItems) == 0 {
+		return nil // No items to display
+	}
+
+	tmpl := getBaseTemplate()
+	template.Must(tmpl.Parse(rssListingContent))
+
+	// Convert to display format with date strings
+	type ItemDisplay struct {
+		Title      string
+		Link       string
+		DateString string
+		FeedTitle  string
+	}
+
+	items := make([]ItemDisplay, len(site.FeedItems))
+	for i, item := range site.FeedItems {
+		dateStr := ""
+		if !item.PubDate.IsZero() {
+			dateStr = item.PubDate.Format("2006-01-02")
+		}
+		items[i] = ItemDisplay{
+			Title:      item.Title,
+			Link:       item.Link,
+			DateString: dateStr,
+			FeedTitle:  item.FeedTitle,
+		}
+	}
+
+	data := struct {
+		Title        string
+		Description  string
+		CanonicalURL string
+		Image        string
+		OGType       string
+		Items        []ItemDisplay
+	}{
+		Title:        "Reading — Vegard Stikbakke",
+		Description:  "Articles from blogs I follow",
+		CanonicalURL: "https://vegardstikbakke.com/reading/",
+		Image:        "",
+		OGType:       "website",
+		Items:        items,
+	}
+
+	if err := os.MkdirAll("public/reading", 0755); err != nil {
+		return err
+	}
+
+	return renderToFile(tmpl, data, "public/reading/index.html")
+}
+
 // RSS structs for XML generation
 type RSSFeed struct {
 	XMLName xml.Name `xml:"rss"`

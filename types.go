@@ -57,4 +57,5 @@ type Site struct {
 	Posts     []Post
 	AboutPage Page
 	Books     []Book
+	FeedItems []FeedItem
 }

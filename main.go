@@ -39,14 +39,22 @@ func main() {
 	// 6. Sort books by date_read (most recent first)
 	sortBooksByDate(books)
 
-	// 7. Build site structure
+	// 7. Load RSS feed items
+	feedItems, err := loadFeedItems("rss-feeds.conf")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Warning: Error loading RSS feeds: %v\n", err)
+		feedItems = nil
+	}
+
+	// 8. Build site structure
 	site := Site{
 		Posts:     publishedPosts,
 		AboutPage: aboutPage,
 		Books:     books,
+		FeedItems: feedItems,
 	}
 
-	// 8. Create output directory
+	// 9. Create output directory
 	if err := os.RemoveAll("public"); err != nil && !os.IsNotExist(err) {
 		log.Fatalf("Error removing public dir: %v", err)
 	}
@@ -54,12 +62,12 @@ func main() {
 		log.Fatalf("Error creating public dir: %v", err)
 	}
 
-	// 9. Copy static assets
+	// 10. Copy static assets
 	if err := copyStaticAssets(); err != nil {
 		log.Fatalf("Error copying static assets: %v", err)
 	}
 
-	// 10. Generate all HTML files
+	// 11. Generate all HTML files
 	if err := generateHomepage(site); err != nil {
 		log.Fatalf("Error generating homepage: %v", err)
 	}
@@ -80,7 +88,12 @@ func main() {
 		log.Fatalf("Error generating individual books: %v", err)
 	}
 
-	// 11. Generate RSS feed
+	// 12. Generate RSS reading list page
+	if err := generateRSSListing(site); err != nil {
+		log.Fatalf("Error generating RSS listing: %v", err)
+	}
+
+	// 13. Generate RSS feed
 	if err := generateRSSFeed(site); err != nil {
 		log.Fatalf("Error generating RSS feed: %v", err)
 	}
@@ -88,5 +101,8 @@ func main() {
 	fmt.Printf("✓ Site generated successfully in public/\n")
 	fmt.Printf("✓ Generated %d posts\n", len(publishedPosts))
 	fmt.Printf("✓ Generated %d books\n", len(books))
+	if len(feedItems) > 0 {
+		fmt.Printf("✓ Generated reading list with %d articles at /reading/\n", len(feedItems))
+	}
 	fmt.Printf("✓ Generated RSS feed at /feed.xml\n")
 }

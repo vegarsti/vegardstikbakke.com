@@ -146,6 +146,37 @@ var baseTemplate = `<!DOCTYPE html>
             }
         }
 
+        .reading-list {
+            margin-top: 2em;
+        }
+
+        .reading-item {
+            margin-bottom: 1em;
+        }
+
+        .reading-title {
+            font-weight: 500;
+            letter-spacing: -0.015em;
+        }
+
+        .reading-title a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .reading-title a:hover {
+            color: var(--caro-red);
+        }
+
+        .reading-meta {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+
+        .reading-source {
+            font-weight: 500;
+        }
+
         .draft-badge {
             display: inline-block;
             background: var(--caro-red);
@@ -407,6 +438,9 @@ var baseTemplate = `<!DOCTYPE html>
     <nav>
         <a href="/">Vegard Stikbakke</a>
         <a href="/blog/">Posts</a>
+        <!-- TODO: Uncomment to show reading list
+        <a href="/reading/">Reading</a>
+        -->
         <!-- TODO: Uncomment to show books again
         <a href="/books/">Books</a>
         -->
@@ -465,6 +499,20 @@ var bookContent = `{{define "content"}}
     {{if .DateRead}} • Read: {{.DateRead}}{{end}}
 </p>
 {{.Content}}
+{{end}}`
+
+// RSS reading list template
+var rssListingContent = `{{define "content"}}
+<h1>Reading</h1>
+<p>Articles from blogs I follow, aggregated from their RSS feeds.</p>
+<div class="reading-list">
+{{range .Items}}
+    <div class="reading-item">
+        <div class="reading-title"><a href="{{.Link}}" target="_blank" rel="noopener">{{.Title}}</a></div>
+        <div class="reading-meta"><span class="reading-source">{{.FeedTitle}}</span> · <span class="reading-date">{{.DateString}}</span></div>
+    </div>
+{{end}}
+</div>
 {{end}}`
 
 func getBaseTemplate() *template.Template {
