@@ -469,6 +469,7 @@ var postsListingContent = `{{define "content"}}
     <div class="post-date">{{.DateString}}</div>
 {{end}}
 </div>
+<p style="margin-top: 2em;"><a href="/feed.xml">RSS feed</a></p>
 {{end}}`
 
 // Books listing template
