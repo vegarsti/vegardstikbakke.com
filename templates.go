@@ -31,7 +31,7 @@ var baseTemplate = `<!DOCTYPE html>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono&display=swap');
 
         :root {
             --bg-color: #faf8f5;
@@ -88,24 +88,9 @@ var baseTemplate = `<!DOCTYPE html>
             color: var(--caro-red);
         }
 
-        h1 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 2em;
-            margin-bottom: 0.5em;
-            text-transform: uppercase;
-        }
-        h2 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.5em;
-            margin-top: 1.5em;
-            text-transform: uppercase;
-        }
-        h3 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.25em;
-            margin-top: 1.5em;
-            text-transform: uppercase;
-        }
+        h1 { font-size: 2em; margin-bottom: 0.5em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.25em; margin-top: 1.5em; }
 
         .post-list {
             display: grid;
