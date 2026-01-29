@@ -10,6 +10,7 @@ import (
 func main() {
 	// Parse command-line flags
 	includeDrafts := flag.Bool("include-drafts", false, "Include draft posts in generation")
+	skipRSSIfExists := flag.Bool("skip-rss-if-exists", false, "Skip RSS fetching if reading page already exists")
 	flag.Parse()
 
 	// 1. Parse content directory
@@ -39,14 +40,25 @@ func main() {
 	// 6. Sort books by date_read (most recent first)
 	sortBooksByDate(books)
 
-	// 7. Load RSS feed items
-	feedItems, err := loadFeedItems("rss-feeds.conf")
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Warning: Error loading RSS feeds: %v\n", err)
-		feedItems = nil
+	// 7. Check if we should skip RSS fetching (preserve existing reading page)
+	skipRSS := *skipRSSIfExists
+	if _, err := os.Stat("public/reading/index.html"); os.IsNotExist(err) {
+		skipRSS = false // Must fetch if reading page doesn't exist
 	}
 
-	// 8. Build site structure
+	// 8. Load RSS feed items (unless skipping)
+	var feedItems []FeedItem
+	if skipRSS {
+		fmt.Println("⏭ Skipping RSS fetch (reading page already exists)")
+	} else {
+		feedItems, err = loadFeedItems("rss-feeds.conf")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Warning: Error loading RSS feeds: %v\n", err)
+			feedItems = nil
+		}
+	}
+
+	// 9. Build site structure
 	site := Site{
 		Posts:     publishedPosts,
 		AboutPage: aboutPage,
@@ -54,20 +66,35 @@ func main() {
 		FeedItems: feedItems,
 	}
 
-	// 9. Create output directory
-	if err := os.RemoveAll("public"); err != nil && !os.IsNotExist(err) {
-		log.Fatalf("Error removing public dir: %v", err)
+	// 10. Create output directory (preserve reading/ if skipping RSS)
+	if skipRSS {
+		// Preserve reading directory by removing everything else
+		entries, err := os.ReadDir("public")
+		if err != nil && !os.IsNotExist(err) {
+			log.Fatalf("Error reading public dir: %v", err)
+		}
+		for _, entry := range entries {
+			if entry.Name() != "reading" {
+				if err := os.RemoveAll("public/" + entry.Name()); err != nil {
+					log.Fatalf("Error removing %s: %v", entry.Name(), err)
+				}
+			}
+		}
+	} else {
+		if err := os.RemoveAll("public"); err != nil && !os.IsNotExist(err) {
+			log.Fatalf("Error removing public dir: %v", err)
+		}
 	}
 	if err := os.MkdirAll("public", 0755); err != nil {
 		log.Fatalf("Error creating public dir: %v", err)
 	}
 
-	// 10. Copy static assets
+	// 11. Copy static assets
 	if err := copyStaticAssets(); err != nil {
 		log.Fatalf("Error copying static assets: %v", err)
 	}
 
-	// 11. Generate all HTML files
+	// 12. Generate all HTML files
 	if err := generateHomepage(site); err != nil {
 		log.Fatalf("Error generating homepage: %v", err)
 	}
@@ -88,12 +115,14 @@ func main() {
 		log.Fatalf("Error generating individual books: %v", err)
 	}
 
-	// 12. Generate RSS reading list page
-	if err := generateRSSListing(site); err != nil {
-		log.Fatalf("Error generating RSS listing: %v", err)
+	// 13. Generate RSS reading list page (skip if preserving existing)
+	if !skipRSS {
+		if err := generateRSSListing(site); err != nil {
+			log.Fatalf("Error generating RSS listing: %v", err)
+		}
 	}
 
-	// 13. Generate RSS feed
+	// 14. Generate RSS feed
 	if err := generateRSSFeed(site); err != nil {
 		log.Fatalf("Error generating RSS feed: %v", err)
 	}

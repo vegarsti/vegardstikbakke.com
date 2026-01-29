@@ -13,7 +13,7 @@ I love getting email. Email me at `vegard.stikbakke@gmail.com`!
 
 ## Elsewhere
 
+- [GitHub](https://github.com/vegarsti)
 - [Twitter](https://twitter.com/vegardstikbakke)
 - [LinkedIn](https://www.linkedin.com/in/vegardstikbakke/)
-- [GitHub](https://github.com/vegarsti)
 - [Goodreads](https://www.goodreads.com/user/show/3400170-vegard-stikbakke)

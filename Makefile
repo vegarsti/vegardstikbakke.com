@@ -24,7 +24,7 @@ generate: build
 # Serve the generated site locally (includes drafts for development)
 serve: build
 	@echo "Generating static site (including drafts)..."
-	./ssg -include-drafts
+	./ssg -include-drafts -skip-rss-if-exists
 	@echo "Serving site at http://localhost:8000"
 	@cd public && python3 -m http.server 8000
 
