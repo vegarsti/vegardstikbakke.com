@@ -349,7 +349,7 @@ var baseTemplate = `<!DOCTYPE html>
             height: auto;
             display: block;
             margin: 2em 0;
-            border: 2px solid var(--text-secondary);
+            border: 1px solid var(--text-color);
         }
 
         main {
