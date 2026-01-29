@@ -127,6 +127,11 @@ func main() {
 		log.Fatalf("Error generating RSS feed: %v", err)
 	}
 
+	// 15. Generate 404 page
+	if err := generate404Page(); err != nil {
+		log.Fatalf("Error generating 404 page: %v", err)
+	}
+
 	fmt.Printf("✓ Site generated successfully in public/\n")
 	fmt.Printf("✓ Generated %d posts\n", len(publishedPosts))
 	fmt.Printf("✓ Generated %d books\n", len(books))

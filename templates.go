@@ -499,6 +499,13 @@ var rssListingContent = `{{define "content"}}
 </div>
 {{end}}`
 
+// 404 page template
+var notFoundContent = `{{define "content"}}
+<h1>404 — Page Not Found</h1>
+<p>The page you're looking for doesn't exist.</p>
+<p><a href="/">← Back to home</a></p>
+{{end}}`
+
 func getBaseTemplate() *template.Template {
 	tmpl := template.New("base")
 	tmpl = tmpl.Funcs(template.FuncMap{

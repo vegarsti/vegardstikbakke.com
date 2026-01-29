@@ -364,6 +364,27 @@ type RSSItem struct {
 	Description string   `xml:"description"`
 }
 
+// generate404Page creates a custom 404 page
+func generate404Page() error {
+	tmpl := getBaseTemplate()
+	template.Must(tmpl.Parse(notFoundContent))
+
+	data := struct {
+		Title        string
+		Description  string
+		CanonicalURL string
+		Image        string
+		OGType       string
+	}{
+		Title:       "404 — Page Not Found",
+		Description: "",
+		Image:       "",
+		OGType:      "website",
+	}
+
+	return renderToFile(tmpl, data, "public/404.html")
+}
+
 // generateRSSFeed creates an RSS feed at /feed.xml
 func generateRSSFeed(site Site) error {
 	// Build items from posts
