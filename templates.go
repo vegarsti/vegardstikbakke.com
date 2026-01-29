@@ -444,8 +444,6 @@ var baseTemplate = `<!DOCTYPE html>
         <!-- TODO: Uncomment to show books again
         <a href="/books/">Books</a>
         -->
-        <a href="https://github.com/vegarsti">GitHub</a>
-        <a href="https://twitter.com/vegardstikbakke">Twitter</a>
     </nav>
     <main>
         {{template "content" .}}
