@@ -19,7 +19,7 @@ The easiest way to build and run the site locally:
 make run
 
 # Serve the site locally at http://localhost:8000 with hot reloading (using https://github.com/vegarsti/reload)
-reload make serve
+reload --ignore public make serve
 ```
 
 ### Available Make Targets

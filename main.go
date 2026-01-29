@@ -49,7 +49,7 @@ func main() {
 	// 8. Load RSS feed items (unless skipping)
 	var feedItems []FeedItem
 	if skipRSS {
-		fmt.Println("⏭ Skipping RSS fetch (reading page already exists)")
+		fmt.Println("Skipping RSS fetch (reading page already exists)")
 	} else {
 		feedItems, err = loadFeedItems("rss-feeds.conf")
 		if err != nil {
