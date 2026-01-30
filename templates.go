@@ -144,6 +144,10 @@ var baseTemplate = `<!DOCTYPE html>
             font-variant-numeric: tabular-nums;
         }
 
+        .year-hidden {
+            color: var(--bg-color);
+        }
+
         @media (max-width: 640px) {
             .post-list {
                 grid-template-columns: 1fr;
@@ -511,7 +515,7 @@ var postsListingContent = `{{define "content"}}
 <div class="post-list">
 {{range .Posts}}
     <div class="post-title"><a href="/{{.Slug}}/">{{.Title}}</a>{{if .Draft}}<span class="draft-badge">Draft</span>{{end}}</div>
-    <div class="post-date">{{.DateString}}</div>
+    <div class="post-date"><span{{if not .ShowYear}} class="year-hidden"{{end}}>{{slice .DateString 0 5}}</span>{{slice .DateString 5}}</div>
 {{end}}
 </div>
 <p style="margin-top: 2em;"><a href="/feed.xml">RSS feed</a></p>
