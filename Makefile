@@ -1,4 +1,6 @@
-.PHONY: help build generate serve run clean new-post
+# We're using Make as a command runner, so always make
+# (avoids need for .PHONY)
+MAKEFLAGS += --always-make
 
 # Default target
 help:
