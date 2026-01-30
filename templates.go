@@ -107,7 +107,8 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         nav a:hover {
-            color: var(--caro-red);
+            color: var(--text-color);
+            text-decoration: underline;
         }
 
         h1 { font-size: 2em; margin-bottom: 0.5em; }
@@ -139,7 +140,7 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         .post-date {
-            color: var(--text-secondary);
+            color: var(--text-color);
             font-variant-numeric: tabular-nums;
         }
 
@@ -339,6 +340,11 @@ var baseTemplate = `<!DOCTYPE html>
         a:hover {
             color: var(--caro-red);
             text-decoration: underline;
+        }
+
+        nav a:hover,
+        .post-title a:hover {
+            color: var(--text-color);
         }
 
         .profile-image {
