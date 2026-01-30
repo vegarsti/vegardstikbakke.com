@@ -32,7 +32,7 @@ var baseTemplate = `<!DOCTYPE html>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
+        @import url('https://cdn.jsdelivr.net/npm/@fontsource/iosevka@5.0.4/index.min.css');
         @font-face {
             font-family: 'Geist';
             src: url('https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-sans/Geist-Regular.woff2') format('woff2');
@@ -231,7 +231,7 @@ var baseTemplate = `<!DOCTYPE html>
         .book-date {
             color: var(--text-secondary);
             font-variant-numeric: tabular-nums;
-            font-family: 'IBM Plex Mono', monospace;
+            font-family: 'Iosevka', monospace;
         }
 
         .book-rating {
@@ -251,12 +251,12 @@ var baseTemplate = `<!DOCTYPE html>
             padding: 20px;
             overflow-x: auto;
             border-left: 4px solid var(--caro-red);
-            font-family: 'IBM Plex Mono', monospace;
+            font-family: 'Iosevka', monospace;
             font-size: 0.85em;
         }
 
         code {
-            font-family: 'IBM Plex Mono', monospace;
+            font-family: 'Iosevka', monospace;
             background: var(--code-bg);
             color: var(--text-color);
             padding: 2px 6px;
