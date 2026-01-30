@@ -36,28 +36,28 @@ var baseTemplate = `<!DOCTYPE html>
         :root {
             --bg-color: #faf8f5;
             --text-color: #1a1a1a;
-            --text-secondary: #666;
-            --caro-red: #c41e3a;
-            --caro-blue: #1e4d8c;
-            --link-color: #c41e3a;
-            --code-bg: #f0ece6;
-            --badge-bg: #c41e3a;
+            --text-secondary: #6C8480;
+            --caro-red: #7B9669;
+            --caro-blue: #6C8480;
+            --link-color: #7B9669;
+            --code-bg: #E6E6E6;
+            --badge-bg: #7B9669;
             --badge-text: #fff;
-            --gold: #b8960c;
+            --gold: #7B9669;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-color: #000000;
-                --text-color: #ffffff;
-                --text-secondary: #888;
-                --caro-red: #c41e3a;
-                --caro-blue: #4a7fc4;
-                --link-color: #c41e3a;
-                --code-bg: #111;
-                --badge-bg: #c41e3a;
+                --bg-color: #1a1f18;
+                --text-color: #E6E6E6;
+                --text-secondary: #BAC8B1;
+                --caro-red: #7B9669;
+                --caro-blue: #6C8480;
+                --link-color: #BAC8B1;
+                --code-bg: #404E3B;
+                --badge-bg: #7B9669;
                 --badge-text: #fff;
-                --gold: #d4af37;
+                --gold: #BAC8B1;
             }
         }
 
