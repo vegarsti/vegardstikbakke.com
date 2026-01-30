@@ -34,30 +34,30 @@ var baseTemplate = `<!DOCTYPE html>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono&display=swap');
 
         :root {
-            --bg-color: #faf8f5;
+            --bg-color: #FEFEFE;
             --text-color: #1a1a1a;
-            --text-secondary: #6C8480;
-            --caro-red: #7B9669;
-            --caro-blue: #6C8480;
-            --link-color: #7B9669;
-            --code-bg: #E6E6E6;
-            --badge-bg: #7B9669;
-            --badge-text: #fff;
-            --gold: #7B9669;
+            --text-secondary: #BA9A91;
+            --caro-red: #8a9e6b;
+            --caro-blue: #BA9A91;
+            --link-color: #8a9e6b;
+            --code-bg: #E0E7D7;
+            --badge-bg: #B7C396;
+            --badge-text: #1a1a1a;
+            --gold: #BA9A91;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-color: #1a1f18;
-                --text-color: #E6E6E6;
-                --text-secondary: #BAC8B1;
-                --caro-red: #7B9669;
-                --caro-blue: #6C8480;
-                --link-color: #BAC8B1;
-                --code-bg: #404E3B;
-                --badge-bg: #7B9669;
-                --badge-text: #fff;
-                --gold: #BAC8B1;
+                --bg-color: #1a1b18;
+                --text-color: #EDECEC;
+                --text-secondary: #BA9A91;
+                --caro-red: #B7C396;
+                --caro-blue: #BA9A91;
+                --link-color: #B7C396;
+                --code-bg: #2a2c27;
+                --badge-bg: #B7C396;
+                --badge-text: #1a1a1a;
+                --gold: #BA9A91;
             }
         }
 
