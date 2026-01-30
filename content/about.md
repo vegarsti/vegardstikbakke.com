@@ -11,9 +11,10 @@ I live in a small town on the south west coast of Norway with my wife and 3 youn
 
 I love getting email. Email me at `vegard.stikbakke@gmail.com`!
 
-## Elsewhere
-
-- [GitHub](https://github.com/vegarsti)
-- [Twitter](https://twitter.com/vegardstikbakke)
-- [LinkedIn](https://www.linkedin.com/in/vegardstikbakke/)
-- [Goodreads](https://www.goodreads.com/user/show/3400170-vegard-stikbakke)
+<br />
+<ul class="social-links">
+  <li><a href="https://github.com/vegarsti"><i class="fab fa-github"></i> GitHub</a></li>
+  <li><a href="https://twitter.com/vegardstikbakke"><i class="fab fa-twitter"></i> Twitter</a></li>
+  <li><a href="https://www.linkedin.com/in/vegardstikbakke/"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+  <li><a href="https://www.goodreads.com/user/show/3400170-vegard-stikbakke"><i class="fab fa-goodreads"></i> Goodreads</a></li>
+</ul>

@@ -11,6 +11,7 @@ import (
 
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/extension"
+	"github.com/yuin/goldmark/renderer/html"
 	"gopkg.in/yaml.v3"
 )
 
@@ -66,6 +67,9 @@ func parsePost(filePath string) (Post, error) {
 	md := goldmark.New(
 		goldmark.WithExtensions(
 			extension.Footnote,
+		),
+		goldmark.WithRendererOptions(
+			html.WithUnsafe(),
 		),
 	)
 	var buf bytes.Buffer
@@ -207,6 +211,9 @@ func loadPage(filePath string) (Page, error) {
 		goldmark.WithExtensions(
 			extension.Footnote,
 		),
+		goldmark.WithRendererOptions(
+			html.WithUnsafe(),
+		),
 	)
 	var buf bytes.Buffer
 	if err := md.Convert([]byte(markdown), &buf); err != nil {
@@ -270,6 +277,9 @@ func parseBook(filePath string) (Book, error) {
 	md := goldmark.New(
 		goldmark.WithExtensions(
 			extension.Footnote,
+		),
+		goldmark.WithRendererOptions(
+			html.WithUnsafe(),
 		),
 	)
 	var buf bytes.Buffer
