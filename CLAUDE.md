@@ -106,7 +106,7 @@ Create a new `.md` file in `content/blog/` with proper frontmatter, then run `ma
 Edit the template strings in `templates.go`. Templates use Go's `html/template` package.
 
 ### Changing site styling
-Modify CSS in `static/` directory.
+All CSS is defined inline in `templates.go` within the `<style>` tag in `baseTemplate`. The `static/style.css` file exists but is empty/unused. CSS custom properties (variables) are defined in `:root` with dark mode variants in `@media (prefers-color-scheme: dark)`.
 
 ### Debugging generation issues
 Run `./ssg` directly to see any error output from the generator.
