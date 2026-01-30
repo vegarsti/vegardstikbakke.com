@@ -348,7 +348,7 @@ var baseTemplate = `<!DOCTYPE html>
             float: right;
             margin-left: 2em;
             margin-bottom: 1em;
-            border: 2px solid var(--caro-red);
+            border: 1px solid var(--caro-red);
         }
 
         main img {
