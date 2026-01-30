@@ -401,15 +401,15 @@ var baseTemplate = `<!DOCTYPE html>
         /* Lists */
         ul {
             list-style: none;
-            padding-left: 1.5em;
+            padding-left: 1.3em;
         }
 
         ul li::before {
-            content: '—';
+            content: '–';
             color: var(--caro-red);
             display: inline-block;
-            width: 1.5em;
-            margin-left: -1.5em;
+            width: 1.3em;
+            margin-left: -1.3em;
             font-weight: bold;
         }
 
