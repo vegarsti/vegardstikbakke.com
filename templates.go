@@ -138,6 +138,7 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         .post-title a:hover {
+            color: var(--text-color);
             text-decoration: underline;
         }
 
