@@ -56,30 +56,30 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         :root {
-            --bg-color: #FEFEFE;
-            --text-color: #1a1a1a;
-            --text-secondary: #BA9A91;
-            --caro-red: #8a9e6b;
-            --caro-blue: #BA9A91;
+            --bg-color: #fff;
+            --text-color: #1d1d27;
+            --text-secondary: #73738b;
             --link-color: #8a9e6b;
+            --link-hover: #496495;
             --code-bg: #E0E7D7;
-            --badge-bg: #B7C396;
-            --badge-text: #1a1a1a;
-            --gold: #BA9A91;
+            --code-border: #b6b6c294;
+            --border: #b6b6c2;
+            --badge-bg: #4a7ddd;
+            --badge-text: #fff;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-color: #1a1b18;
-                --text-color: #EDECEC;
-                --text-secondary: #BA9A91;
-                --caro-red: #B7C396;
-                --caro-blue: #BA9A91;
+                --bg-color: #1d1d27;
+                --text-color: #e8e8ed;
+                --text-secondary: #a0a0b0;
                 --link-color: #B7C396;
+                --link-hover: #8bb8f8;
                 --code-bg: #2a2c27;
-                --badge-bg: #B7C396;
-                --badge-text: #1a1a1a;
-                --gold: #BA9A91;
+                --code-border: #3a3a45;
+                --border: #3a3a45;
+                --badge-bg: #5c9cf5;
+                --badge-text: #1d1d27;
             }
         }
 
@@ -88,6 +88,8 @@ var baseTemplate = `<!DOCTYPE html>
             margin: 0 auto;
             padding: 40px 20px;
             font-family: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 16px;
+            letter-spacing: -0.01em;
             line-height: 1.6;
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -96,7 +98,7 @@ var baseTemplate = `<!DOCTYPE html>
         nav {
             margin-bottom: 40px;
             padding-bottom: 20px;
-            border-bottom: 2px solid var(--caro-red);
+            border-bottom: 1px solid var(--text-color);
         }
 
         nav a {
@@ -136,7 +138,7 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         .post-title a:hover {
-            color: var(--caro-red);
+            text-decoration: underline;
         }
 
         .post-date {
@@ -173,7 +175,7 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         .reading-title a:hover {
-            color: var(--caro-red);
+            text-decoration: underline;
         }
 
         .reading-meta {
@@ -187,12 +189,12 @@ var baseTemplate = `<!DOCTYPE html>
 
         .draft-badge {
             display: inline-block;
-            background: var(--caro-red);
+            background: var(--badge-bg);
             color: var(--badge-text);
             font-size: 0.7em;
             font-weight: 600;
             padding: 2px 6px;
-            border-radius: 3px;
+            border-radius: 0.4em;
             margin-left: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -222,7 +224,7 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         .book-title a:hover {
-            color: var(--caro-red);
+            text-decoration: underline;
         }
 
         .book-author {
@@ -236,7 +238,7 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         .book-rating {
-            color: var(--gold);
+            color: var(--link-color);
             white-space: nowrap;
         }
 
@@ -247,20 +249,24 @@ var baseTemplate = `<!DOCTYPE html>
             }
         }
 
+        pre, code {
+            font-family: 'Iosevka', monospace;
+            font-size: 14px;
+            border-radius: 0.4em;
+        }
+
         pre {
             background: var(--code-bg);
             padding: 20px;
             overflow-x: auto;
-            border-left: 4px solid var(--caro-red);
-            font-family: 'Iosevka', monospace;
-            font-size: 0.85em;
+            border: 1px solid var(--code-border);
         }
 
         code {
-            font-family: 'Iosevka', monospace;
             background: var(--code-bg);
             color: var(--text-color);
             padding: 2px 6px;
+            border-radius: 0.4em;
         }
 
         pre code {
@@ -302,22 +308,23 @@ var baseTemplate = `<!DOCTYPE html>
             padding: 8px 15px;
             margin-top: 0;
             background: var(--code-bg);
-            border: 1px solid var(--caro-red);
+            border: 1px solid var(--border);
             color: var(--text-color);
             font-family: 'Geist', sans-serif;
             font-size: 0.875rem;
             cursor: pointer;
             text-align: center;
             transition: background 0.2s ease, color 0.2s ease;
+            border-radius: 0.4em;
         }
 
         .code-toggle:hover {
-            background: var(--caro-red);
+            background: var(--link-color);
             color: #fff;
         }
 
         .code-toggle:focus {
-            outline: 2px solid var(--gold);
+            outline: 2px solid var(--link-color);
             outline-offset: 2px;
         }
 
@@ -332,19 +339,13 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         a {
-            color: var(--caro-red);
+            color: var(--link-color);
             text-decoration: none;
-            transition: color 0.2s ease;
         }
 
         a:hover {
-            color: var(--caro-red);
+            color: var(--link-color);
             text-decoration: underline;
-        }
-
-        nav a:hover,
-        .post-title a:hover {
-            color: var(--text-color);
         }
 
         .profile-image {
@@ -354,7 +355,7 @@ var baseTemplate = `<!DOCTYPE html>
             float: right;
             margin-left: 2em;
             margin-bottom: 1em;
-            border: 1px solid var(--caro-red);
+            border: 1px solid var(--text-color);
         }
 
         main img {
@@ -362,80 +363,54 @@ var baseTemplate = `<!DOCTYPE html>
             height: auto;
             display: block;
             margin: 2em 0;
-            border: 1px solid var(--text-color);
         }
 
         main {
             position: relative;
         }
 
-        /* Blockquotes - dramatic styling */
+        /* Blockquotes */
         blockquote {
-            border-left: 4px solid var(--caro-blue);
-            background: var(--code-bg);
-            padding: 20px 25px;
-            margin: 2em 0;
-            font-style: italic;
-            position: relative;
+            color: var(--text-secondary);
+            margin-left: 14px;
+            margin-right: 0px;
+            border-left-color: var(--border);
+            border-left-style: solid;
+            border-left-width: 2px;
         }
 
-        blockquote::before {
-            content: '"';
-            font-family: 'Libre Baskerville', serif;
-            font-size: 4em;
-            color: var(--caro-red);
-            position: absolute;
-            top: -10px;
-            left: 10px;
-            opacity: 0.3;
-        }
-
-        /* Selection styling */
-        ::selection {
-            background: var(--caro-red);
-            color: #fff;
+        blockquote > p {
+            color: var(--text-secondary);
+            padding-left: 14px;
         }
 
         /* Horizontal rules */
         hr {
             border: none;
-            height: 3px;
-            background: linear-gradient(to right, var(--caro-red), var(--caro-blue));
-            margin: 3em 0;
+            border-top: 1px solid var(--border);
+            margin-top: 48px;
+            margin-bottom: 48px;
         }
 
         /* Lists */
         ul {
-            list-style: none;
-            padding-left: 1.3em;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            padding-left: 24px;
         }
 
         ul li::before {
-            content: '–';
-            color: var(--caro-red);
-            display: inline-block;
-            width: 1.3em;
-            margin-left: -1.3em;
-            font-weight: bold;
+            content: none;
+        }
+
+        li {
+            padding-top: 3px;
+            padding-bottom: 3px;
+            line-height: 25px;
         }
 
         ol {
             padding-left: 1.5em;
-        }
-
-        ol li::marker {
-            color: var(--caro-red);
-            font-weight: bold;
-        }
-
-        /* Strong and emphasis */
-        strong {
-            color: var(--text-color);
-            font-weight: 700;
-        }
-
-        em {
-            color: var(--text-secondary);
         }
 
         /* Social links with icons */
@@ -463,7 +438,7 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         .social-links a:hover {
-            color: var(--caro-red);
+            text-decoration: underline;
         }
 
         .social-links i {
@@ -485,12 +460,6 @@ var baseTemplate = `<!DOCTYPE html>
     <nav>
         <a href="/">Vegard Stikbakke</a>
         <a href="/blog/">Posts</a>
-        <!-- TODO: Uncomment to show reading list
-        <a href="/reading/">Reading</a>
-        -->
-        <!-- TODO: Uncomment to show books again
-        <a href="/books/">Books</a>
-        -->
     </nav>
     <main>
         {{template "content" .}}
