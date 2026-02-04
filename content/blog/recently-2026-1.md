@@ -5,16 +5,16 @@ date: 2026-02-04
 ---
 
 I want to write more!
-I like the format of [Tom MacWright](https://macwright.com/)'s Recently.
+I like the format of [Tom MacWright](https://macwright.com/)'s Recently posts.
 So here's what I've been doing and thinking about recently, for the first month of 2026.
 
 ### Family
 
-My wife and I just had our third child at the start of this year - third son!
+My wife and I just had our third child at the start of this year - our third son!
 The older boys are 5 and 3, and they are very proud to have a baby brother.
-Family life with three is not so much different from two so far, actually.
-Maybe especially since my wife was rather sick for her entire pregnancy, so I'm used to entertaining the boys.
-And I have to say, it's incredible to have a baby!
+I have to say, it's so lovely to have a baby!
+And family life with three kids has not been so much different from two so far.
+Maybe since my wife was rather sick during her pregnancy, so I'm used to entertaining the boys.
 
 ### Reading
 
@@ -46,11 +46,12 @@ Pros compared to Claude Code:
 My wife and I got completely hooked on [The Pitt](https://en.wikipedia.org/wiki/The_Pitt), a medical drama series.
 We binged season 1 as fast as we could.
 It's a medical drama series which I was sure I was too high brow to like, but it was so fun.
-(It did win five Emmys last year.)
-One season is one shift, so it's real-time, which is a super cool format.
+It did win five Emmys last year!
+One season spans one shift at the ICU, so it's real-time, which is a very neat format.
 
 In the evenings when my wife is sleeping and I'm soothing the baby, I've watched the first two seasons of [Veep](https://en.wikipedia.org/wiki/Veep).
-It's really funny. I'm laughing out loud a lot!
+It's laugh out loud funny.
+Great characters, great dialogue.
 Turns out Jesse Armstrong of [Succession](<https://en.wikipedia.org/wiki/Succession_(TV_series)>) fame is one of the writers.
 Succession is possibly the best and funniest TV series I've seen, so I'm not surprised!
 
@@ -58,7 +59,6 @@ Succession is possibly the best and funniest TV series I've seen, so I'm not sur
 
 <img src="/dune-cap.jpeg" alt="alt text" width="500">
 
-I'm hanging up my Dune hat.
 Next week is my last at [Dune](https://dune.com/), where I've worked for five years.
 When I joined I was the fourth person in the company, we're now more than 60.
 We raised a [Series A](https://dune.com/blog/series-a), a [Series B](https://dune.com/blog/series-b).
