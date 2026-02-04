@@ -16,8 +16,6 @@ Family life with three is not so much different from two so far, actually.
 Maybe especially since my wife was rather sick for her entire pregnancy, so I'm used to entertaining the boys.
 And I have to say, it's incredible to have a baby!
 
-<img src="/baby.png" alt="alt text" width="500">
-
 ### Reading
 
 I reread [The Path to Power](<https://en.wikipedia.org/wiki/The_Years_of_Lyndon_Johnson#Book_One:_The_Path_to_Power_(1982)>), the first Lyndon Johnson book by Robert Caro.
