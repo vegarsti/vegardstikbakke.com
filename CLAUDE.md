@@ -126,3 +126,5 @@ The main branch is `main`. Recent commits show the project was recently set up w
 - Custom fonts
 
 When making changes, follow the existing commit message style (imperative mood, concise descriptions).
+
+**When committing**: Always use explicit file paths with `git add` (e.g., `git add parser.go templates.go`). Never use `git add -A` or `git add .` as this may accidentally stage unrelated files in `content/` or other directories.
