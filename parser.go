@@ -9,9 +9,11 @@ import (
 	"strings"
 	"time"
 
+	chromahtml "github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/renderer/html"
+	highlighting "github.com/yuin/goldmark-highlighting/v2"
 	"gopkg.in/yaml.v3"
 )
 
@@ -67,6 +69,12 @@ func parsePost(filePath string) (Post, error) {
 	md := goldmark.New(
 		goldmark.WithExtensions(
 			extension.Footnote,
+			highlighting.NewHighlighting(
+				highlighting.WithStyle("github"),
+				highlighting.WithFormatOptions(
+					chromahtml.WithClasses(true),
+				),
+			),
 		),
 		goldmark.WithRendererOptions(
 			html.WithUnsafe(),
@@ -210,6 +218,12 @@ func loadPage(filePath string) (Page, error) {
 	md := goldmark.New(
 		goldmark.WithExtensions(
 			extension.Footnote,
+			highlighting.NewHighlighting(
+				highlighting.WithStyle("github"),
+				highlighting.WithFormatOptions(
+					chromahtml.WithClasses(true),
+				),
+			),
 		),
 		goldmark.WithRendererOptions(
 			html.WithUnsafe(),
@@ -277,6 +291,12 @@ func parseBook(filePath string) (Book, error) {
 	md := goldmark.New(
 		goldmark.WithExtensions(
 			extension.Footnote,
+			highlighting.NewHighlighting(
+				highlighting.WithStyle("github"),
+				highlighting.WithFormatOptions(
+					chromahtml.WithClasses(true),
+				),
+			),
 		),
 		goldmark.WithRendererOptions(
 			html.WithUnsafe(),
