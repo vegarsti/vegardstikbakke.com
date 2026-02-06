@@ -255,6 +255,8 @@ var baseTemplate = `<!DOCTYPE html>
             font-size: 14px;
             border-radius: 0.4em;
             tab-size: 4;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
         }
 
         pre {
