@@ -61,26 +61,26 @@ If we didn't find any file, we fall back to watching the working directory.
 Kinda neat!
 
 ```go
-	// Find files in command that we will watch
-	toWatch := make([]string, 0)
-	for _, part := range input {
-		// Check if there's a file to watch
-		info, err := os.Stat(part)
-		if os.IsNotExist(err) {
-			continue
-		}
-		check(err)
-		if !slices.Contains(toWatch, info.Name()) {
-			toWatch = append(toWatch, info.Name())
-		}
+// Find files in command that we will watch
+toWatch := make([]string, 0)
+for _, part := range input {
+	// Check if there's a file to watch
+	info, err := os.Stat(part)
+	if os.IsNotExist(err) {
+		continue
 	}
+	check(err)
+	if !slices.Contains(toWatch, info.Name()) {
+		toWatch = append(toWatch, info.Name())
+	}
+}
 
-	// Fall back to watching the working directory
-	if len(toWatch) == 0 {
-		wd, err := os.Getwd()
-		check(err)
-		toWatch = append(toWatch, wd)
-	}
+// Fall back to watching the working directory
+if len(toWatch) == 0 {
+	wd, err := os.Getwd()
+	check(err)
+	toWatch = append(toWatch, wd)
+}
 ```
 
 ### Detecting file changes
@@ -94,32 +94,32 @@ On macOS it uses the [kqueue](https://en.wikipedia.org/wiki/Kqueue) notification
 Here's the code for that.
 
 ```go
-	watcher, err := fsnotify.NewWatcher()
+watcher, err := fsnotify.NewWatcher()
+check(err)
+defer watcher.Close()
+
+for _, file := range toWatch {
+	err = watcher.Add(file)
 	check(err)
-	defer watcher.Close()
+}
 
-	for _, file := range toWatch {
-		err = watcher.Add(file)
-		check(err)
-	}
-
-	fileChanges := make(chan string)
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		lastChange := time.Now()
-		dedupWindow := 100 * time.Millisecond
-		for event := range watcher.Events {
-			if event.Has(fsnotify.Write) {
-				// Treat multiple events at same time as one
-				if time.Since(lastChange) < dedupWindow {
-					continue
-				}
-				lastChange = time.Now()
-				fileChanges <- event.Name
+fileChanges := make(chan string)
+wg.Add(1)
+go func() {
+	defer wg.Done()
+	lastChange := time.Now()
+	dedupWindow := 100 * time.Millisecond
+	for event := range watcher.Events {
+		if event.Has(fsnotify.Write) {
+			// Treat multiple events at same time as one
+			if time.Since(lastChange) < dedupWindow {
+				continue
 			}
+			lastChange = time.Now()
+			fileChanges <- event.Name
 		}
-	}()
+	}
+}()
 ```
 
 And we listen on the `fileChanges` channel in the code to run the command, which we will see now.
@@ -133,20 +133,20 @@ In our case, we want standard out and standard error to be the operating system'
 [`sh -c '<command>'`](https://man7.org/linux/man-pages/man1/sh.1p.html) allows us to pass the full provided command. All use of pipes and operators like `&&` and `||` will just work, as it's handed over to the shell.
 
 ```go
-	// In `main()`
-	// ...
+// In `main()`
+// ...
 
-	// First run the command
+// First run the command
+runCommand(ctx, command, fileChanges)
+
+// Then rerun it on file changes
+for name := range fileChanges {
+	fmt.Fprintf(os.Stderr, "--- Changed: %s\n", name)
+	fmt.Fprintf(os.Stderr, "--- Running: %s\n", command)
 	runCommand(ctx, command, fileChanges)
+}
 
-	// Then rerun it on file changes
-	for name := range fileChanges {
-		fmt.Fprintf(os.Stderr, "--- Changed: %s\n", name)
-		fmt.Fprintf(os.Stderr, "--- Running: %s\n", command)
-		runCommand(ctx, command, fileChanges)
-	}
-
-	// ...
+// ...
 
 func runCommand(ctx context.Context, command string, fileChanges chan string) {
 	// Create child context so we can cancel this command
