@@ -254,6 +254,7 @@ var baseTemplate = `<!DOCTYPE html>
             font-family: 'Iosevka', monospace;
             font-size: 14px;
             border-radius: 0.4em;
+            tab-size: 4;
         }
 
         pre {
