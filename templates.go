@@ -436,13 +436,14 @@ var baseTemplate = `<!DOCTYPE html>
             display: flex;
             align-items: center;
             gap: 0.5em;
-            color: var(--text-color);
+            color: var(--link-color);
             text-decoration: none;
             font-weight: 500;
         }
 
         .social-links a:hover {
-            text-decoration: underline;
+            color: var(--text-color);
+            text-decoration: none;
         }
 
         .social-links i {
