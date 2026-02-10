@@ -35,6 +35,15 @@ type Post struct {
 	RawContent  string
 }
 
+// PostDisplay is used for rendering posts in listings with year visibility
+type PostDisplay struct {
+	Title      string
+	Slug       string
+	DateString string
+	ShowYear   bool
+	Draft      bool
+}
+
 // Page represents a static page (like About)
 type Page struct {
 	Title       string

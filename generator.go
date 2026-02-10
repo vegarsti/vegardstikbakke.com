@@ -50,20 +50,37 @@ func generatePostsListing(site Site) error {
 	tmpl := getBaseTemplate()
 	template.Must(tmpl.Parse(postsListingContent))
 
+	// Convert posts to display format, tracking year visibility
+	posts := make([]PostDisplay, len(site.Posts))
+	lastYear := ""
+	for i, post := range site.Posts {
+		year := post.Date.Format("2006")
+		showYear := year != lastYear
+		lastYear = year
+
+		posts[i] = PostDisplay{
+			Title:      post.Title,
+			Slug:       post.Slug,
+			DateString: post.DateString,
+			ShowYear:   showYear,
+			Draft:      post.Draft,
+		}
+	}
+
 	data := struct {
 		Title        string
 		Description  string
 		CanonicalURL string
 		Image        string
 		OGType       string
-		Posts        []Post
+		Posts        []PostDisplay
 	}{
 		Title:        "Posts — Vegard Stikbakke",
 		Description:  "Blog posts by Vegard Stikbakke",
 		CanonicalURL: "https://vegardstikbakke.com/blog/",
 		Image:        "",
 		OGType:       "website",
-		Posts:        site.Posts,
+		Posts:        posts,
 	}
 
 	if err := os.MkdirAll("public/blog", 0755); err != nil {
