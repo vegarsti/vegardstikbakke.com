@@ -421,7 +421,6 @@ var baseTemplate = `<!DOCTYPE html>
         .social-links {
             list-style: none;
             padding-left: 0;
-            margin-top: 1em;
         }
 
         .social-links li {
