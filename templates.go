@@ -56,30 +56,36 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         :root {
-            --bg-color: #fff;
-            --text-color: #1d1d27;
-            --text-secondary: #73738b;
-            --link-color: #8a9e6b;
-            --link-hover: #496495;
-            --code-bg: #E0E7D7;
-            --code-border: #b6b6c294;
-            --border: #b6b6c2;
-            --badge-bg: #4a7ddd;
+            --bg-color: #f0fdf4;
+            --text-color: #1e293b;
+            --text-secondary: #475569;
+            --link-color: #166534;
+            --link-hover: #15803d;
+            --link-visited: #14532d;
+            --code-bg: #dcfce7;
+            --code-border: #bbf7d0;
+            --border: #d1d5db;
+            --badge-bg: #22c55e;
             --badge-text: #fff;
+            --accent-light: #f0fdf4;
+            --accent-muted: #22c55e;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-color: #1d1d27;
-                --text-color: #e8e8ed;
-                --text-secondary: #a0a0b0;
-                --link-color: #B7C396;
-                --link-hover: #8bb8f8;
-                --code-bg: #2a2c27;
-                --code-border: #3a3a45;
-                --border: #3a3a45;
-                --badge-bg: #5c9cf5;
-                --badge-text: #1d1d27;
+                --bg-color: #0f172a;
+                --text-color: #e2e8f0;
+                --text-secondary: #9ba9bd;
+                --link-color: #86efac;
+                --link-hover: #4ade80;
+                --link-visited: #22c55e;
+                --code-bg: #052e16;
+                --code-border: #14532d;
+                --border: #334155;
+                --badge-bg: #4ade80;
+                --badge-text: #0f172a;
+                --accent-light: #052e16;
+                --accent-muted: #22c55e;
             }
         }
 
