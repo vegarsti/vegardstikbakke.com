@@ -1,7 +1,7 @@
 I'm Vegard Stikbakke, a software engineer based in Norway.
 
-I work at [Dune](https://dune.com), building data intensive systems to support SQL queries on blockchain time series data.
-Before that I studied mathematical statistics and computer science.
+I have worked at [Dune](https://dune.com), building data intensive systems to support SQL queries on blockchain time series data.
+Before that I had small stints at various Norwegian startups, and studied mathematical statistics and computer science.
 
 I enjoy solving problems with code, and learning the history of computing and companies.
 I also like writing about these things!
