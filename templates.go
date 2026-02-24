@@ -281,6 +281,10 @@ var baseTemplate = `<!DOCTYPE html>
             border-radius: 0.4em;
         }
 
+        a code {
+            color: var(--link-color);
+        }
+
         pre code {
             padding: 0;
             background: transparent;
