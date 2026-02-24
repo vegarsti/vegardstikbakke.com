@@ -121,9 +121,25 @@ var baseTemplate = `<!DOCTYPE html>
             text-decoration: underline;
         }
 
-        h1 { font-size: 2em; margin-bottom: 0.5em; }
-        h2 { font-size: 1.5em; margin-top: 1.5em; }
-        h3 { font-size: 1.25em; margin-top: 1.5em; }
+        h1 { font-size: 2em; margin-bottom: 0.5em; position: relative; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; position: relative; }
+        h3 { font-size: 1.25em; margin-top: 1.5em; position: relative; }
+
+        .heading-anchor {
+            position: absolute;
+            left: -1.2em;
+            opacity: 0;
+            font-weight: normal;
+            text-decoration: none !important;
+            color: var(--text-secondary);
+            transition: opacity 0.15s;
+        }
+
+        h1:hover > .heading-anchor,
+        h2:hover > .heading-anchor,
+        h3:hover > .heading-anchor {
+            opacity: 1;
+        }
 
         .post-list {
             display: grid;

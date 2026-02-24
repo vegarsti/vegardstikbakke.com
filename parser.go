@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strings"
 	"time"
@@ -12,10 +13,22 @@ import (
 	chromahtml "github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/extension"
+	"github.com/yuin/goldmark/parser"
 	"github.com/yuin/goldmark/renderer/html"
 	highlighting "github.com/yuin/goldmark-highlighting/v2"
 	"gopkg.in/yaml.v3"
 )
+
+var headingRe = regexp.MustCompile(`<h([1-6]) id="([^"]+)">`)
+
+// addHeadingAnchors post-processes HTML to inject anchor links into headings
+func addHeadingAnchors(htmlContent string) string {
+	return headingRe.ReplaceAllStringFunc(htmlContent, func(match string) string {
+		groups := headingRe.FindStringSubmatch(match)
+		level, id := groups[1], groups[2]
+		return fmt.Sprintf(`<h%s id="%s"><a class="heading-anchor" href="#%s" aria-label="Link to this section">#</a>`, level, id, id)
+	})
+}
 
 // loadPosts reads all markdown files from a directory and parses them
 func loadPosts(dir string) ([]Post, error) {
@@ -76,6 +89,9 @@ func parsePost(filePath string) (Post, error) {
 				),
 			),
 		),
+		goldmark.WithParserOptions(
+			parser.WithAutoHeadingID(),
+		),
 		goldmark.WithRendererOptions(
 			html.WithUnsafe(),
 		),
@@ -96,7 +112,7 @@ func parsePost(filePath string) (Post, error) {
 		Draft:       fm.Draft,
 		Description: fm.Description,
 		Image:       fm.Image,
-		HTMLContent: buf.String(),
+		HTMLContent: addHeadingAnchors(buf.String()),
 		RawContent:  markdown,
 	}, nil
 }
@@ -225,6 +241,9 @@ func loadPage(filePath string) (Page, error) {
 				),
 			),
 		),
+		goldmark.WithParserOptions(
+			parser.WithAutoHeadingID(),
+		),
 		goldmark.WithRendererOptions(
 			html.WithUnsafe(),
 		),
@@ -236,7 +255,7 @@ func loadPage(filePath string) (Page, error) {
 
 	return Page{
 		Title:       fm.Title,
-		HTMLContent: buf.String(),
+		HTMLContent: addHeadingAnchors(buf.String()),
 	}, nil
 }
 
@@ -298,6 +317,9 @@ func parseBook(filePath string) (Book, error) {
 				),
 			),
 		),
+		goldmark.WithParserOptions(
+			parser.WithAutoHeadingID(),
+		),
 		goldmark.WithRendererOptions(
 			html.WithUnsafe(),
 		),
@@ -314,7 +336,7 @@ func parseBook(filePath string) (Book, error) {
 		YearPublished: fm.YearPublished,
 		DateRead:      fm.DateRead,
 		Rating:        fm.Rating,
-		Summary:       buf.String(),
+		Summary:       addHeadingAnchors(buf.String()),
 	}, nil
 }
 
