@@ -10,7 +10,7 @@ The last year and a half I've been making my way through [CSPrimer](https://cspr
 It consists of hundreds of computer science problems, so working through these means I'm writing hundreds of small programs.
 Like most programming, it's a very iterative process where I tweak my program and rerun it, typically switching from my editor to run a command.
 
-```
+```bash
 gcc main.c -o main && ./main
 ```
 
