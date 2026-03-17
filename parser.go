@@ -81,6 +81,7 @@ func parsePost(filePath string) (Post, error) {
 	// Convert markdown to HTML
 	md := goldmark.New(
 		goldmark.WithExtensions(
+			extension.Table,
 			extension.Footnote,
 			highlighting.NewHighlighting(
 				highlighting.WithStyle("github"),
@@ -233,6 +234,7 @@ func loadPage(filePath string) (Page, error) {
 
 	md := goldmark.New(
 		goldmark.WithExtensions(
+			extension.Table,
 			extension.Footnote,
 			highlighting.NewHighlighting(
 				highlighting.WithStyle("github"),
@@ -309,6 +311,7 @@ func parseBook(filePath string) (Book, error) {
 	// Convert markdown summary to HTML
 	md := goldmark.New(
 		goldmark.WithExtensions(
+			extension.Table,
 			extension.Footnote,
 			highlighting.NewHighlighting(
 				highlighting.WithStyle("github"),
