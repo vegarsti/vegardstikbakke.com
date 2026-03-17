@@ -276,7 +276,7 @@ var baseTemplate = `<!DOCTYPE html>
 
         pre, code {
             font-family: 'Iosevka', monospace;
-            font-size: 14px;
+            font-size: 1em;
             border-radius: 0.4em;
             tab-size: 4;
             -webkit-text-size-adjust: 100%;
@@ -288,6 +288,7 @@ var baseTemplate = `<!DOCTYPE html>
             padding: 20px;
             overflow-x: auto;
             border: 1px solid var(--code-border);
+            font-size: 14px;
         }
 
         code {
