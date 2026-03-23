@@ -9,8 +9,9 @@ type Frontmatter struct {
 	Date        string `yaml:"date"`
 	Draft       bool   `yaml:"draft"`
 	Layout      string `yaml:"layout"`
-	Description string `yaml:"description"`
-	Image       string `yaml:"image"`
+	Description    string `yaml:"description"`
+	Image          string `yaml:"image"`
+	CollapsibleCode *bool `yaml:"collapsible_code"`
 }
 
 // BookFrontmatter represents the YAML metadata for book files
@@ -29,10 +30,11 @@ type Post struct {
 	Date        time.Time
 	DateString  string
 	Draft       bool
-	Description string
-	Image       string
-	HTMLContent string
-	RawContent  string
+	Description     string
+	Image           string
+	CollapsibleCode bool
+	HTMLContent     string
+	RawContent      string
 }
 
 // Page represents a static page (like About)

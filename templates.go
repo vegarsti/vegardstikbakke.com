@@ -620,7 +620,7 @@ var baseTemplate = `<!DOCTYPE html>
     <main>
         {{template "content" .}}
     </main>
-    <script src="/collapsible-code.js"></script>
+    {{if .CollapsibleCode}}<script src="/collapsible-code.js"></script>{{end}}
 </body>
 </html>`
 

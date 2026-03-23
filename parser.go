@@ -105,16 +105,23 @@ func parsePost(filePath string) (Post, error) {
 	// Parse date flexibly
 	parsedDate := parseDate(fm.Date)
 
+	// Default collapsible_code to true
+	collapsibleCode := true
+	if fm.CollapsibleCode != nil {
+		collapsibleCode = *fm.CollapsibleCode
+	}
+
 	return Post{
-		Title:       fm.Title,
-		Slug:        slug,
-		Date:        parsedDate,
-		DateString:  fm.Date,
-		Draft:       fm.Draft,
-		Description: fm.Description,
-		Image:       fm.Image,
-		HTMLContent: addHeadingAnchors(buf.String()),
-		RawContent:  markdown,
+		Title:           fm.Title,
+		Slug:            slug,
+		Date:            parsedDate,
+		DateString:      fm.Date,
+		Draft:           fm.Draft,
+		Description:     fm.Description,
+		Image:           fm.Image,
+		CollapsibleCode: collapsibleCode,
+		HTMLContent:     addHeadingAnchors(buf.String()),
+		RawContent:      markdown,
 	}, nil
 }
 
