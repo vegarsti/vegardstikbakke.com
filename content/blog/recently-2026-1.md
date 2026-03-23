@@ -14,7 +14,6 @@ My wife and I just had our third child at the start of this year - our third son
 The older boys are 5 and 3, and they are very proud to have a baby brother.
 I have to say, it's so lovely to have a baby!
 And family life with three kids has not been so much different from two so far.
-Maybe since my wife was rather sick during her pregnancy, so I'm used to entertaining the boys.
 
 ### Reading
 
@@ -49,7 +48,7 @@ It's a medical drama series which I was sure I was too high brow to like, but it
 It did win five Emmys last year!
 One season spans one shift at the ICU, so it's real-time, which is a very neat format.
 
-In the evenings when my wife is sleeping and I'm soothing the baby, I've watched the first two seasons of [Veep](https://en.wikipedia.org/wiki/Veep).
+In the evenings when my wife is sleeping and I'm soothing the baby, I've been watching [Veep](https://en.wikipedia.org/wiki/Veep).
 It's laugh out loud funny.
 Great characters, great dialogue.
 Turns out Jesse Armstrong of [Succession](<https://en.wikipedia.org/wiki/Succession_(TV_series)>) fame is one of the writers.
