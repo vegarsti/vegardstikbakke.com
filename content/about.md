@@ -1,11 +1,11 @@
 I'm Vegard Stikbakke, a software engineer based in Norway.
 
 I work at [Earendil](https://earendil.com).
-Previously, I spent 5 years at [Dune](https://dune.com), where I built data intensive systems supporting SQL queries on blockchain time series data.
+Previously, I spent 5 years at [Dune](https://dune.com), where I built data intensive systems for time series data.
 
 I enjoy solving problems with code, and reading, especially about the history of computing and companies.
 I also like writing about these things!
-My most recent post is {{MOST_RECENT_POST}}.
+The most recent post is {{MOST_RECENT_POST}}.
 
 I live in a small town on the south west coast of Norway with my wife and 3 young kids.
 
