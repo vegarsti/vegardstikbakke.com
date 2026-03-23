@@ -2,6 +2,7 @@
 title: "A file watcher"
 date: 2024-08-25
 slug: file-watcher
+collapsible_code: false
 ---
 
 I wrote [`reload`](https://github.com/vegarsti/reload), my own file watcher!
