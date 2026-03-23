@@ -2,7 +2,6 @@
 title: Detecting file changes on macOS with kqueue
 slug: kqueue
 date: 2026-03-23
-draft: true
 collapsible_code: false
 ---
 
