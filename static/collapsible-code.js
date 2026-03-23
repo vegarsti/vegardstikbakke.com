@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Only enhance blocks with more than 20 lines
     if (lineCount <= 20) return;
 
+    // Skip blocks explicitly marked as non-collapsible
+    if (pre.hasAttribute('data-no-collapse')) return;
+
     // Create wrapper div
     const wrapper = document.createElement('div');
     wrapper.className = 'code-block-collapsible collapsed';

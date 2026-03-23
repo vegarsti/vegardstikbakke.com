@@ -20,6 +20,24 @@ import (
 )
 
 var headingRe = regexp.MustCompile(`<h([1-6]) id="([^"]+)">`)
+var codeFenceFullRe = regexp.MustCompile("(?m)^(```[a-zA-Z]*) +:full *$")
+
+// markFullCodeBlocks pre-processes markdown to detect :full on code fences.
+// It strips the :full marker and injects an HTML comment before the fence
+// so post-processing can add data-no-collapse to the rendered <pre>.
+func markFullCodeBlocks(markdown string) string {
+	return codeFenceFullRe.ReplaceAllString(markdown, "<!-- no-collapse -->\n${1}")
+}
+
+// applyNoCollapseMarkers post-processes HTML to convert <!-- no-collapse -->
+// markers into data-no-collapse attributes on the following <pre> element.
+func applyNoCollapseMarkers(htmlContent string) string {
+	// The marker appears right before the <pre> in the rendered HTML
+	htmlContent = strings.ReplaceAll(htmlContent, "<!-- no-collapse -->\n<pre", "<pre data-no-collapse")
+	// Also handle case where there might not be a newline
+	htmlContent = strings.ReplaceAll(htmlContent, "<!-- no-collapse --><pre", "<pre data-no-collapse")
+	return htmlContent
+}
 
 // addHeadingAnchors post-processes HTML to inject anchor links into headings
 func addHeadingAnchors(htmlContent string) string {
@@ -97,6 +115,9 @@ func parsePost(filePath string) (Post, error) {
 			html.WithUnsafe(),
 		),
 	)
+	// Pre-process markdown to handle :full code fence markers
+	markdown = markFullCodeBlocks(markdown)
+
 	var buf bytes.Buffer
 	if err := md.Convert([]byte(markdown), &buf); err != nil {
 		return Post{}, fmt.Errorf("error converting markdown: %w", err)
@@ -105,16 +126,23 @@ func parsePost(filePath string) (Post, error) {
 	// Parse date flexibly
 	parsedDate := parseDate(fm.Date)
 
+	// Default collapsible_code to true
+	collapsibleCode := true
+	if fm.CollapsibleCode != nil {
+		collapsibleCode = *fm.CollapsibleCode
+	}
+
 	return Post{
-		Title:       fm.Title,
-		Slug:        slug,
-		Date:        parsedDate,
-		DateString:  fm.Date,
-		Draft:       fm.Draft,
-		Description: fm.Description,
-		Image:       fm.Image,
-		HTMLContent: addHeadingAnchors(buf.String()),
-		RawContent:  markdown,
+		Title:           fm.Title,
+		Slug:            slug,
+		Date:            parsedDate,
+		DateString:      fm.Date,
+		Draft:           fm.Draft,
+		Description:     fm.Description,
+		Image:           fm.Image,
+		CollapsibleCode: collapsibleCode,
+		HTMLContent:     applyNoCollapseMarkers(addHeadingAnchors(buf.String())),
+		RawContent:      markdown,
 	}, nil
 }
 

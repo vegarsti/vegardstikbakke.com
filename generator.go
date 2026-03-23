@@ -27,12 +27,13 @@ func generateHomepage(site Site) error {
 	}
 
 	data := struct {
-		Title        string
-		Description  string
-		CanonicalURL string
-		Image        string
-		OGType       string
-		Content      template.HTML
+		Title           string
+		Description     string
+		CanonicalURL    string
+		Image           string
+		OGType          string
+		CollapsibleCode bool
+		Content         template.HTML
 	}{
 		Title:        "Vegard Stikbakke",
 		Description:  "Vegard Stikbakke — software engineer from Norway",
@@ -51,12 +52,13 @@ func generatePostsListing(site Site) error {
 	template.Must(tmpl.Parse(postsListingContent))
 
 	data := struct {
-		Title        string
-		Description  string
-		CanonicalURL string
-		Image        string
-		OGType       string
-		Posts        []Post
+		Title           string
+		Description     string
+		CanonicalURL    string
+		Image           string
+		OGType          string
+		CollapsibleCode bool
+		Posts           []Post
 	}{
 		Title:        "Posts — Vegard Stikbakke",
 		Description:  "Blog posts by Vegard Stikbakke",
@@ -103,12 +105,13 @@ func generateBooksListing(site Site) error {
 	}
 
 	data := struct {
-		Title        string
-		Description  string
-		CanonicalURL string
-		Image        string
-		OGType       string
-		Books        []BookDisplay
+		Title           string
+		Description     string
+		CanonicalURL    string
+		Image           string
+		OGType          string
+		CollapsibleCode bool
+		Books           []BookDisplay
 	}{
 		Title:        "Books — Vegard Stikbakke",
 		Description:  "Books read by Vegard Stikbakke",
@@ -132,23 +135,25 @@ func generateIndividualPosts(site Site) error {
 
 	for _, post := range site.Posts {
 		data := struct {
-			Title        string
-			PostTitle    string
-			DateString   string
-			Description  string
-			CanonicalURL string
-			Image        string
-			OGType       string
-			Content      template.HTML
+			Title           string
+			PostTitle       string
+			DateString      string
+			Description     string
+			CanonicalURL    string
+			Image           string
+			OGType          string
+			CollapsibleCode bool
+			Content         template.HTML
 		}{
-			Title:        post.Title + " — Vegard Stikbakke",
-			PostTitle:    post.Title,
-			DateString:   post.DateString,
-			Description:  post.Description,
-			CanonicalURL: fmt.Sprintf("https://vegardstikbakke.com/%s/", post.Slug),
-			Image:        post.Image,
-			OGType:       "article",
-			Content:      template.HTML(post.HTMLContent),
+			Title:           post.Title + " — Vegard Stikbakke",
+			PostTitle:       post.Title,
+			DateString:      post.DateString,
+			Description:     post.Description,
+			CanonicalURL:    fmt.Sprintf("https://vegardstikbakke.com/%s/", post.Slug),
+			Image:           post.Image,
+			OGType:          "article",
+			CollapsibleCode: post.CollapsibleCode,
+			Content:         template.HTML(post.HTMLContent),
 		}
 
 		dir := filepath.Join("public", post.Slug)
@@ -172,17 +177,18 @@ func generateIndividualBooks(site Site) error {
 
 	for _, book := range site.Books {
 		data := struct {
-			Title         string
-			BookTitle     string
-			Author        string
-			YearPublished string
-			DateRead      string
-			Rating        int
-			Description   string
-			CanonicalURL  string
-			Image         string
-			OGType        string
-			Content       template.HTML
+			Title           string
+			BookTitle       string
+			Author          string
+			YearPublished   string
+			DateRead        string
+			Rating          int
+			Description     string
+			CanonicalURL    string
+			Image           string
+			OGType          string
+			CollapsibleCode bool
+			Content         template.HTML
 		}{
 			Title:         book.Title + " — Vegard Stikbakke",
 			BookTitle:     book.Title,
@@ -308,12 +314,13 @@ func generateRSSListing(site Site) error {
 	}
 
 	data := struct {
-		Title        string
-		Description  string
-		CanonicalURL string
-		Image        string
-		OGType       string
-		Items        []ItemDisplay
+		Title           string
+		Description     string
+		CanonicalURL    string
+		Image           string
+		OGType          string
+		CollapsibleCode bool
+		Items           []ItemDisplay
 	}{
 		Title:        "Reading — Vegard Stikbakke",
 		Description:  "Articles from blogs I follow",
@@ -370,11 +377,12 @@ func generate404Page() error {
 	template.Must(tmpl.Parse(notFoundContent))
 
 	data := struct {
-		Title        string
-		Description  string
-		CanonicalURL string
-		Image        string
-		OGType       string
+		Title           string
+		Description     string
+		CanonicalURL    string
+		Image           string
+		OGType          string
+		CollapsibleCode bool
 	}{
 		Title:       "404 — Page Not Found",
 		Description: "",
