@@ -285,3 +285,5 @@ func (w *watcher) Wait() (string, error) {
 	}
 }
 ```
+
+[Check out the full program on GitHub](https://github.com/vegarsti/reload).
