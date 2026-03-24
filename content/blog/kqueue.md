@@ -95,7 +95,7 @@ struct kevent *changes = malloc(nfiles * sizeof(struct kevent));
 for (int i = 0; i < nfiles; i++) {
     fds[i] = open(argv[i + 1], O_EVTONLY);
     if (fds[i] == -1) {
-        fprintf(stderr, "open(%s): ", argv[i + 1]);
+        fprintf(stderr, "open(%s): \n", argv[i + 1]);
         exit(1);
     }
 
