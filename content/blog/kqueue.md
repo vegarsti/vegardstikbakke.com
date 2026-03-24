@@ -63,10 +63,9 @@ Finally, `flags` defines the actions to perform on the event.
 There are 10 possible flags, but we only need `EV_ADD` to register the event in the `kqueue`, and `EV_CLEAR` to reset the event state after delivery.
 Without `EV_CLEAR`, we'd get the first file change again and again - try it!
 
-A further note on `EV_CLEAR`:
-When a file is written to, the state transitions to "has been written to".
-Even if there are multiple writes to this file before we retrieve the event from the kqueue, these will be collapsed into one event.
-However if multiple files are written, these will be distinct events.
+If there are multiple writes to this file before we retrieve the event from the kqueue, these will be collapsed into one event.
+However, if multiple files are written, these will be distinct events.
+So in practice, in `reload`, we'll likely want a window such that we don't rerun the command on every single event if they are close in time.
 
 We now have all we need to initialize a kevent structure.
 
