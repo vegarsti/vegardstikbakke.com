@@ -9,7 +9,7 @@ import (
 
 func main() {
 	// Parse command-line flags
-	includeDrafts := flag.Bool("include-drafts", false, "Include draft posts in generation")
+	includeDrafts := flag.Bool("include-drafts", false, "Include draft posts in listings")
 	skipRSSIfExists := flag.Bool("skip-rss-if-exists", false, "Skip RSS fetching if reading page already exists")
 	flag.Parse()
 
@@ -19,11 +19,13 @@ func main() {
 		log.Fatalf("Error loading posts: %v", err)
 	}
 
-	// 2. Filter out drafts (unless includeDrafts is true)
+	// 2. Separate published posts (for listings) and all posts (for page generation)
 	publishedPosts := filterPublished(posts, *includeDrafts)
+	allPosts := posts
 
 	// 3. Sort posts by date (newest first)
 	sortPostsByDate(publishedPosts)
+	sortPostsByDate(allPosts)
 
 	// 4. Load static pages
 	aboutPage, err := loadPage("content/about.md")
@@ -61,6 +63,7 @@ func main() {
 	// 9. Build site structure
 	site := Site{
 		Posts:     publishedPosts,
+		AllPosts:  allPosts,
 		AboutPage: aboutPage,
 		Books:     books,
 		FeedItems: feedItems,
@@ -133,7 +136,7 @@ func main() {
 	}
 
 	fmt.Printf("✓ Site generated successfully in public/\n")
-	fmt.Printf("✓ Generated %d posts\n", len(publishedPosts))
+	fmt.Printf("✓ Generated %d posts (%d published, %d drafts)\n", len(allPosts), len(publishedPosts), len(allPosts)-len(publishedPosts))
 	fmt.Printf("✓ Generated %d books\n", len(books))
 	if len(feedItems) > 0 {
 		fmt.Printf("✓ Generated reading list with %d articles at /reading/\n", len(feedItems))

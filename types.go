@@ -56,7 +56,8 @@ type Book struct {
 
 // Site represents the entire site structure
 type Site struct {
-	Posts     []Post
+	Posts     []Post // Published posts only (for listings, RSS, etc.)
+	AllPosts  []Post // All posts including drafts (for individual page generation)
 	AboutPage Page
 	Books     []Book
 	FeedItems []FeedItem

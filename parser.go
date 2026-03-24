@@ -201,7 +201,6 @@ func filterPublished(posts []Post, includeDrafts bool) []Post {
 	if includeDrafts {
 		return posts
 	}
-
 	var published []Post
 	for _, post := range posts {
 		if !post.Draft {

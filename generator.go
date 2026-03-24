@@ -133,7 +133,7 @@ func generateIndividualPosts(site Site) error {
 	tmpl := getBaseTemplate()
 	template.Must(tmpl.Parse(postContent))
 
-	for _, post := range site.Posts {
+	for _, post := range site.AllPosts {
 		data := struct {
 			Title           string
 			PostTitle       string
