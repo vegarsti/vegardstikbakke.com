@@ -43,7 +43,7 @@ This has five fields that we need to care about.
 - `filter` The kernel filter used to process the event.
 - `flags` Actions to perform on the event.
 - `fflags` Filter-specific flags.
-- `udata` Opaque user data identifier
+- `udata` Opaque user data identifier. We'll use this to store the filename for easy lookup later.
 
 Well, which kernel filter do we use if we want to watch a file for changes?
 There are 9 possible filters, but the one we're looking for is `EVFILT_VNODE`.
