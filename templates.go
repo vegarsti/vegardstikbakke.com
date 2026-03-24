@@ -656,7 +656,7 @@ var booksListingContent = `{{define "content"}}
 
 // Individual post template
 var postContent = `{{define "content"}}
-<h1>{{.PostTitle}}</h1>
+<h1>{{.PostTitle}}{{if .Draft}} <span class="draft-badge">Draft</span>{{end}}</h1>
 {{if .DateString}}<p class="post-date">{{.DateString}}</p>{{end}}
 {{.Content}}
 {{end}}`

@@ -138,6 +138,7 @@ func generateIndividualPosts(site Site) error {
 			Title           string
 			PostTitle       string
 			DateString      string
+			Draft           bool
 			Description     string
 			CanonicalURL    string
 			Image           string
@@ -148,6 +149,7 @@ func generateIndividualPosts(site Site) error {
 			Title:           post.Title + " — Vegard Stikbakke",
 			PostTitle:       post.Title,
 			DateString:      post.DateString,
+			Draft:           post.Draft,
 			Description:     post.Description,
 			CanonicalURL:    fmt.Sprintf("https://vegardstikbakke.com/%s/", post.Slug),
 			Image:           post.Image,
