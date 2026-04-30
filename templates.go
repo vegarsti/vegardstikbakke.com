@@ -216,14 +216,14 @@ var baseTemplate = `<!DOCTYPE html>
             display: inline-block;
             background: var(--badge-bg);
             color: var(--badge-text);
-            font-size: 0.7em;
+            font-size: 0.65em;
             font-weight: 600;
-            padding: 2px 6px;
-            border-radius: 0.4em;
-            margin-left: 8px;
+            padding: 1px 5px;
+            border-radius: 999px;
+            margin-left: 0.45em;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            vertical-align: middle;
+            letter-spacing: 0.04em;
+            vertical-align: 0.12em;
         }
 
         .books {
