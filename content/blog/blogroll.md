@@ -4,6 +4,7 @@ slug: blogroll
 date: "2024-07-31"
 ---
 
+- [Martin Hafskjold Thoresen](https://mht.wtf/)
 - [Andrew Healey](https://healeycodes.com/)
 - [Ben Hoyt](https://benhoyt.com/writings/)
 - [Phil Eaton](https://notes.eatonphil.com/)
