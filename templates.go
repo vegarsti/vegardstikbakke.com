@@ -31,6 +31,18 @@ var baseTemplate = `<!DOCTYPE html>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        (function() {
+            try {
+                var theme = localStorage.getItem('theme');
+                if (theme === 'light' || theme === 'dark') {
+                    document.documentElement.dataset.theme = theme;
+                } else {
+                    delete document.documentElement.dataset.theme;
+                }
+            } catch (e) {}
+        })();
+    </script>
     <style>
         @import url('https://cdn.jsdelivr.net/npm/@fontsource/iosevka@5.0.4/index.min.css');
         @font-face {
@@ -57,6 +69,7 @@ var baseTemplate = `<!DOCTYPE html>
 
         /* Catppuccin Latte */
         :root {
+            color-scheme: light;
             --bg-color: #eff1f5;
             --text-color: #4c4f69;
             --text-secondary: #6c6f85;
@@ -72,9 +85,27 @@ var baseTemplate = `<!DOCTYPE html>
             --accent-muted: #179299;
         }
 
+        :root[data-theme="dark"] {
+            color-scheme: dark;
+            --bg-color: #1e1e2e;
+            --text-color: #cdd6f4;
+            --text-secondary: #a6adc8;
+            --link-color: #89b4fa;
+            --link-hover: #74c7ec;
+            --link-visited: #cba6f7;
+            --code-bg: #313244;
+            --code-border: #45475a;
+            --border: #45475a;
+            --badge-bg: #a6e3a1;
+            --badge-text: #1e1e2e;
+            --accent-light: #181825;
+            --accent-muted: #94e2d5;
+        }
+
         /* Catppuccin Mocha */
         @media (prefers-color-scheme: dark) {
-            :root {
+            :root:not([data-theme="light"]) {
+                color-scheme: dark;
                 --bg-color: #1e1e2e;
                 --text-color: #cdd6f4;
                 --text-secondary: #a6adc8;
@@ -104,13 +135,15 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
             margin-bottom: 40px;
             padding-bottom: 20px;
             border-bottom: 1px solid var(--text-color);
         }
 
         nav a {
-            margin-right: 20px;
             text-decoration: none;
             color: var(--text-color);
             font-weight: 500;
@@ -119,6 +152,37 @@ var baseTemplate = `<!DOCTYPE html>
         nav a:hover {
             color: var(--text-color);
             text-decoration: underline;
+        }
+
+        .theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            margin-left: auto;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: transparent;
+            color: var(--text-color);
+            cursor: pointer;
+            font: inherit;
+            line-height: 1;
+            transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-light);
+            border-color: var(--text-secondary);
+        }
+
+        .theme-toggle:focus {
+            outline: 2px solid var(--link-color);
+            outline-offset: 2px;
+        }
+
+        .theme-toggle:active {
+            transform: translateY(1px);
         }
 
         h1 { font-size: 2em; margin-bottom: 0.5em; position: relative; }
@@ -616,10 +680,55 @@ var baseTemplate = `<!DOCTYPE html>
     <nav>
         <a href="/">Vegard Stikbakke</a>
         <a href="/blog/">Posts</a>
+        <button class="theme-toggle" type="button" aria-label="Theme: auto. Switch to light mode" title="Theme: auto">◐</button>
     </nav>
     <main>
         {{template "content" .}}
     </main>
+    <script>
+        (function() {
+            var button = document.querySelector('.theme-toggle');
+            if (!button) return;
+
+            var modes = ['auto', 'light', 'dark'];
+
+            function storedTheme() {
+                try {
+                    var theme = localStorage.getItem('theme');
+                    return modes.indexOf(theme) === -1 ? 'auto' : theme;
+                } catch (e) {
+                    return 'auto';
+                }
+            }
+
+            function applyTheme(theme) {
+                if (theme === 'light' || theme === 'dark') {
+                    document.documentElement.dataset.theme = theme;
+                } else {
+                    delete document.documentElement.dataset.theme;
+                }
+            }
+
+            function updateButton(theme) {
+                var nextTheme = modes[(modes.indexOf(theme) + 1) % modes.length];
+                var labels = { auto: '◐', light: '☀', dark: '☾' };
+                button.textContent = labels[theme];
+                button.setAttribute('title', 'Theme: ' + theme);
+                button.setAttribute('aria-label', 'Theme: ' + theme + '. Switch to ' + nextTheme + ' mode');
+            }
+
+            applyTheme(storedTheme());
+            updateButton(storedTheme());
+
+            button.addEventListener('click', function() {
+                var current = storedTheme();
+                var nextTheme = modes[(modes.indexOf(current) + 1) % modes.length];
+                applyTheme(nextTheme);
+                try { localStorage.setItem('theme', nextTheme); } catch (e) {}
+                updateButton(nextTheme);
+            });
+        })();
+    </script>
     {{if .CollapsibleCode}}<script src="/collapsible-code.js"></script>{{end}}
 </body>
 </html>`
