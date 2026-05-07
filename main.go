@@ -33,22 +33,13 @@ func main() {
 		log.Fatalf("Error loading about page: %v", err)
 	}
 
-	// 5. Load books from markdown files
-	books, err := loadBooks("content/books")
-	if err != nil {
-		log.Fatalf("Error loading books: %v", err)
-	}
-
-	// 6. Sort books by date_read (most recent first)
-	sortBooksByDate(books)
-
-	// 7. Check if we should skip RSS fetching (preserve existing reading page)
+	// 5. Check if we should skip RSS fetching (preserve existing reading page)
 	skipRSS := *skipRSSIfExists
 	if _, err := os.Stat("public/reading/index.html"); os.IsNotExist(err) {
 		skipRSS = false // Must fetch if reading page doesn't exist
 	}
 
-	// 8. Load RSS feed items (unless skipping)
+	// 6. Load RSS feed items (unless skipping)
 	var feedItems []FeedItem
 	if skipRSS {
 		fmt.Println("Skipping RSS fetch (reading page already exists)")
@@ -60,16 +51,15 @@ func main() {
 		}
 	}
 
-	// 9. Build site structure
+	// 7. Build site structure
 	site := Site{
 		Posts:     publishedPosts,
 		AllPosts:  allPosts,
 		AboutPage: aboutPage,
-		Books:     books,
 		FeedItems: feedItems,
 	}
 
-	// 10. Create output directory (preserve reading/ if skipping RSS)
+	// 8. Create output directory (preserve reading/ if skipping RSS)
 	if skipRSS {
 		// Preserve reading directory by removing everything else
 		entries, err := os.ReadDir("public")
@@ -92,12 +82,12 @@ func main() {
 		log.Fatalf("Error creating public dir: %v", err)
 	}
 
-	// 11. Copy static assets
+	// 9. Copy static assets
 	if err := copyStaticAssets(); err != nil {
 		log.Fatalf("Error copying static assets: %v", err)
 	}
 
-	// 12. Generate all HTML files
+	// 10. Generate all HTML files
 	if err := generateHomepage(site); err != nil {
 		log.Fatalf("Error generating homepage: %v", err)
 	}
@@ -106,38 +96,29 @@ func main() {
 		log.Fatalf("Error generating posts listing: %v", err)
 	}
 
-	if err := generateBooksListing(site); err != nil {
-		log.Fatalf("Error generating books listing: %v", err)
-	}
-
 	if err := generateIndividualPosts(site); err != nil {
 		log.Fatalf("Error generating individual posts: %v", err)
 	}
 
-	if err := generateIndividualBooks(site); err != nil {
-		log.Fatalf("Error generating individual books: %v", err)
-	}
-
-	// 13. Generate RSS reading list page (skip if preserving existing)
+	// 11. Generate RSS reading list page (skip if preserving existing)
 	if !skipRSS {
 		if err := generateRSSListing(site); err != nil {
 			log.Fatalf("Error generating RSS listing: %v", err)
 		}
 	}
 
-	// 14. Generate RSS feed
+	// 12. Generate RSS feed
 	if err := generateRSSFeed(site); err != nil {
 		log.Fatalf("Error generating RSS feed: %v", err)
 	}
 
-	// 15. Generate 404 page
+	// 13. Generate 404 page
 	if err := generate404Page(); err != nil {
 		log.Fatalf("Error generating 404 page: %v", err)
 	}
 
 	fmt.Printf("✓ Site generated successfully in public/\n")
 	fmt.Printf("✓ Generated %d posts (%d published, %d drafts)\n", len(allPosts), len(publishedPosts), len(allPosts)-len(publishedPosts))
-	fmt.Printf("✓ Generated %d books\n", len(books))
 	if len(feedItems) > 0 {
 		fmt.Printf("✓ Generated reading list with %d articles at /reading/\n", len(feedItems))
 	}

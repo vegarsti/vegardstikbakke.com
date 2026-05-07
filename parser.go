@@ -12,10 +12,10 @@ import (
 
 	chromahtml "github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/yuin/goldmark"
+	highlighting "github.com/yuin/goldmark-highlighting/v2"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
 	"github.com/yuin/goldmark/renderer/html"
-	highlighting "github.com/yuin/goldmark-highlighting/v2"
 	"gopkg.in/yaml.v3"
 )
 
@@ -180,10 +180,10 @@ func parseDate(dateStr string) time.Time {
 
 	// Try common formats
 	formats := []string{
-		"2006-01-02",                 // "2020-03-21"
-		"2006-01-02T15:04:05Z07:00",  // ISO 8601 with timezone
-		"2006-01-02T15:04:05",        // ISO 8601 without timezone
-		"2006-01-02 15:04:05",        // Space separated
+		"2006-01-02",                // "2020-03-21"
+		"2006-01-02T15:04:05Z07:00", // ISO 8601 with timezone
+		"2006-01-02T15:04:05",       // ISO 8601 without timezone
+		"2006-01-02 15:04:05",       // Space separated
 	}
 
 	for _, format := range formats {
@@ -265,101 +265,4 @@ func loadPage(filePath string) (Page, error) {
 		Title:       fm.Title,
 		HTMLContent: addHeadingAnchors(buf.String()),
 	}, nil
-}
-
-// loadBooks reads all markdown files from content/books/ and parses them
-func loadBooks(dir string) ([]Book, error) {
-	files, err := filepath.Glob(filepath.Join(dir, "*.md"))
-	if err != nil {
-		return nil, err
-	}
-
-	var books []Book
-	for _, file := range files {
-		book, err := parseBook(file)
-		if err != nil {
-			return nil, fmt.Errorf("error parsing %s: %w", file, err)
-		}
-		books = append(books, book)
-	}
-
-	return books, nil
-}
-
-// parseBook reads a markdown file and extracts book metadata and summary
-func parseBook(filePath string) (Book, error) {
-	content, err := os.ReadFile(filePath)
-	if err != nil {
-		return Book{}, err
-	}
-
-	// Split frontmatter from content
-	frontmatter, markdown := extractFrontmatter(content)
-
-	// Parse YAML frontmatter
-	var fm BookFrontmatter
-	if err := yaml.Unmarshal([]byte(frontmatter), &fm); err != nil {
-		return Book{}, fmt.Errorf("error parsing frontmatter: %w", err)
-	}
-
-	// Validate required fields
-	if fm.Title == "" {
-		return Book{}, fmt.Errorf("book missing required field: title")
-	}
-	if fm.Author == "" {
-		return Book{}, fmt.Errorf("book missing required field: author")
-	}
-
-	// Generate slug from filename
-	filename := filepath.Base(filePath)
-	slug := strings.TrimSuffix(filename, ".md")
-
-	// Convert markdown summary to HTML
-	md := goldmark.New(
-		goldmark.WithExtensions(
-			extension.Table,
-			extension.Footnote,
-			highlighting.NewHighlighting(
-				highlighting.WithStyle("github"),
-				highlighting.WithFormatOptions(
-					chromahtml.WithClasses(true),
-				),
-			),
-		),
-		goldmark.WithParserOptions(
-			parser.WithAutoHeadingID(),
-		),
-		goldmark.WithRendererOptions(
-			html.WithUnsafe(),
-		),
-	)
-	var buf bytes.Buffer
-	if err := md.Convert([]byte(markdown), &buf); err != nil {
-		return Book{}, fmt.Errorf("error converting markdown: %w", err)
-	}
-
-	return Book{
-		Title:         fm.Title,
-		Slug:          slug,
-		Author:        fm.Author,
-		YearPublished: fm.YearPublished,
-		DateRead:      fm.DateRead,
-		Rating:        fm.Rating,
-		Summary:       addHeadingAnchors(buf.String()),
-	}, nil
-}
-
-// sortBooksByDate sorts books by date_read, most recent first
-func sortBooksByDate(books []Book) {
-	sort.Slice(books, func(i, j int) bool {
-		// Books without dates should go to the end
-		if books[i].DateRead == "" {
-			return false
-		}
-		if books[j].DateRead == "" {
-			return true
-		}
-		// Simple string comparison works for YYYY-MM or YYYY formats
-		return books[i].DateRead > books[j].DateRead
-	})
 }

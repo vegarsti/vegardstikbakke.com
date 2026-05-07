@@ -290,54 +290,6 @@ var baseTemplate = `<!DOCTYPE html>
             vertical-align: 0.12em;
         }
 
-        .books {
-            display: grid;
-            grid-template-columns: 1fr 0.75fr 110px;
-            gap: 1em 1.5em;
-            margin-top: 2em;
-        }
-
-        .book-title, .book-author {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        .book-title {
-            font-weight: 400;
-        }
-
-        .book-title a {
-            color: var(--text-color);
-            text-decoration: none;
-        }
-
-        .book-title a:hover {
-            text-decoration: underline;
-        }
-
-        .book-author {
-            color: var(--text-secondary);
-        }
-
-        .book-date {
-            color: var(--text-secondary);
-            font-variant-numeric: tabular-nums;
-            font-family: 'Iosevka', monospace;
-        }
-
-        .book-rating {
-            color: var(--link-color);
-            white-space: nowrap;
-        }
-
-        @media (max-width: 640px) {
-            .books {
-                grid-template-columns: 1fr;
-                gap: 0.5em;
-            }
-        }
-
         pre, code {
             font-family: 'Iosevka', monospace;
             font-size: 1em;
@@ -751,33 +703,10 @@ var postsListingContent = `{{define "content"}}
 <p style="margin-top: 2em;"><a href="/feed.xml">RSS feed</a></p>
 {{end}}`
 
-// Books listing template
-var booksListingContent = `{{define "content"}}
-<h1>Books</h1>
-<div class="books">
-{{range .Books}}
-    <div class="book-title"><a href="/books/{{.Slug}}/">{{.Title}}</a></div>
-    <div class="book-author">{{.Author}}</div>
-    <div class="book-date">{{.DateRead}}</div>
-{{end}}
-</div>
-{{end}}`
-
 // Individual post template
 var postContent = `{{define "content"}}
 <h1>{{.PostTitle}}{{if .Draft}} <span class="draft-badge">Draft</span>{{end}}</h1>
 {{if .DateString}}<p class="post-date">{{.DateString}}</p>{{end}}
-{{.Content}}
-{{end}}`
-
-// Individual book template
-var bookContent = `{{define "content"}}
-<h1>{{.BookTitle}}</h1>
-<p class="post-date">
-    by {{.Author}}
-    {{if .YearPublished}} ({{.YearPublished}}){{end}}
-    {{if .DateRead}} • Read: {{.DateRead}}{{end}}
-</p>
 {{.Content}}
 {{end}}`
 
@@ -803,18 +732,5 @@ var notFoundContent = `{{define "content"}}
 {{end}}`
 
 func getBaseTemplate() *template.Template {
-	tmpl := template.New("base")
-	tmpl = tmpl.Funcs(template.FuncMap{
-		"stars": func(rating int) string {
-			result := ""
-			for i := 0; i < rating; i++ {
-				result += "★"
-			}
-			for i := rating; i < 5; i++ {
-				result += "☆"
-			}
-			return result
-		},
-	})
-	return template.Must(tmpl.Parse(baseTemplate))
+	return template.Must(template.New("base").Parse(baseTemplate))
 }
