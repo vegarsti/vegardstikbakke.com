@@ -8,6 +8,7 @@ type Frontmatter struct {
 	Slug            string `yaml:"slug"`
 	Date            string `yaml:"date"`
 	Draft           bool   `yaml:"draft"`
+	Starred         bool   `yaml:"starred"`
 	Layout          string `yaml:"layout"`
 	Description     string `yaml:"description"`
 	Image           string `yaml:"image"`
@@ -21,6 +22,7 @@ type Post struct {
 	Date            time.Time
 	DateString      string
 	Draft           bool
+	Starred         bool
 	Description     string
 	Image           string
 	CollapsibleCode bool

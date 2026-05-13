@@ -74,6 +74,7 @@ title: My Post Title
 slug: my-post-slug
 date: "2024-01-01"
 draft: false
+starred: false
 ---
 Your markdown content here...
 ```
@@ -82,6 +83,7 @@ Your markdown content here...
 - `slug` (optional): URL slug (defaults to filename)
 - `date` (optional): Publication date
 - `draft` (optional): Set to `true` to exclude from site
+- `starred` (optional): Set to `true` to show a star next to the post in the listing
 
 ## Output Structure
 

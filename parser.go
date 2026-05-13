@@ -117,6 +117,7 @@ func parsePost(filePath string) (Post, error) {
 		Date:            parsedDate,
 		DateString:      fm.Date,
 		Draft:           fm.Draft,
+		Starred:         fm.Starred,
 		Description:     fm.Description,
 		Image:           fm.Image,
 		CollapsibleCode: collapsibleCode,

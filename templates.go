@@ -207,9 +207,18 @@ var baseTemplate = `<!DOCTYPE html>
 
         .post-list {
             display: grid;
-            grid-template-columns: 1fr 110px;
-            gap: 5px;
+            grid-template-columns: 1.25em minmax(0, 1fr) 110px;
+            column-gap: 0.35em;
+            row-gap: 5px;
+            align-items: baseline;
             margin-top: 2em;
+        }
+
+        .post-star-slot {
+            color: var(--text-color);
+            font-size: 0.9em;
+            line-height: 1;
+            text-align: center;
         }
 
         .post-title {
@@ -230,6 +239,10 @@ var baseTemplate = `<!DOCTYPE html>
             text-decoration: underline;
         }
 
+        .post-star {
+            color: var(--text-color);
+        }
+
         .post-date {
             color: var(--text-color);
             font-variant-numeric: tabular-nums;
@@ -237,8 +250,13 @@ var baseTemplate = `<!DOCTYPE html>
 
         @media (max-width: 640px) {
             .post-list {
-                grid-template-columns: 1fr;
-                gap: 0.5em;
+                grid-template-columns: 1.25em minmax(0, 1fr);
+                column-gap: 0.35em;
+                row-gap: 0;
+            }
+            .post-list .post-date {
+                grid-column: 2;
+                margin-bottom: 0.5em;
             }
             h1 {
                 font-size: 1.75em;
@@ -694,8 +712,10 @@ var homepageContent = `{{define "content"}}
 // Posts listing template
 var postsListingContent = `{{define "content"}}
 <h1>Posts</h1>
+<p class="posts-intro">A star (<span class="post-star" title="Starred post" aria-label="Starred post">★</span>) marks posts I'm particularly happy with.</p>
 <div class="post-list">
 {{range .Posts}}
+    <div class="post-star-slot">{{if .Starred}}<span class="post-star" title="Starred post" aria-label="Starred post">★</span>{{end}}</div>
     <div class="post-title"><a href="/{{.Slug}}/">{{.Title}}</a>{{if .Draft}}<span class="draft-badge">Draft</span>{{end}}</div>
     <div class="post-date">{{.DateString}}</div>
 {{end}}
