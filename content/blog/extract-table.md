@@ -2,6 +2,7 @@
 title: "Extract Table API"
 date: 2024-08-17
 slug: extract-table
+draft: true
 ---
 
 How great would it be to pull a table from an image or PDF and instantly turn it into structured text?

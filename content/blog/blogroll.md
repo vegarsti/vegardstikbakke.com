@@ -4,6 +4,8 @@ slug: blogroll
 date: "2024-07-31"
 ---
 
+This is a living document.
+
 - [Martin Hafskjold Thoresen](https://mht.wtf/)
 - [Andrew Healey](https://healeycodes.com/)
 - [Ben Hoyt](https://benhoyt.com/writings/)
