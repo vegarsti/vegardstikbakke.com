@@ -2,6 +2,7 @@
 title: Problem solving with Unix commands
 slug: unix
 date: "2019-02-13"
+starred: true
 ---
 
 I am starting to realize that the Unix command-line toolbox can fix absolutely any problem related to text wrangling. Let me tell you about a problem I had, and how I used some Unix command-line utilities to solve it.

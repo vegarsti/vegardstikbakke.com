@@ -3,7 +3,10 @@ title: Detecting file changes on macOS with kqueue
 slug: kqueue
 date: 2026-03-24
 collapsible_code: false
+starred: true
 ---
+
+PS: This post generated [some interesting discussion on Hacker News](https://news.ycombinator.com/item?id=47508710).
 
 A while ago I wrote [a small file watcher in Go for my own use](https://github.com/vegarsti/reload) with an [accompanying blog post](/file-watcher).
 I needed a tool that I could just plop in front of the command I was running as part of my iteration loop.
