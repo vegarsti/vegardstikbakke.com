@@ -423,6 +423,12 @@ var baseTemplate = `<!DOCTYPE html>
             margin-left: 2em;
             margin-bottom: 1em;
             border: 1px solid var(--text-color);
+            cursor: pointer;
+        }
+
+        .profile-image:focus {
+            outline: 2px solid var(--link-color);
+            outline-offset: 2px;
         }
 
         main img {
@@ -705,8 +711,29 @@ var baseTemplate = `<!DOCTYPE html>
 
 // Homepage template (shows bio from about.md)
 var homepageContent = `{{define "content"}}
-<img src="/me.jpg" alt="Vegard Stikbakke" class="profile-image">
+<img src="/me.jpg" alt="Vegard Stikbakke" class="profile-image" role="button" tabindex="0" aria-label="Toggle profile picture" data-toggle-src="/me-pixel.png">
 {{.Content}}
+<script>
+    (function() {
+        var img = document.querySelector('.profile-image[data-toggle-src]');
+        if (!img) return;
+
+        var initialSrc = img.getAttribute('src');
+        var toggleSrc = img.getAttribute('data-toggle-src');
+
+        function toggleImage() {
+            img.setAttribute('src', img.getAttribute('src') === initialSrc ? toggleSrc : initialSrc);
+        }
+
+        img.addEventListener('click', toggleImage);
+        img.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                toggleImage();
+            }
+        });
+    })();
+</script>
 {{end}}`
 
 // Posts listing template
