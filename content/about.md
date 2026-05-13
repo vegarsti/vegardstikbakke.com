@@ -4,7 +4,7 @@ From 2021 to 2025 I worked at [Dune](https://dune.com), where I built data inten
 Previously, I studied applied math and did a research master's in statistics at the University of Oslo.
 You can find my resume [here](https://docs.google.com/document/d/1ThIq4n7CwNNql6NbqD5RRUrIqfy63drAB29gb1SMurw/preview).
 
-This is where I occasionally write about programming, books, and the history of computing.
+This is where I occasionally write about programming and books I read.
 The most recent post is {{MOST_RECENT_POST}}.
 
 I live in a small town in Norway with my wife and 3 young kids.
