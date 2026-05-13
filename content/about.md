@@ -1,13 +1,11 @@
-I'm Vegard Stikbakke, a software engineer based in Norway.
+I'm Vegard Stikbakke. I'm a software engineer at [Earendil](https://earendil.com), where we make AI tools for humans.
 
-I work at [Earendil](https://earendil.com).
 From 2021 to 2025 I worked at [Dune](https://dune.com), where I built data intensive systems for time series data.
-Previously, I studied applied math and statistics at the University of Oslo.
+Previously, I studied applied math and did a research master's in statistics at the University of Oslo.
 You can find my resume [here](https://docs.google.com/document/d/1ThIq4n7CwNNql6NbqD5RRUrIqfy63drAB29gb1SMurw/preview).
 
-I like reading, especially about the history of companies and computing, and I like solving problems with code.
-
-I write on here sometimes, mostly about programming or books. The most recent post is {{MOST_RECENT_POST}}.
+This is where I occasionally write about programming, books, and the history of computing.
+The most recent post is {{MOST_RECENT_POST}}.
 
 I live in a small town in Norway with my wife and 3 young kids.
 
