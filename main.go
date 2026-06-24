@@ -51,12 +51,20 @@ func main() {
 		}
 	}
 
+	// 6b. Load books from data/books.ndjson (no network; refresh via `make fetch-books`)
+	books, err := loadBooks("data/books.ndjson")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Warning: Error loading books: %v\n", err)
+		books = nil
+	}
+
 	// 7. Build site structure
 	site := Site{
 		Posts:     publishedPosts,
 		AllPosts:  allPosts,
 		AboutPage: aboutPage,
 		FeedItems: feedItems,
+		Books:     books,
 	}
 
 	// 8. Create output directory (preserve reading/ if skipping RSS)
@@ -98,6 +106,11 @@ func main() {
 
 	if err := generateIndividualPosts(site); err != nil {
 		log.Fatalf("Error generating individual posts: %v", err)
+	}
+
+	// 10b. Generate books page (skipped if data/books.ndjson is absent/empty)
+	if err := generateBooksList(site); err != nil {
+		log.Fatalf("Error generating books page: %v", err)
 	}
 
 	// 11. Generate RSS reading list page (skip if preserving existing)

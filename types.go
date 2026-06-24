@@ -42,4 +42,5 @@ type Site struct {
 	AllPosts  []Post // All posts including drafts (for individual page generation)
 	AboutPage Page
 	FeedItems []FeedItem
+	Books     []Book
 }

@@ -9,6 +9,8 @@ help:
 	@echo "  make generate   - Generate the static site in public/"
 	@echo "  make serve      - Serve the generated site locally on port 8000"
 	@echo "  make run        - Build the generator and generate the site"
+	@echo "  make fetch-books - Refresh data/books.ndjson from Goodreads RSS"
+	@echo "  make add-book   - Fetch your latest finished book (after marking it read on Goodreads) and rebuild"
 	@echo "  make clean      - Remove generated files (ssg binary and public/ directory)"
 	@echo "  make new-post SLUG=my-post - Create a new draft blog post"
 	@echo "  make help       - Show this help message"
@@ -29,6 +31,18 @@ serve: build
 	./ssg -include-drafts -skip-rss-if-exists
 	@echo "Serving site at http://localhost:8000"
 	@cd public && python3 -m http.server 8000
+
+# Refresh the Goodreads read-shelf data (no build required)
+fetch-books:
+	@echo "Fetching Goodreads read-shelf..."
+	python3 scripts/fetch_goodreads.py
+
+# Add a book you just finished: assumes you already marked it read (with date
+# and rating) on Goodreads. Pulls the latest read-shelf into data/books.ndjson
+# and regenerates the site so the new book appears on /books/. The fetcher
+# reports "+ N new" — if it says 0 new, Goodreads hasn't propagated the change
+# yet (or the book wasn't moved to the read shelf).
+add-book: fetch-books run
 
 # Build and generate in one step
 run: generate

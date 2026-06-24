@@ -93,6 +93,10 @@ public/
 
 4. **Keep it minimal**: This project intentionally avoids complexity. Don't add unnecessary features, dependencies, or abstractions unless specifically requested.
 
+### Books page (`/books/`)
+
+The books page is generated from `data/books.ndjson` (durable; no network at build time). To refresh the list of recently-read books, run `make fetch-books` then `make run`. See **`docs/books.md`** for the full runbook, field reference, and the important 100-book RSS cap caveat before touching this.
+
 5. **Static assets**: Files in `static/` are copied as-is to `public/`. This includes CSS, fonts, images, etc.
 
 6. **URL paths**: The generated site uses absolute paths starting with `/`, so it must be served with a web server (not opened directly as files).

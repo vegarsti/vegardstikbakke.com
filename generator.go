@@ -273,6 +273,40 @@ type RSSItem struct {
 	Description string   `xml:"description"`
 }
 
+// generateBooksList creates the /books/ page from data/books.ndjson.
+// If the data file is missing or empty, the page is skipped (no error).
+func generateBooksList(site Site) error {
+	if len(site.Books) == 0 {
+		return nil
+	}
+
+	tmpl := getBaseTemplate()
+	template.Must(tmpl.Parse(booksListContent))
+
+	data := struct {
+		Title           string
+		Description     string
+		CanonicalURL    string
+		Image           string
+		OGType          string
+		CollapsibleCode bool
+		Books           []Book
+	}{
+		Title:        "Books — Vegard Stikbakke",
+		Description:  "Books Vegard Stikbakke has read recently",
+		CanonicalURL: "https://vegardstikbakke.com/books/",
+		Image:        "",
+		OGType:       "website",
+		Books:        site.Books,
+	}
+
+	if err := os.MkdirAll("public/books", 0755); err != nil {
+		return err
+	}
+
+	return renderToFile(tmpl, data, "public/books/index.html")
+}
+
 // generate404Page creates a custom 404 page
 func generate404Page() error {
 	tmpl := getBaseTemplate()

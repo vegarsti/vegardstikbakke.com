@@ -767,6 +767,20 @@ var rssListingContent = `{{define "content"}}
 </div>
 {{end}}`
 
+// Books listing template
+var booksListContent = `{{define "content"}}
+<h1>Books</h1>
+<p>Books I've read.</p>
+<div class="reading-list">
+{{range .Books}}
+    <div class="reading-item">
+        <div class="reading-title"><a href="{{.Link}}" target="_blank" rel="noopener">{{.Title}}</a></div>
+        <div class="reading-meta"><span class="reading-source">{{.AuthorName}}</span> · <span title="My rating">{{.Stars}}</span> · <span>{{.ReadAtISO}}</span>{{if .BookPublished}} · <span class="reading-date">{{.BookPublished}}</span>{{end}}</div>
+    </div>
+{{end}}
+</div>
+{{end}}`
+
 // 404 page template
 var notFoundContent = `{{define "content"}}
 <h1>404 — Page Not Found</h1>
