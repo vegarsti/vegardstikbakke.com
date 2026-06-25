@@ -344,7 +344,8 @@ I did not know about kqueue before, but I learned that it's easy to work with, a
 
 Another way to solve the file watching problem would be the naive way, that is, to poll for changes.
 Since kqueue requires an open fd per watched file, kqueue won't scale to very large directory trees.
-The third way this could be done on macOS is to use [FSEvents](https://en.wikipedia.org/wiki/FSEvents), which does not have the problem of fd exhaustion.
+The third way this could be done on macOS is to use [FSEvents](https://en.wikipedia.org/wiki/FSEvents), which does not have the problem of fd exhaustion,
+but it's a heavier, callback-based API and overkill for watching a handful of source files.
 
 I would be very happy if you checked out [the reload code on GitHub](https://github.com/vegarsti/reload), tried it out on your Mac, or reached out to me with any thoughts or experiences doing something similar.
 
