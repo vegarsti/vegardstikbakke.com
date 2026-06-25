@@ -6,8 +6,6 @@ collapsible_code: false
 starred: true
 ---
 
-PS: This post generated [some interesting discussion on Hacker News](https://news.ycombinator.com/item?id=47508710).
-
 A while ago I wrote [a small file watcher in Go for my own use](https://github.com/vegarsti/reload) with an [accompanying blog post](/file-watcher).
 I needed a tool that I could just plop in front of the command I was running as part of my iteration loop.
 I use it for recompiling C files when I modify them,
@@ -352,3 +350,5 @@ I would be very happy if you checked out [the reload code on GitHub](https://git
 Finally, if you're interested in reading more about kqueue,
 you can read [this post](https://nima101.github.io/kqueue_server) about implementing a bidirectional streaming server using kqueue in C,
 and [the original paper](https://people.freebsd.org/~jlemon/papers/kqueue.pdf).
+
+PS: This post generated [some interesting discussion on Hacker News](https://news.ycombinator.com/item?id=47508710).
