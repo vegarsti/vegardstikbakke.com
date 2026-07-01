@@ -536,6 +536,128 @@ var baseTemplate = `<!DOCTYPE html>
             text-align: center;
         }
 
+        /* Homepage sections inspired by ttaylorr.com */
+        .home-rule {
+            clear: both;
+            margin: 2.5em 0 2em;
+        }
+
+        .home-section {
+            margin: 1.75em 0;
+        }
+
+        .home-section h2,
+        .home-section h3 {
+            margin-top: 0;
+            margin-bottom: 0.6em;
+        }
+
+
+        .project-list {
+            padding-left: 1.25em;
+        }
+
+        .writing-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .project-list details {
+            display: inline;
+        }
+
+        details summary {
+            cursor: pointer;
+        }
+
+        details summary:hover {
+            color: var(--link-color);
+        }
+
+        .writing-list .post {
+            position: relative;
+            padding-right: 8.5em;
+        }
+
+        .writing-list .post a {
+            color: var(--text-color);
+            font-weight: 500;
+            letter-spacing: -0.015em;
+            text-decoration: none;
+        }
+
+        .writing-list .post a:hover {
+            color: var(--text-color);
+            text-decoration: underline;
+        }
+
+        .home-book-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .home-book {
+            padding: 0.25em 0;
+        }
+
+        .home-book-title {
+            font-weight: 500;
+            min-width: 0;
+        }
+
+        .home-book-title a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .home-book-title a:hover {
+            text-decoration: underline;
+        }
+
+        .home-book-meta {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            font-variant-numeric: tabular-nums;
+        }
+
+
+        .marginnote {
+            position: absolute;
+            right: 0;
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            white-space: nowrap;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .marginnote.new::before {
+            content: 'new';
+            display: inline-block;
+            margin-right: 0.45em;
+            padding: 0 0.45em;
+            border-radius: 999px;
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            font-size: 0.72em;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            vertical-align: 0.12em;
+        }
+
+        @media (max-width: 640px) {
+            .writing-list .post {
+                padding-right: 0;
+            }
+
+            .marginnote {
+                position: static;
+                display: block;
+                margin-top: 0.1em;
+            }
+
+        }
+
         /* Syntax highlighting - Catppuccin Latte */
         .chroma { background-color: var(--code-bg); }
         .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
@@ -730,6 +852,33 @@ var homepageContent = `{{define "content"}}
 <img src="/me.jpg" alt="Vegard Stikbakke" class="profile-image profile-image-light">
 <img src="/me-pixel.png" alt="Vegard Stikbakke" class="profile-image profile-image-dark">
 {{.Content}}
+
+<section class="home-section" aria-labelledby="writing-heading">
+    <h3 id="writing-heading">Posts</h3>
+    <ul class="writing-list">
+        {{range $i, $post := .Posts}}
+            {{if lt $i 4}}
+                <li class="post"><a href="/{{$post.Slug}}/">{{$post.Title}}</a><span class="marginnote">{{$post.DateString}}</span></li>
+            {{end}}
+        {{end}}
+    </ul>
+    <p><a href="/blog/">All posts →</a></p>
+</section>
+
+{{if .Books}}
+<section class="home-section" aria-labelledby="books-heading">
+    <h3 id="books-heading">Books read</h3>
+    <ul class="home-book-list">
+        {{range $book := .Books}}
+            <li class="home-book">
+                <div class="home-book-title"><a href="{{$book.Link}}" target="_blank" rel="noopener">{{$book.Title}}</a></div>
+                <div class="home-book-meta">{{$book.AuthorName}} · {{$book.ReadAtISO}}</div>
+            </li>
+        {{end}}
+    </ul>
+    <p><a href="/books/">All books →</a></p>
+</section>
+{{end}}
 {{end}}`
 
 // Posts listing template

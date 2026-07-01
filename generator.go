@@ -26,6 +26,11 @@ func generateHomepage(site Site) error {
 		content = strings.Replace(content, "{{MOST_RECENT_POST}}", postLink, 1)
 	}
 
+	latestBooks := site.Books
+	if len(latestBooks) > 5 {
+		latestBooks = latestBooks[:5]
+	}
+
 	data := struct {
 		Title           string
 		Description     string
@@ -34,6 +39,8 @@ func generateHomepage(site Site) error {
 		OGType          string
 		CollapsibleCode bool
 		Content         template.HTML
+		Posts           []Post
+		Books           []Book
 	}{
 		Title:        "Vegard Stikbakke",
 		Description:  "Vegard Stikbakke — software engineer from Norway",
@@ -41,6 +48,8 @@ func generateHomepage(site Site) error {
 		Image:        "/me.jpg",
 		OGType:       "website",
 		Content:      template.HTML(content),
+		Posts:        site.Posts,
+		Books:        latestBooks,
 	}
 
 	return renderToFile(tmpl, data, "public/index.html")
