@@ -8,6 +8,7 @@ This is where I occasionally write about programming and books I read.
 The most recent post is {{MOST_RECENT_POST}}.
 
 I live in a small town in Norway with my wife and 3 young kids.
+Other than hanging out with my family and programming, I enjoy reading and running.
 
 I love getting email. Email me at `vegard.stikbakke@gmail.com`!
 
