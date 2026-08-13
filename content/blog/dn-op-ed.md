@@ -1,6 +1,7 @@
 ---
-title: Op-ed in Norway’s leading business newspaper about university admissions
+title: Op-ed about university admissions in Norway’s leading business newspaper
 slug: dn-op-ed
+external_url: https://www.dn.no/innlegg/utdannelse/samordna-opptak/medisin/forbedring-av-vitnemal-gir-meningslos-slosing/2-1-643154
 date: 2019-07-24
 ---
 

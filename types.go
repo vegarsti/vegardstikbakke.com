@@ -12,6 +12,7 @@ type Frontmatter struct {
 	Layout          string `yaml:"layout"`
 	Description     string `yaml:"description"`
 	Image           string `yaml:"image"`
+	ExternalURL     string `yaml:"external_url"`
 	CollapsibleCode *bool  `yaml:"collapsible_code"`
 }
 
@@ -25,6 +26,7 @@ type Post struct {
 	Starred         bool
 	Description     string
 	Image           string
+	ExternalURL     string
 	CollapsibleCode bool
 	HTMLContent     string
 	RawContent      string

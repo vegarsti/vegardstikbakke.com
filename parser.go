@@ -120,6 +120,7 @@ func parsePost(filePath string) (Post, error) {
 		Starred:         fm.Starred,
 		Description:     fm.Description,
 		Image:           fm.Image,
+		ExternalURL:     fm.ExternalURL,
 		CollapsibleCode: collapsibleCode,
 		HTMLContent:     addHeadingAnchors(buf.String()),
 		RawContent:      markdown,
