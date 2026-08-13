@@ -239,6 +239,11 @@ var baseTemplate = `<!DOCTYPE html>
             text-decoration: underline;
         }
 
+        .external-link-icon {
+            margin-left: 0.15em;
+            font-size: 0.75em;
+        }
+
         .post-star {
             color: var(--text-color);
         }
@@ -739,7 +744,7 @@ var postsListingContent = `{{define "content"}}
 <div class="post-list">
 {{range .Posts}}
     <div class="post-star-slot">{{if .Starred}}<span class="post-star" title="Starred post" aria-label="Starred post">★</span>{{end}}</div>
-    <div class="post-title"><a href="{{if .ExternalURL}}{{.ExternalURL}}{{else}}/{{.Slug}}/{{end}}">{{.Title}}</a>{{if .Draft}}<span class="draft-badge">Draft</span>{{end}}</div>
+    <div class="post-title"><a href="{{if .ExternalURL}}{{.ExternalURL}}{{else}}/{{.Slug}}/{{end}}">{{.Title}}{{if .ExternalURL}} <i class="fa-solid fa-arrow-up-right-from-square external-link-icon" aria-hidden="true"></i>{{end}}</a>{{if .Draft}}<span class="draft-badge">Draft</span>{{end}}</div>
     <div class="post-date">{{.DateString}}</div>
 {{end}}
 </div>

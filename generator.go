@@ -22,7 +22,13 @@ func generateHomepage(site Site) error {
 	content := site.AboutPage.HTMLContent
 	if len(site.Posts) > 0 {
 		mostRecent := site.Posts[0]
-		postLink := fmt.Sprintf(`<a href="/%s/">%s</a>`, mostRecent.Slug, mostRecent.Title)
+		postURL := fmt.Sprintf("/%s/", mostRecent.Slug)
+		externalIcon := ""
+		if mostRecent.ExternalURL != "" {
+			postURL = mostRecent.ExternalURL
+			externalIcon = ` <i class="fa-solid fa-arrow-up-right-from-square external-link-icon" aria-hidden="true"></i>`
+		}
+		postLink := fmt.Sprintf(`<a href="%s">%s%s</a>`, html.EscapeString(postURL), html.EscapeString(mostRecent.Title), externalIcon)
 		content = strings.Replace(content, "{{MOST_RECENT_POST}}", postLink, 1)
 	}
 
