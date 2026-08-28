@@ -405,9 +405,10 @@ var baseTemplate = `<!DOCTYPE html>
             .post-list { grid-template-columns: 1.25em minmax(0, 1fr); column-gap: 0.35em; row-gap: 0; }
             .post-list .post-date { grid-column: 2; margin-bottom: 0.5em; }
             .editorial-subtitle { grid-column: 1; }
-            .work-row { grid-template-columns: 85px minmax(0, 1fr); column-gap: 1rem; row-gap: 0.2rem; }
-            .work-role { grid-column: 2; grid-row: 2; }
-            .work-period { grid-column: 2; grid-row: 1; justify-self: end; }
+            .work-row { grid-template-columns: minmax(0, 1fr) auto; column-gap: 1rem; row-gap: 0.2rem; }
+            .work-company { grid-column: 1 / span 2; grid-row: 1; }
+            .work-role { grid-column: 1; grid-row: 2; }
+            .work-period { grid-column: 2; grid-row: 2; justify-self: end; }
             .editorial-row.book-row { grid-template-columns: minmax(0, 1fr) auto; }
             .book-author { grid-column: 1; grid-row: 2; }
             h1 { font-size: 1.5rem; }
