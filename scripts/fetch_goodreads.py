@@ -9,8 +9,8 @@ git-diffable line-by-line, and streamable.
 
 Why merge (not overwrite): the RSS feed caps at the 100 most-recent reads.
 Once a book scrolls off the feed it's gone from Goodreads' RSS forever, so we
-must accumulate. Keying by the Goodreads review id means re-ratings and edits
-update in place while genuinely new reads append.
+must accumulate. Keying by the Goodreads review link means each read is added
+once; existing records are deliberately left unchanged.
 
 Run:
     python3 scripts/fetch_goodreads.py
@@ -137,19 +137,17 @@ def main():
     print(f"Got {len(items)} items from feed")
 
     skipped_excluded = 0
-    new_links, updated_links = [], []
+    new_links = []
     for item in items:
         book = item_to_book(item)
         key = book["link"]
         if key in excluded:
             skipped_excluded += 1
             continue
-        prev = existing.get(key)
-        if prev is None:
-            new_links.append(key)
-        elif prev != book:
-            updated_links.append(key)
-        existing[key] = book  # upsert
+        if key in existing:
+            continue  # Keep the durable record exactly as it was fetched.
+        existing[key] = book
+        new_links.append(key)
 
     ordered = sorted(existing.values(), key=sort_key, reverse=True)
     tmp = DATA_FILE + ".tmp"
@@ -165,8 +163,7 @@ def main():
             print(f"      • {existing[key]['title']}")
         if len(new_links) > 10:
             print(f"      … and {len(new_links) - 10} more")
-    print(f"  ~ {len(updated_links)} updated (re-rated / edited)")
-    print(f"  = {len(ordered) - len(new_links) - len(updated_links)} unchanged")
+    print(f"  = {len(ordered) - len(new_links)} unchanged")
     if dropped:
         print(f"  - {len(dropped)} removed (now excluded)")
     if skipped_excluded:

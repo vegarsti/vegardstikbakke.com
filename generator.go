@@ -32,6 +32,9 @@ func generateHomepage(site Site) error {
 		content = strings.Replace(content, "{{MOST_RECENT_POST}}", postLink, 1)
 	}
 
+	// Social links are rendered as compact icon links in the site header.
+	content = removeSocialLinks(content)
+
 	data := struct {
 		Title           string
 		Description     string
@@ -40,6 +43,8 @@ func generateHomepage(site Site) error {
 		OGType          string
 		CollapsibleCode bool
 		Content         template.HTML
+		RecentPosts     []Post
+		RecentBooks     []Book
 	}{
 		Title:        "Vegard Stikbakke",
 		Description:  "Vegard Stikbakke — software engineer from Norway",
@@ -47,9 +52,50 @@ func generateHomepage(site Site) error {
 		Image:        "/me.jpg",
 		OGType:       "website",
 		Content:      template.HTML(content),
+		RecentPosts:  recentPosts(site.Posts, 8),
+		RecentBooks:  recentBooks(site.Books, 8),
 	}
 
 	return renderToFile(tmpl, data, "public/index.html")
+}
+
+func removeSocialLinks(content string) string {
+	const startTag = `<ul class="social-links">`
+	start := strings.Index(content, startTag)
+	if start == -1 {
+		return content
+	}
+
+	end := strings.Index(content[start:], "</ul>")
+	if end == -1 {
+		return content
+	}
+
+	return content[:start] + content[start+end+len("</ul>"):]
+}
+
+func recentPosts(posts []Post, count int) []Post {
+	if len(posts) < count {
+		count = len(posts)
+	}
+	return posts[:count]
+}
+
+func recentBooks(books []Book, count int) []Book {
+	if len(books) < count {
+		count = len(books)
+	}
+	return books[:count]
+}
+
+func yearlyBookPosts(posts []Post) []Post {
+	var yearly []Post
+	for _, post := range posts {
+		if strings.HasPrefix(post.Title, "Books I read in ") {
+			yearly = append(yearly, post)
+		}
+	}
+	return yearly
 }
 
 // generatePostsListing creates the posts listing page
@@ -297,13 +343,15 @@ func generateBooksList(site Site) error {
 		OGType          string
 		CollapsibleCode bool
 		Books           []Book
+		YearlyBookPosts []Post
 	}{
-		Title:        "Books — Vegard Stikbakke",
-		Description:  "Books Vegard Stikbakke has read recently",
-		CanonicalURL: "https://vegardstikbakke.com/books/",
-		Image:        "",
-		OGType:       "website",
-		Books:        site.Books,
+		Title:           "Books — Vegard Stikbakke",
+		Description:     "Books Vegard Stikbakke has read recently",
+		CanonicalURL:    "https://vegardstikbakke.com/books/",
+		Image:           "",
+		OGType:          "website",
+		Books:           site.Books,
+		YearlyBookPosts: yearlyBookPosts(site.Posts),
 	}
 
 	if err := os.MkdirAll("public/books", 0755); err != nil {

@@ -69,13 +69,14 @@ Runs `scripts/fetch_goodreads.py`, which:
 - **Merges** the result into `data/books.ndjson`, keyed by `link` (the
   Goodreads review URL, which is unique on the read shelf).
   - New reads → appended.
-  - Re-rated or edited reviews → updated in place.
+  - Existing reads → kept exactly as stored, even if Goodreads later changes
+    the rating, title, or another field.
   - Books that scrolled off the RSS feed → **kept** (this is why we merge, not
     overwrite — see "The 100-book cap" below).
 - Sorts newest-read first and atomically rewrites the file.
-- Prints a diff summary, e.g. `+ 4 new  ~ 1 updated  = 95 unchanged`.
+- Prints a diff summary, e.g. `+ 4 new  = 96 unchanged`.
 
-A clean re-run with no changes shows `+ 0 new  ~ 0 updated  = 100 unchanged`.
+A clean re-run with no new books shows `+ 0 new  = 100 unchanged`.
 
 ### 2. `make run`
 

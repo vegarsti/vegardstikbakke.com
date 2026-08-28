@@ -31,18 +31,6 @@ var baseTemplate = `<!DOCTYPE html>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script>
-        (function() {
-            try {
-                var theme = localStorage.getItem('theme');
-                if (theme === 'light' || theme === 'dark') {
-                    document.documentElement.dataset.theme = theme;
-                } else {
-                    delete document.documentElement.dataset.theme;
-                }
-            } catch (e) {}
-        })();
-    </script>
     <style>
         @import url('https://cdn.jsdelivr.net/npm/@fontsource/iosevka@5.0.4/index.min.css');
         @font-face {
@@ -85,26 +73,9 @@ var baseTemplate = `<!DOCTYPE html>
             --accent-muted: #179299;
         }
 
-        :root[data-theme="dark"] {
-            color-scheme: dark;
-            --bg-color: #1e1e2e;
-            --text-color: #cdd6f4;
-            --text-secondary: #a6adc8;
-            --link-color: #89b4fa;
-            --link-hover: #74c7ec;
-            --link-visited: #cba6f7;
-            --code-bg: #313244;
-            --code-border: #45475a;
-            --border: #45475a;
-            --badge-bg: #a6e3a1;
-            --badge-text: #1e1e2e;
-            --accent-light: #181825;
-            --accent-muted: #94e2d5;
-        }
-
         /* Catppuccin Mocha */
         @media (prefers-color-scheme: dark) {
-            :root:not([data-theme="light"]) {
+            :root {
                 color-scheme: dark;
                 --bg-color: #1e1e2e;
                 --text-color: #cdd6f4;
@@ -123,71 +94,200 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         body {
-            max-width: 700px;
+            max-width: 640px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 64px 24px 48px;
             font-family: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             font-size: 16px;
             letter-spacing: -0.01em;
-            line-height: 1.6;
+            line-height: 1.65;
             background-color: var(--bg-color);
             color: var(--text-color);
         }
 
-        nav {
+        .site-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 52px;
+        }
+
+        .site-name {
+            display: inline-block;
+            color: var(--text-color);
+            font-size: 1.125rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+            text-decoration: none;
+        }
+
+        .site-name:hover { color: var(--text-color); }
+
+        .site-tagline {
+            margin: 4px 0 0;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.4;
+        }
+
+        .site-socials {
             display: flex;
             align-items: center;
-            gap: 20px;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--text-color);
+            gap: 0.75rem;
+            margin-top: 0.65rem;
         }
 
-        nav a {
+        .site-socials a {
+            position: relative;
+            color: var(--link-color);
+            font-size: 0.875rem;
+            line-height: 1;
+        }
+
+        .site-socials a:hover { color: var(--link-color); }
+
+        .site-nav {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-top: 1px;
+        }
+
+        .site-nav a {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
             text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
         }
 
-        nav a:hover {
+        .site-nav a:hover {
             color: var(--text-color);
             text-decoration: underline;
+            text-underline-offset: 3px;
         }
 
-        .theme-toggle {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 2rem;
-            height: 2rem;
-            margin-left: auto;
-            border: 1px solid var(--border);
-            border-radius: 999px;
-            background: transparent;
+        .home-intro::after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+
+        .section-link {
+            margin: 0.75rem 0 0;
+            font-size: 0.875rem;
+        }
+
+        .section-link a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .section-link a:hover {
             color: var(--text-color);
-            cursor: pointer;
-            font: inherit;
-            line-height: 1;
-            transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+            text-decoration: underline;
+            text-underline-offset: 3px;
         }
 
-        .theme-toggle:hover {
+        .work-list {
+            margin: 0 -12px;
+        }
+
+        .work-row {
+            display: grid;
+            grid-template-columns: 110px minmax(0, 1fr) 90px;
+            align-items: baseline;
+            column-gap: 1.5rem;
+            padding: 0.7rem 12px;
+            border-radius: 6px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.15s ease;
+        }
+
+        .work-row:hover {
+            color: var(--text-color);
             background: var(--accent-light);
-            border-color: var(--text-secondary);
+            text-decoration: none;
         }
 
-        .theme-toggle:focus {
-            outline: 2px solid var(--link-color);
-            outline-offset: 2px;
+        .work-company {
+            position: relative;
+            display: block;
+            padding-left: calc(16px + 0.6rem);
+            font-weight: 500;
+            letter-spacing: -0.015em;
         }
 
-        .theme-toggle:active {
-            transform: translateY(1px);
+        .work-icon {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 16px;
+            height: 16px;
+            margin: 0;
+            object-fit: contain;
+            opacity: 0.55;
+            transform: translateY(-50%);
         }
 
-        h1 { font-size: 2em; margin-bottom: 0.5em; position: relative; }
-        h2 { font-size: 1.5em; margin-top: 1.5em; position: relative; }
-        h3 { font-size: 1.25em; margin-top: 1.5em; position: relative; }
+        .dune-work-icon { filter: invert(1); }
+
+        @media (prefers-color-scheme: dark) {
+            .dune-work-icon { filter: none; }
+            .cognite-work-icon { filter: invert(1); }
+        }
+
+        .work-role,
+        .work-period {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .editorial-row.book-row {
+            grid-template-columns: minmax(0, 1fr) minmax(100px, auto) auto;
+        }
+
+        .post-star-slot {
+            color: var(--text-color);
+            font-size: 0.9em;
+            line-height: 1;
+            text-align: center;
+        }
+
+        .book-author {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .work-period {
+            font-variant-numeric: tabular-nums;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        h1 { font-size: 1.75rem; letter-spacing: -0.035em; line-height: 1.2; margin-bottom: 0.75em; position: relative; }
+        h2 { font-size: 1.25rem; letter-spacing: -0.025em; line-height: 1.3; margin-top: 2em; position: relative; }
+        h3 { font-size: 1.1rem; letter-spacing: -0.015em; margin-top: 1.75em; position: relative; }
+
+        .section-label {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            margin: 3.5rem 0 1rem;
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            letter-spacing: 0;
+            line-height: 1.2;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px dotted currentColor;
+            opacity: 0.5;
+        }
 
         .heading-anchor {
             position: absolute;
@@ -205,6 +305,10 @@ var baseTemplate = `<!DOCTYPE html>
             opacity: 1;
         }
 
+        .editorial-list {
+            margin: 0 -12px;
+        }
+
         .post-list {
             display: grid;
             grid-template-columns: 1.25em minmax(0, 1fr) 110px;
@@ -212,13 +316,6 @@ var baseTemplate = `<!DOCTYPE html>
             row-gap: 5px;
             align-items: baseline;
             margin-top: 2em;
-        }
-
-        .post-star-slot {
-            color: var(--text-color);
-            font-size: 0.9em;
-            line-height: 1;
-            text-align: center;
         }
 
         .post-title {
@@ -239,61 +336,99 @@ var baseTemplate = `<!DOCTYPE html>
             text-decoration: underline;
         }
 
-        .external-link-icon {
-            margin-left: 0.15em;
-            font-size: 0.75em;
+        .post-list .post-date {
+            color: var(--text-color);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .posts-rss {
+            margin-top: 2em;
+        }
+
+        .editorial-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: baseline;
+            column-gap: 0.75rem;
+            padding: 0.45rem 12px;
+            border-radius: 6px;
+            color: var(--text-color);
+            font-size: 0.9375rem;
+            line-height: 1.45;
+            text-decoration: none;
+            transition: background-color 0.15s ease;
+        }
+
+        .editorial-row:hover {
+            color: var(--text-color);
+            background: var(--accent-light);
+            text-decoration: none;
+        }
+
+        .editorial-title {
+            min-width: 0;
+            font-weight: 500;
+            letter-spacing: -0.015em;
+        }
+
+        .editorial-leader { display: none; }
+
+        .editorial-meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+
+        .editorial-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
         }
 
         .post-star {
             color: var(--text-color);
         }
 
-        .post-date {
-            color: var(--text-color);
-            font-variant-numeric: tabular-nums;
+        .external-link-icon {
+            margin-left: 0.15em;
+            font-size: 0.75em;
         }
+
+        .post-date { color: var(--text-color); font-variant-numeric: tabular-nums; }
 
         @media (max-width: 640px) {
-            .post-list {
-                grid-template-columns: 1.25em minmax(0, 1fr);
-                column-gap: 0.35em;
-                row-gap: 0;
-            }
-            .post-list .post-date {
-                grid-column: 2;
-                margin-bottom: 0.5em;
-            }
-            h1 {
-                font-size: 1.75em;
-            }
+            body { padding: 40px 20px; }
+            .site-header { margin-bottom: 40px; }
+            .site-nav { gap: 10px; }
+            .editorial-row { grid-template-columns: minmax(0, 1fr) auto; row-gap: 0.15rem; }
+            .editorial-leader { display: none; }
+            .post-list { grid-template-columns: 1.25em minmax(0, 1fr); column-gap: 0.35em; row-gap: 0; }
+            .post-list .post-date { grid-column: 2; margin-bottom: 0.5em; }
+            .editorial-subtitle { grid-column: 1; }
+            .work-row { grid-template-columns: 85px minmax(0, 1fr); column-gap: 1rem; row-gap: 0.2rem; }
+            .work-role { grid-column: 2; grid-row: 2; }
+            .work-period { grid-column: 2; grid-row: 1; justify-self: end; }
+            .editorial-row.book-row { grid-template-columns: minmax(0, 1fr) auto; }
+            .book-author { grid-column: 1; grid-row: 2; }
+            h1 { font-size: 1.5rem; }
         }
 
-        .reading-list {
-            margin-top: 2em;
+        @media (max-width: 480px) {
+            .site-header { flex-direction: column; gap: 14px; }
+            .site-nav { padding-top: 0; }
         }
 
-        .reading-item {
-            margin-bottom: 1em;
-        }
+        .reading-list { margin: 0 -12px; }
 
-        .reading-title {
-            font-weight: 500;
-            letter-spacing: -0.015em;
-        }
+        .reading-item { margin: 0; }
 
-        .reading-title a {
-            color: var(--text-color);
-            text-decoration: none;
-        }
+        .reading-title { font-weight: 500; letter-spacing: -0.015em; }
 
-        .reading-title a:hover {
-            text-decoration: underline;
-        }
+        .reading-title a { color: var(--text-color); text-decoration: none; }
 
-        .reading-meta {
-            color: var(--text-secondary);
-            font-size: 0.9em;
-        }
+        .reading-title a:hover { text-decoration: underline; }
+
+        .reading-meta { color: var(--text-secondary); font-size: 0.875em; }
 
         .reading-source {
             font-weight: 500;
@@ -425,8 +560,8 @@ var baseTemplate = `<!DOCTYPE html>
             height: 180px;
             object-fit: cover;
             float: right;
-            margin-left: 2em;
-            margin-bottom: 1em;
+            margin: 0 0 1rem 2rem;
+            border-radius: 0;
             border: 1px solid var(--text-color);
         }
 
@@ -434,22 +569,9 @@ var baseTemplate = `<!DOCTYPE html>
             display: none;
         }
 
-        :root[data-theme="dark"] .profile-image-light {
-            display: none;
-        }
-
-        :root[data-theme="dark"] .profile-image-dark {
-            display: block;
-        }
-
         @media (prefers-color-scheme: dark) {
-            :root:not([data-theme="light"]) .profile-image-light {
-                display: none;
-            }
-
-            :root:not([data-theme="light"]) .profile-image-dark {
-                display: block;
-            }
+            .profile-image-light { display: none; }
+            .profile-image-dark { display: block; }
         }
 
         main img {
@@ -509,37 +631,34 @@ var baseTemplate = `<!DOCTYPE html>
 
         /* Social links with icons */
         .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem 1rem;
             list-style: none;
-            padding-left: 0;
+            margin: 1.5rem 0 0;
+            padding: 0;
         }
 
-        .social-links li {
-            margin: 0.5em 0;
-        }
+        .social-links li { padding: 0; }
 
-        .social-links li::before {
-            content: none;
-        }
+        .social-links li::before { content: none; }
 
         .social-links a {
             display: flex;
             align-items: center;
-            gap: 0.5em;
-            color: var(--link-color);
+            gap: 0.35em;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
             text-decoration: none;
-            font-weight: 500;
         }
 
         .social-links a:hover {
             color: var(--text-color);
-            text-decoration: none;
+            text-decoration: underline;
+            text-underline-offset: 3px;
         }
 
-        .social-links i {
-            font-size: 1.2em;
-            width: 1.2em;
-            text-align: center;
-        }
+        .social-links i { font-size: 1em; width: 1em; text-align: center; }
 
         /* Syntax highlighting - Catppuccin Latte */
         .chroma { background-color: var(--code-bg); }
@@ -674,71 +793,92 @@ var baseTemplate = `<!DOCTYPE html>
     </script>
 </head>
 <body>
-    <nav>
-        <a href="/">Vegard Stikbakke</a>
-        <a href="/blog/">Posts</a>
-        <button class="theme-toggle" type="button" aria-label="Theme: auto. Switch to light mode" title="Theme: auto">◐</button>
-    </nav>
+    <header class="site-header">
+        <div class="site-identity">
+            <a class="site-name" href="/">Vegard Stikbakke</a>
+            <div class="site-socials" aria-label="Social links">
+                <a href="https://github.com/vegarsti" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+                <a href="https://twitter.com/vegardstikbakke" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                <a href="https://www.linkedin.com/in/vegardstikbakke/" aria-label="LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                <a href="https://www.goodreads.com/user/show/3400170-vegard-stikbakke" aria-label="Goodreads"><i class="fab fa-goodreads" aria-hidden="true"></i></a>
+                <a href="mailto:vegard.stikbakke@gmail.com" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+            </div>
+        </div>
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="/blog/">Posts</a>
+            <a href="/books/">Books</a>
+        </nav>
+    </header>
     <main>
         {{template "content" .}}
     </main>
-    <script>
-        (function() {
-            var button = document.querySelector('.theme-toggle');
-            if (!button) return;
-
-            var modes = ['auto', 'light', 'dark'];
-
-            function storedTheme() {
-                try {
-                    var theme = localStorage.getItem('theme');
-                    return modes.indexOf(theme) === -1 ? 'auto' : theme;
-                } catch (e) {
-                    return 'auto';
-                }
-            }
-
-            function applyTheme(theme) {
-                if (theme === 'light' || theme === 'dark') {
-                    document.documentElement.dataset.theme = theme;
-                } else {
-                    delete document.documentElement.dataset.theme;
-                }
-            }
-
-            function updateButton(theme) {
-                var nextTheme = modes[(modes.indexOf(theme) + 1) % modes.length];
-                var labels = { auto: '◐', light: '☀', dark: '☾' };
-                button.textContent = labels[theme];
-                button.setAttribute('title', 'Theme: ' + theme);
-                button.setAttribute('aria-label', 'Theme: ' + theme + '. Switch to ' + nextTheme + ' mode');
-            }
-
-            applyTheme(storedTheme());
-            updateButton(storedTheme());
-
-            button.addEventListener('click', function() {
-                var current = storedTheme();
-                var nextTheme = modes[(modes.indexOf(current) + 1) % modes.length];
-                applyTheme(nextTheme);
-                try { localStorage.setItem('theme', nextTheme); } catch (e) {}
-                updateButton(nextTheme);
-            });
-        })();
-    </script>
     {{if .CollapsibleCode}}<script src="/collapsible-code.js"></script>{{end}}
 </body>
 </html>`
 
-// Homepage template (shows bio from about.md)
+// Homepage template (shows a concise bio and curated recent activity)
 var homepageContent = `{{define "content"}}
-<img src="/me.jpg" alt="Vegard Stikbakke" class="profile-image profile-image-light">
-<img src="/me-pixel.png" alt="Vegard Stikbakke" class="profile-image profile-image-dark">
-{{.Content}}
+<div class="home-intro">
+    <img src="/me.jpg" alt="Vegard Stikbakke" class="profile-image profile-image-light">
+    <img src="/me-pixel.png" alt="Vegard Stikbakke" class="profile-image profile-image-dark">
+    {{.Content}}
+</div>
+
+<section aria-labelledby="selected-work">
+    <h2 id="selected-work" class="section-label">Work</h2>
+    <div class="work-list">
+        <a class="work-row" href="https://earendil.com" target="_blank" rel="noopener">
+            <span class="work-company"><img class="work-icon" src="/work/earendil.png" alt="">Earendil</span>
+            <span class="work-role">Member of Technical Staff</span>
+            <span class="work-period">2026–present</span>
+        </a>
+        <a class="work-row" href="https://dune.com" target="_blank" rel="noopener">
+            <span class="work-company"><img class="work-icon dune-work-icon" src="/work/dune.png" alt="">Dune</span>
+            <span class="work-role">Senior Software Engineer</span>
+            <span class="work-period">2021–2026</span>
+        </a>
+        <a class="work-row" href="https://www.cognite.com" target="_blank" rel="noopener">
+            <span class="work-company"><img class="work-icon cognite-work-icon" src="/work/cognite.png" alt="">Cognite</span>
+            <span class="work-role">Software Engineer</span>
+            <span class="work-period">2019–2020</span>
+        </a>
+    </div>
+</section>
+
+<section aria-labelledby="recent-writing">
+    <h2 id="recent-writing" class="section-label">Occasional blog posts</h2>
+    <div class="editorial-list">
+    {{range .RecentPosts}}
+        <a class="editorial-row" href="{{if .ExternalURL}}{{.ExternalURL}}{{else}}/{{.Slug}}/{{end}}">
+            <span class="editorial-title">{{.Title}}</span>
+            <span class="editorial-leader" aria-hidden="true"></span>
+            <span class="editorial-meta">{{.DateString}}</span>
+        </a>
+    {{end}}
+    </div>
+    <p class="section-link"><a href="/blog/">All posts →</a></p>
+</section>
+
+{{if .RecentBooks}}
+<section aria-labelledby="recent-books">
+    <h2 id="recent-books" class="section-label">Books I've read recently</h2>
+    <div class="editorial-list">
+    {{range .RecentBooks}}
+        <a class="editorial-row book-row" href="{{.Link}}" target="_blank" rel="noopener">
+            <span class="editorial-title">{{.Title}}</span>
+            <span class="book-author">{{.AuthorName}}</span>
+            <span class="editorial-meta">{{.ReadAtISO}}</span>
+        </a>
+    {{end}}
+    </div>
+    <p class="section-link"><a href="/books/">All books →</a></p>
+</section>
+{{end}}
 {{end}}`
 
 // Posts listing template
 var postsListingContent = `{{define "content"}}
+<div class="posts-page">
 <h1>Posts</h1>
 <p class="posts-intro">A star (<span class="post-star" title="Starred post" aria-label="Starred post">★</span>) marks posts I'm particularly happy with.</p>
 <div class="post-list">
@@ -748,7 +888,8 @@ var postsListingContent = `{{define "content"}}
     <div class="post-date">{{.DateString}}</div>
 {{end}}
 </div>
-<p style="margin-top: 2em;"><a href="/feed.xml">RSS feed</a></p>
+<p class="posts-rss"><a href="/feed.xml">RSS feed</a></p>
+</div>
 {{end}}`
 
 // Individual post template
@@ -761,13 +902,14 @@ var postContent = `{{define "content"}}
 // RSS reading list template
 var rssListingContent = `{{define "content"}}
 <h1>Reading</h1>
-<p>Articles from blogs I follow, aggregated from their RSS feeds.</p>
-<div class="reading-list">
+<p>Articles from blogs I follow.</p>
+<div class="editorial-list">
 {{range .Items}}
-    <div class="reading-item">
-        <div class="reading-title"><a href="{{.Link}}" target="_blank" rel="noopener">{{.Title}}</a></div>
-        <div class="reading-meta"><span class="reading-source">{{.FeedTitle}}</span> · <span class="reading-date">{{.DateString}}</span></div>
-    </div>
+    <a class="editorial-row" href="{{.Link}}" target="_blank" rel="noopener">
+        <span class="editorial-title">{{.Title}}</span>
+        <span class="editorial-leader" aria-hidden="true"></span>
+        <span class="editorial-meta">{{.FeedTitle}} · {{.DateString}}</span>
+    </a>
 {{end}}
 </div>
 {{end}}`
@@ -775,15 +917,32 @@ var rssListingContent = `{{define "content"}}
 // Books listing template
 var booksListContent = `{{define "content"}}
 <h1>Books</h1>
-<p>Books I've read.</p>
-<div class="reading-list">
-{{range .Books}}
-    <div class="reading-item">
-        <div class="reading-title"><a href="{{.Link}}" target="_blank" rel="noopener">{{.Title}}</a></div>
-        <div class="reading-meta"><span class="reading-source">{{.AuthorName}}</span> · <span title="My rating">{{.Stars}}</span> · <span>{{.ReadAtISO}}</span>{{if .BookPublished}} · <span class="reading-date">{{.BookPublished}}</span>{{end}}</div>
+{{if .YearlyBookPosts}}
+<section aria-labelledby="yearly-reading">
+    <h2 id="yearly-reading" class="section-label">Yearly reading</h2>
+    <div class="editorial-list">
+    {{range .YearlyBookPosts}}
+        <a class="editorial-row" href="/{{.Slug}}/">
+            <span class="editorial-title">{{.Title}}</span>
+            <span class="editorial-leader" aria-hidden="true"></span>
+            <span class="editorial-meta">{{.DateString}}</span>
+        </a>
+    {{end}}
     </div>
+</section>
 {{end}}
-</div>
+<section aria-labelledby="all-books">
+    <h2 id="all-books" class="section-label">All books</h2>
+    <div class="editorial-list">
+{{range .Books}}
+    <a class="editorial-row book-row" href="{{.Link}}" target="_blank" rel="noopener">
+        <span class="editorial-title">{{.Title}}</span>
+        <span class="book-author">{{.AuthorName}}</span>
+        <span class="editorial-meta">{{.ReadAtISO}}</span>
+    </a>
+{{end}}
+    </div>
+</section>
 {{end}}`
 
 // 404 page template
