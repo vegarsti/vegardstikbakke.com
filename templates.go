@@ -189,61 +189,6 @@ var baseTemplate = `<!DOCTYPE html>
             text-underline-offset: 3px;
         }
 
-        .work-list {
-            margin: 0 -12px;
-        }
-
-        .work-row {
-            display: grid;
-            grid-template-columns: 110px minmax(0, 1fr) 90px;
-            align-items: baseline;
-            column-gap: 1.5rem;
-            padding: 0.7rem 12px;
-            border-radius: 6px;
-            color: var(--text-color);
-            text-decoration: none;
-            transition: background-color 0.15s ease;
-        }
-
-        .work-row:hover {
-            color: var(--text-color);
-            background: var(--accent-light);
-            text-decoration: none;
-        }
-
-        .work-company {
-            position: relative;
-            display: block;
-            padding-left: calc(16px + 0.6rem);
-            font-weight: 500;
-            letter-spacing: -0.015em;
-        }
-
-        .work-icon {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 16px;
-            height: 16px;
-            margin: 0;
-            object-fit: contain;
-            opacity: 0.55;
-            transform: translateY(-50%);
-        }
-
-        .dune-work-icon { filter: invert(1); }
-
-        @media (prefers-color-scheme: dark) {
-            .dune-work-icon { filter: none; }
-            .cognite-work-icon { filter: invert(1); }
-        }
-
-        .work-role,
-        .work-period {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
         .editorial-row.book-row {
             grid-template-columns: minmax(0, 1fr) minmax(100px, auto) auto;
         }
@@ -258,12 +203,6 @@ var baseTemplate = `<!DOCTYPE html>
         .book-author {
             color: var(--text-secondary);
             font-size: 0.875rem;
-        }
-
-        .work-period {
-            font-variant-numeric: tabular-nums;
-            text-align: right;
-            white-space: nowrap;
         }
 
         h1 { font-size: 1.75rem; letter-spacing: -0.035em; line-height: 1.2; margin-bottom: 0.75em; position: relative; }
@@ -405,10 +344,6 @@ var baseTemplate = `<!DOCTYPE html>
             .post-list { grid-template-columns: 1.25em minmax(0, 1fr); column-gap: 0.35em; row-gap: 0; }
             .post-list .post-date { grid-column: 2; margin-bottom: 0.5em; }
             .editorial-subtitle { grid-column: 1; }
-            .work-row { grid-template-columns: minmax(0, 1fr) auto; column-gap: 1rem; row-gap: 0.2rem; }
-            .work-company { grid-column: 1 / span 2; grid-row: 1; }
-            .work-role { grid-column: 1; grid-row: 2; }
-            .work-period { grid-column: 2; grid-row: 2; justify-self: end; }
             .editorial-row.book-row { grid-template-columns: minmax(0, 1fr) auto; }
             .book-author { grid-column: 1; grid-row: 2; }
             h1 { font-size: 1.5rem; }
@@ -824,27 +759,6 @@ var homepageContent = `{{define "content"}}
     <img src="/me-pixel.png" alt="Vegard Stikbakke" class="profile-image profile-image-dark">
     {{.Content}}
 </div>
-
-<section aria-labelledby="selected-work">
-    <h2 id="selected-work" class="section-label">Work</h2>
-    <div class="work-list">
-        <a class="work-row" href="https://earendil.com" target="_blank" rel="noopener">
-            <span class="work-company"><img class="work-icon" src="/work/earendil.png" alt="">Earendil</span>
-            <span class="work-role">Member of Technical Staff</span>
-            <span class="work-period">2026–present</span>
-        </a>
-        <a class="work-row" href="https://dune.com" target="_blank" rel="noopener">
-            <span class="work-company"><img class="work-icon dune-work-icon" src="/work/dune.png" alt="">Dune</span>
-            <span class="work-role">Senior Software Engineer</span>
-            <span class="work-period">2021–2026</span>
-        </a>
-        <a class="work-row" href="https://www.cognite.com" target="_blank" rel="noopener">
-            <span class="work-company"><img class="work-icon cognite-work-icon" src="/work/cognite.png" alt="">Cognite</span>
-            <span class="work-role">Software Engineer</span>
-            <span class="work-period">2019–2020</span>
-        </a>
-    </div>
-</section>
 
 <section aria-labelledby="recent-writing">
     <h2 id="recent-writing" class="section-label">Occasional blog posts</h2>
