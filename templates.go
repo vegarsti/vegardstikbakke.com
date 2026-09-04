@@ -823,7 +823,7 @@ var rssListingContent = `{{define "content"}}
     <a class="editorial-row" href="{{.Link}}" target="_blank" rel="noopener">
         <span class="editorial-title">{{.Title}}</span>
         <span class="editorial-leader" aria-hidden="true"></span>
-        <span class="editorial-meta">{{.FeedTitle}} · {{.DateString}}</span>
+        <span class="editorial-meta">{{if .FeedTitle}}{{.FeedTitle}} {{end}}{{.DateString}}</span>
     </a>
 {{end}}
 </div>
