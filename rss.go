@@ -15,11 +15,11 @@ import (
 
 // FeedItem represents a single item from an RSS/Atom feed
 type FeedItem struct {
-	Title      string
-	Link       string
-	PubDate    time.Time
-	FeedTitle  string
-	FeedURL    string
+	Title     string
+	Link      string
+	PubDate   time.Time
+	FeedTitle string
+	FeedURL   string
 }
 
 // RSS feed structures
@@ -55,49 +55,70 @@ type atomLink struct {
 	Href string `xml:"href,attr"`
 }
 
-// loadFeedURLs reads feed URLs from a config file
-func loadFeedURLs(filename string) ([]string, error) {
+// FeedSource identifies an RSS/Atom feed and an optional display-name override.
+type FeedSource struct {
+	URL         string
+	DisplayName string
+}
+
+// loadFeedSources reads feed URLs and optional display-name overrides from a config file.
+// Each non-comment line has the form: URL [| Display Name].
+func loadFeedSources(filename string) ([]FeedSource, error) {
 	file, err := os.Open(filename)
 	if err != nil {
 		return nil, err
 	}
 	defer file.Close()
 
-	var feeds []string
+	var feeds []FeedSource
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
-		// Skip empty lines and comments
-		if line != "" && !strings.HasPrefix(line, "#") {
-			feeds = append(feeds, line)
+		// Skip empty lines and comments.
+		if line == "" || strings.HasPrefix(line, "#") {
+			continue
+		}
+
+		parts := strings.SplitN(line, "|", 2)
+		feeds = append(feeds, FeedSource{
+			URL:         strings.TrimSpace(parts[0]),
+			DisplayName: "",
+		})
+		if len(parts) == 2 {
+			feeds[len(feeds)-1].DisplayName = strings.TrimSpace(parts[1])
 		}
 	}
 	return feeds, scanner.Err()
 }
 
 // fetchAllFeeds fetches all feeds concurrently and returns combined items
-func fetchAllFeeds(feedURLs []string) ([]FeedItem, error) {
+func fetchAllFeeds(feeds []FeedSource) ([]FeedItem, error) {
 	var allItems []FeedItem
 	var mu sync.Mutex
 	var wg sync.WaitGroup
 	var errors []error
 	var errMu sync.Mutex
 
-	for _, url := range feedURLs {
+	for _, feed := range feeds {
 		wg.Add(1)
-		go func(feedURL string) {
+		go func(feed FeedSource) {
 			defer wg.Done()
-			items, err := fetchFeed(feedURL)
+			items, err := fetchFeed(feed.URL)
 			if err != nil {
 				errMu.Lock()
-				errors = append(errors, fmt.Errorf("fetching %s: %w", feedURL, err))
+				errors = append(errors, fmt.Errorf("fetching %s: %w", feed.URL, err))
 				errMu.Unlock()
 				return
+			}
+			if feed.DisplayName != "" {
+				for i := range items {
+					items[i].FeedTitle = feed.DisplayName
+				}
 			}
 			mu.Lock()
 			allItems = append(allItems, items...)
 			mu.Unlock()
-		}(url)
+		}(feed)
 	}
 
 	wg.Wait()
@@ -216,7 +237,7 @@ func parseFeedDate(dateStr string) time.Time {
 
 // loadFeedItems loads all feed items from the configured feeds
 func loadFeedItems(configFile string) ([]FeedItem, error) {
-	feeds, err := loadFeedURLs(configFile)
+	feeds, err := loadFeedSources(configFile)
 	if err != nil {
 		if os.IsNotExist(err) {
 			return nil, nil // No feeds config, skip RSS aggregation
