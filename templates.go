@@ -266,8 +266,17 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         .post-title a {
+            display: inline-flex;
+            align-items: baseline;
+            max-width: 100%;
             color: var(--text-color);
             text-decoration: none;
+        }
+
+        .post-title-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .post-title a:hover {
@@ -329,6 +338,7 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         .external-link-icon {
+            flex: none;
             margin-left: 0.15em;
             font-size: 0.75em;
         }
@@ -799,7 +809,7 @@ var postsListingContent = `{{define "content"}}
 <div class="post-list">
 {{range .Posts}}
     <div class="post-star-slot">{{if .Starred}}<span class="post-star" title="Starred post" aria-label="Starred post">★</span>{{end}}</div>
-    <div class="post-title"><a href="{{if .ExternalURL}}{{.ExternalURL}}{{else}}/{{.Slug}}/{{end}}">{{.Title}}{{if .ExternalURL}} <i class="fa-solid fa-arrow-up-right-from-square external-link-icon" aria-hidden="true"></i>{{end}}</a>{{if .Draft}}<span class="draft-badge">Draft</span>{{end}}</div>
+    <div class="post-title"><a href="{{if .ExternalURL}}{{.ExternalURL}}{{else}}/{{.Slug}}/{{end}}"><span class="post-title-text">{{.Title}}</span>{{if .ExternalURL}} <i class="fa-solid fa-arrow-up-right-from-square external-link-icon" aria-hidden="true"></i>{{end}}</a>{{if .Draft}}<span class="draft-badge">Draft</span>{{end}}</div>
     <div class="post-date">{{.DateString}}</div>
 {{end}}
 </div>
