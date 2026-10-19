@@ -173,17 +173,12 @@ var baseTemplate = `<!DOCTYPE html>
             clear: both;
         }
 
-        .section-link {
-            margin: 0.75rem 0 0;
-            font-size: 0.875rem;
-        }
-
-        .section-link a {
-            color: var(--text-secondary);
+        .section-label a {
+            color: inherit;
             text-decoration: none;
         }
 
-        .section-link a:hover {
+        .section-label a:hover {
             color: var(--text-color);
             text-decoration: underline;
             text-underline-offset: 3px;
@@ -304,13 +299,16 @@ var baseTemplate = `<!DOCTYPE html>
             font-size: 0.9375rem;
             line-height: 1.45;
             text-decoration: none;
-            transition: background-color 0.15s ease;
         }
 
-        .editorial-row:hover {
+        .editorial-title a {
             color: var(--text-color);
-            background: var(--accent-light);
             text-decoration: none;
+        }
+
+        .editorial-title a:hover {
+            color: var(--text-color);
+            text-decoration: underline;
         }
 
         .editorial-title {
@@ -771,32 +769,30 @@ var homepageContent = `{{define "content"}}
 </div>
 
 <section aria-labelledby="recent-writing">
-    <h2 id="recent-writing" class="section-label">Occasional blog posts</h2>
+    <h2 id="recent-writing" class="section-label"><a href="/blog/">Occasional blog posts</a></h2>
     <div class="editorial-list">
     {{range .RecentPosts}}
-        <a class="editorial-row" href="{{if .ExternalURL}}{{.ExternalURL}}{{else}}/{{.Slug}}/{{end}}">
-            <span class="editorial-title">{{.Title}}</span>
+        <div class="editorial-row">
+            <span class="editorial-title"><a href="{{if .ExternalURL}}{{.ExternalURL}}{{else}}/{{.Slug}}/{{end}}">{{.Title}}</a></span>
             <span class="editorial-leader" aria-hidden="true"></span>
             <span class="editorial-meta">{{.DateString}}</span>
-        </a>
+        </div>
     {{end}}
     </div>
-    <p class="section-link"><a href="/blog/">All posts →</a></p>
 </section>
 
 {{if .RecentBooks}}
 <section aria-labelledby="recent-books">
-    <h2 id="recent-books" class="section-label">Books I've read recently</h2>
+    <h2 id="recent-books" class="section-label"><a href="/books/">Books I've read recently</a></h2>
     <div class="editorial-list">
     {{range .RecentBooks}}
-        <a class="editorial-row book-row" href="{{.Link}}" target="_blank" rel="noopener">
-            <span class="editorial-title">{{.Title}}</span>
+        <div class="editorial-row book-row">
+            <span class="editorial-title"><a href="{{.Link}}" target="_blank" rel="noopener">{{.Title}}</a></span>
             <span class="book-author">{{.AuthorName}}</span>
             <span class="editorial-meta">{{.ReadAtISO}}</span>
-        </a>
+        </div>
     {{end}}
     </div>
-    <p class="section-link"><a href="/books/">All books →</a></p>
 </section>
 {{end}}
 {{end}}`
@@ -830,11 +826,11 @@ var rssListingContent = `{{define "content"}}
 <p>Articles from blogs I follow.</p>
 <div class="editorial-list">
 {{range .Items}}
-    <a class="editorial-row" href="{{.Link}}" target="_blank" rel="noopener">
-        <span class="editorial-title">{{.Title}}</span>
+    <div class="editorial-row">
+        <span class="editorial-title"><a href="{{.Link}}" target="_blank" rel="noopener">{{.Title}}</a></span>
         <span class="editorial-leader" aria-hidden="true"></span>
         <span class="editorial-meta">{{if .FeedTitle}}{{.FeedTitle}} {{end}}{{.DateString}}</span>
-    </a>
+    </div>
 {{end}}
 </div>
 {{end}}`
@@ -847,11 +843,11 @@ var booksListContent = `{{define "content"}}
     <h2 id="yearly-reading" class="section-label">Yearly reading</h2>
     <div class="editorial-list">
     {{range .YearlyBookPosts}}
-        <a class="editorial-row" href="/{{.Slug}}/">
-            <span class="editorial-title">{{.Title}}</span>
+        <div class="editorial-row">
+            <span class="editorial-title"><a href="/{{.Slug}}/">{{.Title}}</a></span>
             <span class="editorial-leader" aria-hidden="true"></span>
             <span class="editorial-meta">{{.DateString}}</span>
-        </a>
+        </div>
     {{end}}
     </div>
 </section>
@@ -860,11 +856,11 @@ var booksListContent = `{{define "content"}}
     <h2 id="all-books" class="section-label">All books</h2>
     <div class="editorial-list">
 {{range .Books}}
-    <a class="editorial-row book-row" href="{{.Link}}" target="_blank" rel="noopener">
-        <span class="editorial-title">{{.Title}}</span>
+    <div class="editorial-row book-row">
+        <span class="editorial-title"><a href="{{.Link}}" target="_blank" rel="noopener">{{.Title}}</a></span>
         <span class="book-author">{{.AuthorName}}</span>
         <span class="editorial-meta">{{.ReadAtISO}}</span>
-    </a>
+    </div>
 {{end}}
     </div>
 </section>
