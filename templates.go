@@ -141,6 +141,7 @@ var baseTemplate = `<!DOCTYPE html>
 
         .site-socials a {
             position: relative;
+            text-decoration: none;
             color: var(--link-color);
             font-size: 0.875rem;
             line-height: 1;
@@ -280,7 +281,7 @@ var baseTemplate = `<!DOCTYPE html>
         }
 
         .post-list .post-date {
-            color: var(--text-color);
+            color: var(--text-secondary);
             font-variant-numeric: tabular-nums;
         }
 
@@ -341,7 +342,7 @@ var baseTemplate = `<!DOCTYPE html>
             font-size: 0.75em;
         }
 
-        .post-date { color: var(--text-color); font-variant-numeric: tabular-nums; }
+        .post-date { color: var(--text-secondary); font-variant-numeric: tabular-nums; }
 
         @media (max-width: 640px) {
             body { padding: 40px 20px; }
@@ -491,12 +492,16 @@ var baseTemplate = `<!DOCTYPE html>
 
         a {
             color: var(--link-color);
-            text-decoration: none;
+            text-decoration: underline;
+            text-decoration-color: color-mix(in srgb, var(--link-color) 35%, transparent);
+            text-decoration-thickness: 1px;
+            text-underline-offset: 2px;
+            transition: text-decoration-color 0.15s;
         }
 
         a:hover {
             color: var(--link-color);
-            text-decoration: underline;
+            text-decoration-color: currentColor;
         }
 
         .profile-image {
