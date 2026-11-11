@@ -1,7 +1,8 @@
 I like to build infrastructure and data intensive systems that solve real problems.
-Currently I do that at [Earendil](https://earendil.com), where we build tools to harness AI.
+Currently I do that at [Earendil](https://earendil.com), where I work on the [Pi](https://pi.dev) coding agent and related things.
 
-Previously, I worked at [Dune](https://dune.com) and [Cognite](https://www.cognite.com), and studied applied math and did a research master's in statistics at the University of Oslo. You can find my resume [here](https://docs.google.com/document/d/1ThIq4n7CwNNql6NbqD5RRUrIqfy63drAB29gb1SMurw/preview).
+Previously, I studied applied math, did a research master's in statistics at the University of Oslo, worked at [Cognite](https://www.cognite.com) and most recently at [Dune](https://dune.com).
+You can find my resume [here](https://docs.google.com/document/d/1ThIq4n7CwNNql6NbqD5RRUrIqfy63drAB29gb1SMurw/preview).
 
 I live in a small town in Norway with my wife and 3 young kids.
 I enjoy reading and running.
